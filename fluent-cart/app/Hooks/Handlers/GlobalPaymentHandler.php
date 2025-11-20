@@ -13,7 +13,6 @@ use FluentCart\App\Modules\PaymentMethods\PayPalGateway\PayPal;
 use FluentCart\App\Modules\PaymentMethods\RazorpayGateway\Razorpay;
 use FluentCart\App\Modules\PaymentMethods\SquareGateway\Square;
 use FluentCart\App\Modules\PaymentMethods\StripeGateway\Stripe;
-use FluentCart\App\Modules\PaymentMethods\StripeGateway\Connect\ConnectConfig;
 use FluentCart\Framework\Container\Contracts\BindingResolutionException;
 use FluentCart\Framework\Support\Arr;
 use FluentCart\Api\PaymentMethods;
@@ -37,8 +36,6 @@ class GlobalPaymentHandler
             $gateway->register('square', new Square());
             $gateway->register('authorize_net', new AuthorizeNet());
             $gateway->register('airwallex', new Airwallex());
-
-            $this->verifyStripeConnect();
 
             $this->appAuthenticator();
             //This hook will allow others to register their payment method with ours
@@ -87,19 +84,6 @@ class GlobalPaymentHandler
                     $methodInstance->appAuthenticator($request);
                 }
             }
-        }
-    }
-
-    public function verifyStripeConnect()
-    {
-        $request = App::request()->all();
-        if (isset($request['vendor_source']) && $request['vendor_source'] == 'fluent_cart') {
-            if (isset($request['ff_stripe_connect']) && current_user_can('manage_options')) {
-                $data = Arr::only($request, ['ff_stripe_connect', 'mode', 'state', 'code']);
-                ConnectConfig::verifyAuthorizeSuccess($data);
-            }
-
-            wp_redirect(admin_url('admin.php?page=fluent-cart#/settings/payments/stripe'));
         }
     }
 

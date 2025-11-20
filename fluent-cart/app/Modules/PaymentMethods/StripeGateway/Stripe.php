@@ -12,7 +12,6 @@ use FluentCart\App\Hooks\Cart\WebCheckoutHandler;
 use FluentCart\App\Modules\PaymentMethods\Core\AbstractPaymentGateway;
 use FluentCart\App\Modules\PaymentMethods\Core\BaseGatewaySettings;
 use FluentCart\App\Modules\PaymentMethods\StripeGateway\API\API;
-use FluentCart\App\Modules\PaymentMethods\StripeGateway\Connect\ConnectConfig;
 use FluentCart\App\Modules\PaymentMethods\StripeGateway\Webhook\IPN;
 use FluentCart\App\Modules\PaymentMethods\StripeGateway\Webhook\Webhook;
 use FluentCart\App\Services\CustomPayment\PaymentIntent;
@@ -36,10 +35,6 @@ class Stripe extends AbstractPaymentGateway
             new StripeSettingsBase(),
             new StripeSubscriptions()
         );
-
-        add_action('fluent_cart_action_stripe_connect', function ($data) {
-            ConnectConfig::handleConnect($data);
-        });
 
     }
 
@@ -153,18 +148,15 @@ class Stripe extends AbstractPaymentGateway
 
     public static function beforeSettingsUpdate($data, $oldSettings): array
     {
-        $provider = Arr::get($data, 'provider', 'connect');
-        $mode = Arr::get($data, 'payment_mode', 'test');
+        $data['provider'] = 'api_keys';
 
-        if ('connect' == $provider) {
-            $data[$mode . '_secret_key'] = Helper::encryptKey(Arr::get($data, $mode . '_secret_key'));
-        }
+        foreach (['live', 'test'] as $mode) {
+            $secretKeyField = $mode . '_secret_key';
 
-        if (Arr::get($data, 'provider') === 'api_keys') {
-            $data['test_publishable_key'] = '';
-            $data['live_publishable_key'] = '';
-            $data['test_secret_key'] = '';
-            $data['live_secret_key'] = '';
+            if (!empty($data[$secretKeyField])) {
+                $data[$secretKeyField] = Helper::encryptKey($data[$secretKeyField]);
+                $data[$mode . '_is_encrypted'] = 'yes';
+            }
         }
 
         return $data;
@@ -173,28 +165,11 @@ class Stripe extends AbstractPaymentGateway
     public static function validateSettings($data): array
     {
         $mode = Arr::get($data, 'payment_mode', 'test');
-        $provider = Arr::get($data, 'provider', 'connect');
 
-        if ($provider === 'api_keys') {
-            if ($mode === 'live') {
-                $sk = defined('FCT_STRIPE_LIVE_SECRET_KEY') ? FCT_STRIPE_LIVE_SECRET_KEY : Arr::get($data, 'live_secret_key');
-            } else {
-                $sk = defined('FCT_STRIPE_TEST_SECRET_KEY') ? FCT_STRIPE_TEST_SECRET_KEY : Arr::get($data, 'test_secret_key');
-            }
+        if ($mode === 'live') {
+            $sk = defined('FCT_STRIPE_LIVE_SECRET_KEY') ? FCT_STRIPE_LIVE_SECRET_KEY : Arr::get($data, 'live_secret_key');
         } else {
-            $sk = $mode === 'live' ? Arr::get($data, 'live_secret_key') : Arr::get($data, 'test_secret_key');
-            if (empty($sk)) {
-                $errorMessage = $mode === 'live' ? __('Stripe not connected in Live Mode!', 'fluent-cart') : __('Stripe not connected in Test Mode!!', 'fluent-cart');
-                return [
-                    'status'  => 'failed',
-                    'message' => $errorMessage
-                ];
-            } else {
-                return [
-                    'status'  => 'success',
-                    'message' => __('Stripe account already verified!', 'fluent-cart')
-                ];
-            }
+            $sk = defined('FCT_STRIPE_TEST_SECRET_KEY') ? FCT_STRIPE_TEST_SECRET_KEY : Arr::get($data, 'test_secret_key');
         }
 
         if (empty($sk)) {
@@ -240,6 +215,78 @@ class Stripe extends AbstractPaymentGateway
 
     public function fields(): array
     {
+        $liveSchema = [
+            'live_publishable_key' => [
+                'value'       => '',
+                'label'       => __('Live Publishable Key', 'fluent-cart'),
+                'type'        => 'text',
+                'placeholder' => __('pk_live_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'live'
+                ]
+            ],
+            'live_secret_key'      => [
+                'value'       => '',
+                'label'       => __('Live Secret Key', 'fluent-cart'),
+                'type'        => 'password',
+                'placeholder' => __('sk_live_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'live'
+                ]
+            ],
+            'live_webhook_secret'  => [
+                'value'       => '',
+                'label'       => __('Live Webhook Secret', 'fluent-cart'),
+                'type'        => 'password',
+                'placeholder' => __('whsec_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'live'
+                ]
+            ],
+        ];
+
+        $testSchema = [
+            'test_publishable_key' => [
+                'value'       => '',
+                'label'       => __('Test Publishable Key', 'fluent-cart'),
+                'type'        => 'text',
+                'placeholder' => __('pk_test_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'test'
+                ]
+            ],
+            'test_secret_key'      => [
+                'value'       => '',
+                'label'       => __('Test Secret Key', 'fluent-cart'),
+                'type'        => 'password',
+                'placeholder' => __('sk_test_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'test'
+                ]
+            ],
+            'test_webhook_secret'  => [
+                'value'       => '',
+                'label'       => __('Test Webhook Secret', 'fluent-cart'),
+                'type'        => 'password',
+                'placeholder' => __('whsec_xxxxxxxxxxxxx', 'fluent-cart'),
+                'dependency'  => [
+                    'depends_on' => 'payment_mode',
+                    'operator'   => '=',
+                    'value'      => 'test'
+                ]
+            ],
+        ];
+
         return array(
             'notice'              => [
                 'value' => $this->renderStoreModeNotice(),
@@ -253,27 +300,16 @@ class Stripe extends AbstractPaymentGateway
                         'type'   => 'tab',
                         'label'  => __('Live credentials', 'fluent-cart'),
                         'value'  => 'live',
-                        'schema' => []
+                        'schema' => $liveSchema
                     ],
                     [
                         'type'   => 'tab',
                         'label'  => __('Test credentials', 'fluent-cart'),
                         'value'  => 'test',
-                        'schema' => [],
+                        'schema' => $testSchema,
                     ]
                 ]
             ],
-            'provider'            => array(
-                'value' => apply_filters('fluent_cart_form_disable_stripe_connect', false, []) ? 'api_keys' : 'connect',
-                'label' => __('Provider', 'fluent-cart'),
-                'type'  => 'provider'
-            ),
-            'setup_guide'         => array(
-                'value'   => '<h4>' . __('Or Setup keys manually.', 'fluent-cart') . '</h4><hr/>',
-                'label'   => __('Or Setup keys manually', 'fluent-cart'),
-                'type'    => 'html_attr',
-                'visible' => 'no'
-            ),
             'webhook_desc'        => array(
                 'value' => Webhook::webhookInstruction(),
                 'label' => __('Webhook URL', 'fluent-cart'),
@@ -373,16 +409,6 @@ class Stripe extends AbstractPaymentGateway
             ],
             200
         );
-    }
-
-    public function getConnectInfo(): array
-    {
-        return ConnectConfig::getConnectConfig();
-    }
-
-    public function disconnect($mode): bool
-    {
-        return ConnectConfig::disconnect($mode);
     }
 
     public function getCounterDisputeUrl($transaction)
