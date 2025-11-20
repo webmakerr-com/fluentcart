@@ -106,6 +106,10 @@ class Application implements ArrayAccess
             }
         }
 
+        if (!is_array($data['app'] ?? null)) {
+            $data['app'] = [];
+        }
+
         $data['app']['rest_namespace'] = $this->app->config->get('app.rest_namespace');
 
         $this->bindings['config'] = new Config($data);
