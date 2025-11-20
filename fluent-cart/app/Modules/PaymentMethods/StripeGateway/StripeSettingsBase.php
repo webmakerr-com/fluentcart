@@ -45,7 +45,7 @@ class StripeSettingsBase extends BaseGatewaySettings
     {
         return [
             'is_active'            => 'no',
-            'provider'             => 'connect',
+            'provider'             => 'api_keys',
             //define keys
             'define_test_keys'     => false,
             'define_live_keys'     => false,

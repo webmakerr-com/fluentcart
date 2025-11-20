@@ -212,10 +212,20 @@ class API
 
         $liveMode = !!Arr::get($gateway, 'livemode');
 
+        $configurePath = ($liveMode ? '' : 'test/') . 'settings/payment_methods';
+
+        if ($accountId) {
+            $configurePath = $accountId . ($liveMode ? '/' : '/test/') . 'settings/payment_methods';
+        }
+
+        if (Arr::get($gateway, 'id')) {
+            $configurePath .= '/' . Arr::get($gateway, 'id');
+        }
+
         return [
             'id'                => Arr::get($gateway, 'id'),
             'activated_methods' => $stripeGateways,
-            'configure_url'     => 'https://dashboard.stripe.com/' . $accountId . (!$liveMode ? '/test/' : '/') . 'settings/payment_methods/' . Arr::get($gateway, 'id'),
+            'configure_url'     => 'https://dashboard.stripe.com/' . $configurePath,
         ];
     }
 
