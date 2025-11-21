@@ -5,6 +5,7 @@ namespace FluentCart\App\Modules\PaymentMethods\StripeGateway;
 use FluentCart\Api\StoreSettings;
 use FluentCart\App\Helpers\Helper;
 use FluentCart\App\Modules\PaymentMethods\Core\BaseGatewaySettings;
+use FluentCart\Framework\Support\Arr;
 
 class StripeSettingsBase extends BaseGatewaySettings
 {
@@ -109,8 +110,15 @@ class StripeSettingsBase extends BaseGatewaySettings
 
     public function getMode()
     {
-        // return store mode
-        return (new StoreSettings)->get('order_mode');
+        $storeMode = (new StoreSettings)->get('order_mode');
+
+        $paymentMode = Arr::get($this->settings, 'payment_mode');
+
+        if (in_array($paymentMode, ['test', 'live'], true)) {
+            return $paymentMode;
+        }
+
+        return $storeMode;
     }
 
     public function getPublicKey()
