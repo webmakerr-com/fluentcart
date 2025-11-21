@@ -16,8 +16,8 @@ class FluentLicensing
             return self::$instance; // Return existing instance if already set.
         }
 
-        if (empty($config['basename']) || empty($config['version']) || empty($config['api_url'])) {
-            throw new \Exception('Invalid configuration provided for FluentLicensing. Please provide basename, version, and api_url.');
+        if (empty($config['basename']) || empty($config['version'])) {
+            throw new \Exception('Invalid configuration provided for FluentLicensing. Please provide basename and version.');
         }
 
         $this->config = $config;
@@ -40,7 +40,8 @@ class FluentLicensing
             require_once __DIR__ . '/PluginUpdater.php';
         }
 
-        // Initialize the updater with the provided configuration.
+        // Initialize the updater with the provided configuration. The updater now avoids
+        // remote validation and simply keeps the plugin hooks intact.
         new PluginUpdater($config);
 
         self::$instance = $this; // Set the instance for future use.
@@ -54,11 +55,12 @@ class FluentLicensing
             'license_key'     => 'fluentcart-pro-local',
             'status'          => 'valid',
             'variation_id'    => '',
-            'variation_title' => 'Local Activation',
+            'variation_title' => __('Local identifier only', 'fluent-cart-pro'),
             'expires'         => 'lifetime',
             'activation_hash' => 'local',
             'renew_url'       => '',
             'is_expired'      => false,
+            'notice'          => __('Licensing is optional and only used to identify this installation. All features stay enabled.', 'fluent-cart-pro'),
         ];
 
         $saved = get_option($this->settingsKey, []);
@@ -89,12 +91,9 @@ class FluentLicensing
 
     public function activate($licenseKey = '')
     {
-        if (!$licenseKey) {
-            $licenseKey = 'fluentcart-pro-local';
-        }
-
         $saveData = $this->getLocalLicenseData([
             'license_key' => $licenseKey,
+            'status'      => 'valid',
         ]);
 
         update_option($this->settingsKey, $saveData, false);
@@ -105,7 +104,7 @@ class FluentLicensing
     public function deactivate()
     {
         $savedData = $this->getLocalLicenseData([
-            'license_key' => 'fluentcart-pro-local',
+            'license_key' => '',
             'status'      => 'valid',
         ]);
 
@@ -145,7 +144,7 @@ class FluentLicensing
         if ($scope == 'global') {
             $renewUrl = $this->getConfig('activate_url');
         } else {
-            $renewUrl = $this->getConfig('api_url');
+            $renewUrl = isset($this->config['api_url']) ? $this->getConfig('api_url') : $this->getConfig('activate_url');
         }
 
         return '<p>Your ' . $this->getConfig('plugin_title') . ' ' . __('license has been', 'fluent-cart-pro') . ' <b>' . __('expired at', 'fluent-cart-pro') . ' ' . gmdate('d M Y', strtotime($licenseData['expires'])) . '</b>, Please ' .
