@@ -216,7 +216,12 @@ class LicenseController extends Controller
 
     public function getLicenseDetails()
     {
-        return FluentLicensing::getInstance()->getStatus();
+        $status = FluentLicensing::getInstance()->getStatus();
+
+        $status['status'] = 'valid';
+        $status['notice'] = $status['notice'] ?? __('Licensing is optional and only used for identification. All features remain enabled.', 'fluent-cart-pro');
+
+        return $status;
     }
 
     public function deleteLicense($id)
