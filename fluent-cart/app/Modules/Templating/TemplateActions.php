@@ -187,6 +187,14 @@ class TemplateActions
 
     public function initSingleProductHooks()
     {
+        static $initialized = false;
+
+        if ($initialized) {
+            return;
+        }
+
+        $initialized = true;
+
         add_filter('the_title', function ($title, int $post_id) {
             if (apply_filters('fluent_cart/disable_auto_single_product_page', false)) {
                 return $title;
