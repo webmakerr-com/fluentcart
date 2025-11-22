@@ -227,7 +227,11 @@ class TemplateActions
         ob_start();
         do_action('fluent_cart/product/render_product_header', $post->ID);
         $headerContent = ob_get_clean();
-        $content = $headerContent . $content;
+        // The product renderer already outputs the full product page layout,
+        // including the long description. To avoid duplicating that
+        // description ahead of the related products section, rely solely on
+        // the rendered markup here.
+        $content = $headerContent;
 
         $storeSettings = new StoreSettings();
 
