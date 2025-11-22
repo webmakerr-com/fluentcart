@@ -168,20 +168,287 @@ class ProductRenderer
     {
         ?>
         <div class="fct-single-product-page" data-fluent-cart-single-product-page>
-            <div class="fct-single-product-page-row">
-                <?php $this->renderGallery(); ?>
-                <div class="fct-product-summary">
-                    <?php
-                    $this->renderTitle();
-                    $this->renderStockAvailability();
-                    $this->renderExcerpt();
-                    $this->renderPrices();
-                    $this->renderBuySection();
-                    ?>
+            <div class="fct-gig-hero mb-4">
+                <div class="container-fluid px-0">
+                    <?php $this->renderGallery(); ?>
+                </div>
+            </div>
+
+            <div class="container-fluid fct-gig-body px-0 px-md-4">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex flex-column gap-3">
+                                    <?php $this->renderTitle(); ?>
+                                    <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
+                                        <?php $this->renderRatingSummary(); ?>
+                                        <?php $this->renderStockAvailability('class="text-success fw-semibold"'); ?>
+                                    </div>
+                                    <?php $this->renderSellerOverview(); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <h3 class="h5 mb-3"><?php esc_html_e('Gig Overview', 'fluent-cart'); ?></h3>
+                                <?php $this->renderExcerpt(); ?>
+                                <div class="fct-product-description mt-3">
+                                    <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <h3 class="h6 text-uppercase text-muted mb-3"><?php esc_html_e('What you get', 'fluent-cart'); ?></h3>
+                                <?php $this->renderFeatureList(); ?>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('FAQ', 'fluent-cart'); ?></h3>
+                                    <span class="text-muted small"><?php esc_html_e('Common questions', 'fluent-cart'); ?></span>
+                                </div>
+                                <?php $this->renderFaqSection(); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="position-sticky" style="top: 90px;">
+                            <div class="card shadow-sm fct-gig-purchase-box">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start justify-content-between mb-3">
+                                        <div>
+                                            <div class="text-muted small"><?php esc_html_e('Starting at', 'fluent-cart'); ?></div>
+                                            <?php $this->renderPrices(); ?>
+                                        </div>
+                                        <div class="text-end text-muted small">
+                                            <?php $this->renderRatingSummary(); ?>
+                                        </div>
+                                    </div>
+                                    <?php $this->renderBuySection(); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-white border-0 pb-0">
+                                <ul class="nav nav-tabs fct-gig-tabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="fct-tab-overview" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-overview" type="button" role="tab" aria-controls="fct-tab-pane-overview" aria-selected="true"><?php esc_html_e('Overview', 'fluent-cart'); ?></button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="fct-tab-seller" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-seller" type="button" role="tab" aria-controls="fct-tab-pane-seller" aria-selected="false"><?php esc_html_e('About Seller', 'fluent-cart'); ?></button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="fct-tab-reviews" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-reviews" type="button" role="tab" aria-controls="fct-tab-pane-reviews" aria-selected="false"><?php esc_html_e('Reviews', 'fluent-cart'); ?></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="fct-single-product-tabs">
+                                    <div class="tab-pane fade show active" id="fct-tab-pane-overview" role="tabpanel" aria-labelledby="fct-tab-overview">
+                                        <div class="mb-4">
+                                            <h4 class="h6 text-uppercase text-muted mb-2"><?php esc_html_e('Description', 'fluent-cart'); ?></h4>
+                                            <div class="fct-product-description">
+                                                <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="h6 text-uppercase text-muted mb-2"><?php esc_html_e('Deliverables', 'fluent-cart'); ?></h4>
+                                            <?php $this->renderFeatureList(); ?>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="fct-tab-pane-seller" role="tabpanel" aria-labelledby="fct-tab-seller">
+                                        <?php $this->renderSellerOverview(true); ?>
+                                    </div>
+                                    <div class="tab-pane fade" id="fct-tab-pane-reviews" role="tabpanel" aria-labelledby="fct-tab-reviews">
+                                        <?php $this->renderReviewPlaceholder(); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <?php
+    }
+
+    protected function renderRatingSummary()
+    {
+        $rating = apply_filters('fluent_cart/product/rating_value', 4.9, $this->product);
+        $ratingCount = apply_filters('fluent_cart/product/rating_count', 0, $this->product);
+
+        ?>
+        <div class="d-flex align-items-center gap-1 fct-rating-summary">
+            <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="fw-semibold text-dark"><?php echo esc_html(number_format_i18n($rating, 1)); ?></span>
+            <span class="text-muted">(<?php echo esc_html(number_format_i18n(max(0, $ratingCount))); ?>)</span>
+        </div>
+        <?php
+    }
+
+    protected function renderSellerOverview($inset = false)
+    {
+        $authorId = (int)$this->product->post_author;
+        $avatar = get_avatar_url($authorId, ['size' => 64]);
+        $name = get_the_author_meta('display_name', $authorId);
+        $bio = get_the_author_meta('description', $authorId);
+
+        ?>
+        <div class="d-flex align-items-center gap-3 <?php echo $inset ? 'p-3 bg-light rounded-3 border' : ''; ?>">
+            <div class="flex-shrink-0">
+                <img src="<?php echo esc_url($avatar); ?>" alt="<?php echo esc_attr($name); ?>" class="rounded-circle" width="64" height="64" />
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                    <div>
+                        <div class="fw-semibold text-dark"><?php echo esc_html($name ?: __('Seller', 'fluent-cart')); ?></div>
+                        <div class="text-muted small"><?php esc_html_e('Verified Freelancer', 'fluent-cart'); ?></div>
+                    </div>
+                    <a class="btn btn-outline-primary btn-sm" href="<?php echo esc_url(get_author_posts_url($authorId)); ?>"><?php esc_html_e('Contact', 'fluent-cart'); ?></a>
+                </div>
+                <div class="text-muted small mb-2"><?php echo esc_html($bio ?: __('Professional seller profile placeholder', 'fluent-cart')); ?></div>
+                <?php $this->renderRatingSummary(); ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    protected function renderFeatureList()
+    {
+        $features = $this->getFeatures();
+
+        if (empty($features)) {
+            ?>
+            <p class="text-muted mb-0"><?php esc_html_e('Detailed deliverables will appear here.', 'fluent-cart'); ?></p>
+            <?php
+            return;
+        }
+
+        ?>
+        <ul class="list-unstyled row row-cols-1 row-cols-md-2 g-2 mb-0">
+            <?php foreach ($features as $feature): ?>
+                <li class="col d-flex align-items-start gap-2">
+                    <span class="text-success">&#10003;</span>
+                    <span class="text-dark"><?php echo esc_html($feature); ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php
+    }
+
+    protected function renderFaqSection()
+    {
+        $faqs = $this->getFaqs();
+
+        if (empty($faqs)) {
+            ?>
+            <div class="alert alert-light border mb-0" role="note"><?php esc_html_e('No FAQs added yet.', 'fluent-cart'); ?></div>
+            <?php
+            return;
+        }
+
+        ?>
+        <div class="accordion" id="fct-product-faq">
+            <?php foreach ($faqs as $index => $faq):
+                $headingId = 'fct-faq-heading-' . $index;
+                $collapseId = 'fct-faq-collapse-' . $index;
+                ?>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="<?php echo esc_attr($headingId); ?>">
+                        <button class="accordion-button <?php echo $index ? 'collapsed' : ''; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo esc_attr($collapseId); ?>" aria-expanded="<?php echo $index ? 'false' : 'true'; ?>" aria-controls="<?php echo esc_attr($collapseId); ?>">
+                            <?php echo esc_html($faq['question']); ?>
+                        </button>
+                    </h2>
+                    <div id="<?php echo esc_attr($collapseId); ?>" class="accordion-collapse collapse <?php echo $index ? '' : 'show'; ?>" aria-labelledby="<?php echo esc_attr($headingId); ?>" data-bs-parent="#fct-product-faq">
+                        <div class="accordion-body">
+                            <?php echo wp_kses_post(wpautop($faq['answer'])); ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php
+    }
+
+    protected function renderReviewPlaceholder()
+    {
+        ?>
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+            <div>
+                <div class="fw-semibold text-dark mb-1"><?php esc_html_e('Client Reviews', 'fluent-cart'); ?></div>
+                <div class="text-muted small"><?php esc_html_e('Ratings and testimonials will be displayed here.', 'fluent-cart'); ?></div>
+            </div>
+            <button class="btn btn-outline-secondary btn-sm" type="button"><?php esc_html_e('Write a review', 'fluent-cart'); ?></button>
+        </div>
+        <div class="alert alert-light border mb-0" role="status"><?php esc_html_e('No reviews have been published yet.', 'fluent-cart'); ?></div>
+        <?php
+    }
+
+    protected function getFormattedContent()
+    {
+        $content = $this->product->post_content ?: '';
+
+        if (!$content) {
+            return __('Add a detailed gig description to inform buyers.', 'fluent-cart');
+        }
+
+        return $content;
+    }
+
+    protected function getFeatures()
+    {
+        $otherInfo = (array)Arr::get($this->product->detail, 'other_info', []);
+        $features = Arr::get($otherInfo, 'features');
+
+        if (is_array($features)) {
+            return array_values(array_filter(array_map('trim', $features)));
+        }
+
+        $excerpt = wp_strip_all_tags($this->product->post_excerpt);
+        if ($excerpt) {
+            $parts = array_filter(array_map('trim', preg_split('/[\.\n]+/', $excerpt)));
+            return array_slice($parts, 0, 6);
+        }
+
+        return [];
+    }
+
+    protected function getFaqs()
+    {
+        $otherInfo = (array)Arr::get($this->product->detail, 'other_info', []);
+        $faqs = Arr::get($otherInfo, 'faqs');
+
+        if (is_array($faqs)) {
+            $sanitized = [];
+            foreach ($faqs as $faq) {
+                $question = Arr::get($faq, 'question');
+                $answer = Arr::get($faq, 'answer');
+                if ($question && $answer) {
+                    $sanitized[] = [
+                        'question' => $question,
+                        'answer'   => $answer
+                    ];
+                }
+            }
+
+            if (!empty($sanitized)) {
+                return $sanitized;
+            }
+        }
+
+        return [];
     }
 
     public function renderBuySection($atts = [])
