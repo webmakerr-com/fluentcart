@@ -137,7 +137,14 @@ if ($post instanceof WP_Post) {
     $relatedList = $relatedProducts ? Arr::get($relatedProducts, 'products') : null;
     if ($relatedList && $relatedList->count()) :
         ob_start();
-        (new ProductListRenderer($relatedList, __('Related Products', 'fluent-cart'), 'fc-similar-product-list-container fc-product-section--related'))->render();
+        (new ProductListRenderer(
+            $relatedList,
+            __('Related Products', 'fluent-cart'),
+            'fc-similar-product-list-container fc-product-section--related',
+            [
+                'card_variant' => 'related'
+            ]
+        ))->render();
         $relatedMarkup = ob_get_clean();
         ?>
         <div class="fc-container mt-4">
