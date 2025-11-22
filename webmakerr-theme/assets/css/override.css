@@ -1,0 +1,45 @@
+/* GLOBAL FONT */
+body, * {
+    font-family: "Inter", sans-serif !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* HEADINGS */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+}
+
+/* Paragraphs */
+p {
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+}
+
+/* Small text */
+small, .text-muted, .form-text {
+    font-size: 0.875rem !important;
+    color: #6B7280 !important;
+}
+
+/* Labels */
+label {
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Navigation text */
+nav a,
+.menu a {
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Buttons (FONT ONLY — no color changes) */
+button,
+.btn,
+input[type=submit] {
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: -0.01em !important;
+}

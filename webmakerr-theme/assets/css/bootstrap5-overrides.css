@@ -1,0 +1,203 @@
+:root {
+    --rap-header-gap: 1rem;
+}
+
+.top-panel__layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rap-header-gap);
+}
+
+.top-panel__layout .pages-menu,
+.top-panel__layout .text-shipping,
+.top-panel__layout .top-right {
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .top-panel__layout .pages-menu,
+    .top-panel__layout .text-shipping,
+    .top-panel__layout .top-right {
+        width: auto;
+    }
+}
+
+.top-panel__layout .pages-menu ul,
+.top-panel__layout .pages-menu .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.top-panel__layout .top-right {
+    justify-content: flex-end;
+}
+
+.site-header__bar .site-header__grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--rap-header-gap);
+}
+
+.site-header__bar .wrap.box {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .site-header__bar .wrap.box {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--rap-header-gap);
+    }
+}
+
+.site-header__bar .search-wrap {
+    flex: 1 1 280px;
+    min-width: 220px;
+}
+
+.site-header__bar .box-cart {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.site-header__bar .text-shipping {
+    max-width: 380px;
+    text-align: left;
+}
+
+@media (max-width: 767.98px) {
+    .site-header__bar .wrap.box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .site-header__bar .text-shipping {
+        width: 100%;
+    }
+}
+
+.navbar-toggler {
+    border: 0;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:hover {
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+}
+
+.navbar-toggler-icon {
+    background-image: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: inherit;
+}
+
+.navbar-toggler-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.categories-menu-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.categories-menu-line > li {
+    margin: 0;
+}
+
+.box-categories-menu-sub .menu-sub-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.box-categories-menu-sub .menu {
+    flex: 1 1 200px;
+}
+
+.page-contact .contact-form .item,
+.comment-form .row .col-md-6,
+.comment-form .row .col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.contact-form .form-control,
+.comment-form .form-control,
+.review-form .form-control,
+.review-form textarea {
+    border-radius: 0;
+}
+
+.contact-form button.btn,
+.review-form button.btn,
+.comment-form .form-submit .btn {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contact-form .form-check,
+.review-form .form-check,
+.comment-form .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-left: 0;
+}
+
+.review-form .addReviewForm .fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.review-form .addReviewForm .fileinput-button input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.review-form .stars_set {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.comment-form .row.g-3 {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.comment-form .form-submit {
+    margin-top: 1rem;
+}
