@@ -381,7 +381,70 @@ class ProductRenderer
 
     protected function renderReviewPlaceholder()
     {
-        // Intentionally left empty to avoid rendering placeholder review content.
+        ?>
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+            <div class="fw-semibold text-dark mb-1"><?php esc_html_e('What our customers say', 'fluent-cart'); ?></div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=12" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Sofia R.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=32" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Daniel K.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=47" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Maya L.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=24" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Liam T.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Communication was effortless and the results matched our brief perfectly. Highly recommend.”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 
     protected function getFormattedContent()
