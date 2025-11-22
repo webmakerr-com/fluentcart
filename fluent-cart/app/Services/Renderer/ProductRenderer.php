@@ -284,7 +284,7 @@ class ProductRenderer
         <?php
     }
 
-    protected function renderRatingSummary()
+    public function renderRatingSummary()
     {
         $rating = apply_filters('fluent_cart/product/rating_value', 4.9, $this->product);
         $ratingCount = apply_filters('fluent_cart/product/rating_count', 0, $this->product);
@@ -298,7 +298,7 @@ class ProductRenderer
         <?php
     }
 
-    protected function renderSellerOverview($inset = false)
+    public function renderSellerOverview($inset = false)
     {
         $authorId = (int)$this->product->post_author;
         $avatar = get_avatar_url($authorId, ['size' => 64]);
@@ -325,7 +325,7 @@ class ProductRenderer
         <?php
     }
 
-    protected function renderFeatureList()
+    public function renderFeatureList()
     {
         $features = $this->getFeatures();
 
@@ -348,7 +348,7 @@ class ProductRenderer
         <?php
     }
 
-    protected function renderFaqSection()
+    public function renderFaqSection()
     {
         $faqs = $this->getFaqs();
 
