@@ -266,6 +266,30 @@ class ProductRenderer
                     </div>
                 </div>
             </div>
+            <?php $this->renderMobileCtaBar(); ?>
+        </div>
+        <?php
+    }
+
+    protected function renderMobileCtaBar()
+    {
+        $buttonConfig = $this->preparePurchaseButtonData();
+
+        ?>
+        <div class="fct-mobile-cta-bar d-md-none" data-fct-mobile-cta>
+            <a <?php $this->renderAttributes(array_merge($buttonConfig['buy_now_attributes'], [
+                    'class' => trim($buttonConfig['buy_now_attributes']['class'] . ' fct-mobile-cta-button d-flex align-items-center justify-content-center gap-2 fw-semibold text-uppercase'),
+                    'style' => 'background-color:#000;color:#fff;border:1px solid #000;border-radius:4px 4px 0 0;text-align:center;'
+            ])); ?> aria-label="<?php echo esc_attr($buttonConfig['buy_button_text']); ?>" role="button">
+                <span class="fct-mobile-cta-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 12.39a2 2 0 0 0 2 1.61h7.72a2 2 0 0 0 2-1.61L21 6H6"></path>
+                    </svg>
+                </span>
+                <span class="fct-button-text"><?php echo wp_kses_post($buttonConfig['buy_button_text']); ?></span>
+            </a>
         </div>
         <?php
     }
@@ -1301,13 +1325,13 @@ class ProductRenderer
         ]);
     }
 
-    public function renderPurchaseButtons($atts = [])
+    protected function preparePurchaseButtonData($atts = [])
     {
         if (ModuleSettings::isActive('stock_management')) {
             if ($this->product->detail->variation_type === 'simple' && $this->defaultVariant) {
                 if ($this->product->detail->manage_stock && $this->defaultVariant->stock_status !== Helper::IN_STOCK) {
                     echo '<span aria-disabled="true">' . esc_html__('Out of stock', 'fluent-cart') . '</span>';
-                    return;
+                    return [];
                 }
             }
         }
@@ -1351,6 +1375,27 @@ class ProductRenderer
         $addToCartText = apply_filters('fluent_cart/product/add_to_cart_text', $atts['add_to_cart_text'], [
                 'product' => $this->product
         ]);
+
+        return [
+                'buy_now_attributes' => $buyNowAttributes,
+                'cart_attributes'    => $cartAttributes,
+                'buy_button_text'    => $buyButtonText,
+                'add_to_cart_text'   => $addToCartText,
+        ];
+    }
+
+    public function renderPurchaseButtons($atts = [])
+    {
+        $buttonConfig = $this->preparePurchaseButtonData($atts);
+
+        if (empty($buttonConfig)) {
+            return;
+        }
+
+        $buyNowAttributes = $buttonConfig['buy_now_attributes'];
+        $cartAttributes = $buttonConfig['cart_attributes'];
+        $buyButtonText = $buttonConfig['buy_button_text'];
+        $addToCartText = $buttonConfig['add_to_cart_text'];
         ?>
         <div class="fct-purchase-actions d-flex flex-column gap-3">
             <a <?php $this->renderAttributes(array_merge($buyNowAttributes, [
