@@ -270,11 +270,13 @@ class ProductResource extends BaseResourceApi
         (new StockChanged([$postId]))->dispatch();
 
         static::updateWpPost($postId, $product);
-        $videoUrl = trim(Arr::get($product, 'video_url', ''));
-        if ($videoUrl) {
-            update_post_meta($postId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
-        } else {
-            delete_post_meta($postId, FluentProducts::CPT_NAME . '-video-url');
+        if (Arr::has($product, 'video_url')) {
+            $videoUrl = trim(Arr::get($product, 'video_url'));
+            if ($videoUrl) {
+                update_post_meta($postId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
+            } else {
+                delete_post_meta($postId, FluentProducts::CPT_NAME . '-video-url');
+            }
         }
         if (Arr::has($product, 'gallery')) {
             update_post_meta($postId, FluentProducts::CPT_NAME . '-gallery-image', $gallery);
