@@ -35,37 +35,26 @@ class TemplateService
             $pageId = get_queried_object_id();
         }
 
-        static $pageType = null;
-
-        if ($pageType !== null) {
-            return $pageType; // Return cached page type
-        }
-
         if (!$pageId) {
             if (is_singular('fluent-products')) {
-                $pageType = 'single_product';
-                return $pageType;
+                return 'single_product';
             }
 
             if (is_tax(get_object_taxonomies('fluent-products'))) {
-                $pageType = 'product_taxonomy';
-                return $pageType;
+                return 'product_taxonomy';
             }
-
         }
 
         $pagesConfig = (new StoreSettings())->getPagesSettings();
 
         if (!in_array($pageId, $pagesConfig)) {
-            $pageType = '';
-            return $pageType;
+            return '';
         }
 
         // find the key of the current page ID in the pagesConfig array
         $pageTypeKey = array_search($pageId, $pagesConfig);
         if ($pageTypeKey === false) {
-            $pageType = '';
-            return $pageType;
+            return '';
         }
 
         $pageTypeMaps = [
@@ -79,9 +68,7 @@ class TemplateService
         ];
 
         // Return the corresponding page type
-        $pageType = $pageTypeMaps[$pageTypeKey] ?? null;
-
-        return $pageType;
+        return $pageTypeMaps[$pageTypeKey] ?? '';
     }
 
     public static function isFcPageType($type)
