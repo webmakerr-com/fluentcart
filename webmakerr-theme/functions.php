@@ -32,6 +32,18 @@ include( __DIR__ . '/inc/breadcrumbs.php' );
 include( __DIR__ . '/inc/review.php' );
 include( __DIR__ . '/inc/instagram.php' );
 
+add_action( 'wp_enqueue_scripts', function () {
+        $coupon_fix_path = get_template_directory() . '/js/fluentcart-fixes.js';
+
+        wp_enqueue_script(
+                'webmakerr-fluentcart-fixes',
+                get_template_directory_uri() . '/js/fluentcart-fixes.js',
+                [],
+                file_exists( $coupon_fix_path ) ? filemtime( $coupon_fix_path ) : null,
+                true
+        );
+} );
+
 
 if ( ! function_exists( 'raphael_is_item_permalink' ) ) {
         /**
