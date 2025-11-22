@@ -130,10 +130,31 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
     height: 18px;
   }
   .fct-mobile-cta-savings {
-    margin-top: 6px;
+    margin: 6px auto 0;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     font-size: 11.5px;
-    color: #6b7280;
+    font-weight: 600;
+    color: #d4006e;
+    background: #ffe6eb;
+    border-radius: 16px;
+    line-height: 1.2;
     text-align: center;
+  }
+  .fct-mobile-cta-savings-text {
+    white-space: nowrap;
+  }
+  .fct-mobile-cta-savings-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    color: #d4006e;
+    flex-shrink: 0;
   }
 }
 
