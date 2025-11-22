@@ -229,6 +229,18 @@ class ProductRenderer
                                     <?php $this->renderBuySection(); ?>
                                 </div>
                             </div>
+
+                            <div class="mt-3">
+                                <a href="<?php echo esc_url(site_url('/contact')); ?>"
+                                   class="btn w-100"
+                                   style="border:1px solid #e0e0e0;background-color:#fff;color:#6c757d;border-radius:4px;font-size:0.875rem;"
+                                   aria-label="<?php esc_attr_e('Contact Us', 'fluent-cart'); ?>">
+                                    <?php esc_html_e('Contact Us', 'fluent-cart'); ?>
+                                </a>
+                                <p class="text-muted small text-center mb-0 mt-2">
+                                    <?php esc_html_e('Get answers fast — we respond within minutes.', 'fluent-cart'); ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -632,13 +644,11 @@ class ProductRenderer
         }
 
         $this->renderItemPrice();
+        $this->renderSavingsBadge();
         $this->renderQuantity();
         ?>
         <div class="fct-product-buttons-wrap d-flex flex-column gap-2">
             <?php $this->renderPurchaseButtons(Arr::get($atts, 'button_atts', [])); ?>
-            <p class="text-muted small text-center mb-0 fw-semibold">
-                <?php esc_html_e('Only a few spots left — secure your order today.', 'fluent-cart'); ?>
-            </p>
         </div>
         </div>
         <?php
@@ -1096,6 +1106,66 @@ class ProductRenderer
         ]);
     }
 
+    public function renderSavingsBadge()
+    {
+        if (!$this->product->variants || $this->product->variants->isEmpty()) {
+            return;
+        }
+
+        $badges = [];
+
+        foreach ($this->product->variants as $variant) {
+            $regularPrice = $variant->compare_price;
+            $salePrice = $variant->item_price;
+
+            if (!is_numeric($regularPrice) || !is_numeric($salePrice)) {
+                continue;
+            }
+
+            $saving = floatval($regularPrice) - floatval($salePrice);
+
+            if ($saving <= 0) {
+                continue;
+            }
+
+            $badges[] = [
+                    'id'   => $variant->id,
+                    'text' => sprintf(__('Save %s — limited time only', 'fluent-cart'), Helper::toDecimal($saving))
+            ];
+        }
+
+        if (empty($badges)) {
+            return;
+        }
+        ?>
+        <div class="mb-3">
+            <?php
+            foreach ($badges as $badge) {
+                $isHidden = $this->defaultVariant && $this->defaultVariant->id != $badge['id'];
+
+                $attributes = [
+                        'class'                  => 'fct-savings-badge fluent-cart-product-variation-content' . ($isHidden ? ' is-hidden' : ''),
+                        'data-variation-id'      => $badge['id'],
+                        'data-fluent-cart-product-savings-badge' => '',
+                        'style'                  => 'display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:20px;background-color:#FFE6EB;color:#D4006E;font-size:12px;font-weight:600;line-height:1.2;'
+                ];
+                ?>
+                <div <?php $this->renderAttributes($attributes); ?>>
+                    <span class="fct-savings-badge-icon" aria-hidden="true" style="display:inline-flex;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 7.5C4 6.67157 4.67157 6 5.5 6H18.5C19.3284 6 20 6.67157 20 7.5V9.58579C20 9.851 19.8946 10.1054 19.7071 10.2929L17.2929 12.7071C16.9024 13.0976 16.9024 13.7308 17.2929 14.1213L19.7071 16.5355C19.8946 16.723 20 16.9774 20 17.2426V19.5C20 20.3284 19.3284 21 18.5 21H5.5C4.67157 21 4 20.3284 4 19.5V17.25C4 16.9739 4.11491 16.7096 4.31802 16.518L6.761 14.2142C7.13417 13.8622 7.13417 13.2708 6.761 12.9188L4.31802 10.615C4.11491 10.4234 4 10.1591 4 9.883V7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10.5 9.5L13.5 16.5M14 9L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="fct-savings-badge-text"><?php echo esc_html($badge['text']); ?></span>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+    }
+
     public function renderQuantity()
     {
         $soldIndividually = $this->product->soldIndividually();
@@ -1222,7 +1292,7 @@ class ProductRenderer
                 'product' => $this->product
         ]);
         ?>
-        <div class="fct-purchase-actions d-flex flex-column gap-2">
+        <div class="fct-purchase-actions d-flex flex-column gap-3">
             <a <?php $this->renderAttributes(array_merge($buyNowAttributes, [
                     'class' => $buyNowAttributes['class'] . ' btn w-100 fw-semibold text-uppercase',
                     'style' => 'background-color:#000;color:#fff;border:1px solid #000;border-radius:4px;text-align:center;'
@@ -1253,15 +1323,6 @@ class ProductRenderer
                     </span>
             </button>
             <?php endif; ?>
-
-            <a href="<?php echo esc_url(site_url('/contact')); ?>"
-               class="btn btn-outline-secondary w-100 fw-semibold text-uppercase"
-               style="border-radius:4px;" aria-label="<?php esc_attr_e('Contact Us', 'fluent-cart'); ?>">
-                <?php esc_html_e('Contact Us', 'fluent-cart'); ?>
-            </a>
-            <p class="text-muted small text-center mb-0">
-                <?php esc_html_e('Get answers fast — we respond within minutes.', 'fluent-cart'); ?>
-            </p>
         </div>
     <?php
     }
