@@ -76,7 +76,11 @@ class ProductRenderer
             }
         }
 
-        $this->videoUrl = trim(get_post_meta($product->ID, FluentProducts::CPT_NAME . '-video-url', true));
+        $this->videoUrl = trim(get_post_meta($product->ID, FluentProducts::VIDEO_META_KEY, true));
+
+        if (!$this->videoUrl) {
+            $this->videoUrl = trim(get_post_meta($product->ID, FluentProducts::CPT_NAME . '-video-url', true));
+        }
 
         $this->buildProductGroups();
     }

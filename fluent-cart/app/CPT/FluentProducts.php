@@ -13,6 +13,7 @@ class FluentProducts
 {
 
     const CPT_NAME = 'fluent-products';
+    const VIDEO_META_KEY = '_fct_product_video_url';
 
     protected $showStandaloneMenu = false;
 
@@ -134,14 +135,18 @@ class FluentProducts
             __('Product Video URL', 'fluent-cart'),
             [$this, 'renderVideoMetaBox'],
             self::CPT_NAME,
-            'side',
+            'normal',
             'default'
         );
     }
 
     public function renderVideoMetaBox($post)
     {
-        $videoUrl = get_post_meta($post->ID, 'fluent-products-video-url', true);
+        $videoUrl = get_post_meta($post->ID, self::VIDEO_META_KEY, true);
+
+        if (!$videoUrl) {
+            $videoUrl = get_post_meta($post->ID, self::CPT_NAME . '-video-url', true);
+        }
         wp_nonce_field('fluent_cart_save_product_video_url', '_fluent_cart_product_video_nonce');
         ?>
         <p>
@@ -150,7 +155,7 @@ class FluentProducts
                    id="fluent_cart_product_video_url"
                    name="fluent_cart_product_video_url"
                    class="widefat"
-                   placeholder="<?php esc_attr_e('https://', 'fluent-cart'); ?>"
+                   placeholder="<?php esc_attr_e('https://www.youtube.com/watch?v=xxxx', 'fluent-cart'); ?>"
                    value="<?php echo esc_attr($videoUrl); ?>"/>
         </p>
         <p class="description">
@@ -178,9 +183,11 @@ class FluentProducts
         $videoUrl = $rawVideoUrl ? esc_url_raw($rawVideoUrl) : '';
 
         if ($videoUrl) {
-            update_post_meta($postId, 'fluent-products-video-url', $videoUrl);
+            update_post_meta($postId, self::VIDEO_META_KEY, $videoUrl);
+            delete_post_meta($postId, self::CPT_NAME . '-video-url');
         } else {
-            delete_post_meta($postId, 'fluent-products-video-url');
+            delete_post_meta($postId, self::VIDEO_META_KEY);
+            delete_post_meta($postId, self::CPT_NAME . '-video-url');
         }
     }
 
