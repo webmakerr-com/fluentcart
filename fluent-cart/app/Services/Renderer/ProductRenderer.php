@@ -310,7 +310,7 @@ class ProductRenderer
                 <span class="fct-button-text"><?php echo wp_kses_post($buttonLabel); ?></span>
             </a>
             <?php if ($savingsText): ?>
-                <div class="fct-mobile-cta-savings" role="note">
+                <div class="fct-mobile-cta-savings fct-saving-badge-bubble" role="note">
                     <span class="fct-mobile-cta-savings-text"><?php echo esc_html($savingsText); ?></span>
                     <span class="fct-mobile-cta-savings-icon" aria-hidden="true">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1201,15 +1201,17 @@ class ProductRenderer
              data-fluent-cart-product-savings
              data-default-variation-id="<?php echo esc_attr($defaultVariationId); ?>"
              data-savings-map="<?php echo esc_attr(wp_json_encode($badges)); ?>">
-            <div class="fct-savings-badge" data-fluent-cart-product-savings-badge
+            <div class="fct-savings-badge fct-saving-badge-bubble" data-fluent-cart-product-savings-badge
                  <?php echo $defaultBadgeText ? '' : 'style="display:none;"'; ?>>
+                <span class="fct-savings-badge-text"><?php echo esc_html($defaultBadgeText); ?></span>
                 <span class="fct-savings-badge-icon" aria-hidden="true">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L5 6V11C5 15.55 7.39 19.74 11 21.96C11.6283 22.3342 12.3717 22.3342 13 21.96C16.61 19.74 19 15.55 19 11V6L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9.5 11.5L11.25 13.25L14.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 14.667A6.667 6.667 0 1 0 8 1.333a6.667 6.667 0 0 0 0 13.334Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 5.333h.005" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.667 8h1.333v3.333" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.667 11.333h2.666" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                <span class="fct-savings-badge-text"><?php echo esc_html($defaultBadgeText); ?></span>
             </div>
             <div class="fct-savings-trust-line" data-fluent-cart-product-savings-trust <?php echo $defaultBadgeText ? '' : 'style="display:none;"'; ?>>
                 <span aria-hidden="true">🛡️</span>
