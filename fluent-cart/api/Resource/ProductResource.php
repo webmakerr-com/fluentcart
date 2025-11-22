@@ -92,6 +92,11 @@ class ProductResource extends BaseResourceApi
         $detail['post_id'] = $createdPostId;
         $createdProductDetail = ProductDetailResource::create($detail);
 
+        $videoUrl = trim(Arr::get($data, 'video_url', ''));
+        if ($videoUrl) {
+            update_post_meta($createdPostId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
+        }
+
         if ($createdProductDetail) {
             return static::makeSuccessResponse(
                 [
@@ -265,6 +270,12 @@ class ProductResource extends BaseResourceApi
         (new StockChanged([$postId]))->dispatch();
 
         static::updateWpPost($postId, $product);
+        $videoUrl = trim(Arr::get($product, 'video_url', ''));
+        if ($videoUrl) {
+            update_post_meta($postId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
+        } else {
+            delete_post_meta($postId, FluentProducts::CPT_NAME . '-video-url');
+        }
         if (Arr::has($product, 'gallery')) {
             update_post_meta($postId, FluentProducts::CPT_NAME . '-gallery-image', $gallery);
         }

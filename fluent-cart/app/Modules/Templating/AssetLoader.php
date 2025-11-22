@@ -76,6 +76,12 @@ class AssetLoader
                 'dependencies' => [],
                 'inFooter'     => true
             ],
+            [
+                'source'       => 'public/single-product/video-gallery.js',
+                'dependencies' => ['fluent-cart-single-product-page'],
+                'inFooter'     => true,
+                'isStatic'     => true,
+            ],
         ];
         $localizeData = [
             'fluentcart_single_product_vars' => [
@@ -97,7 +103,12 @@ class AssetLoader
             'public/product-card/style/product-card.scss',
             'public/single-product/xzoom/xzoom.css',
             'public/buttons/add-to-cart/style/style.scss',
-            'public/buttons/direct-checkout/style/style.scss'
+            'public/buttons/direct-checkout/style/style.scss',
+            [
+                'source'   => 'public/single-product/video-gallery.css',
+                'isStatic' => true,
+                'handle'   => 'fluent-cart-product-video-gallery',
+            ]
         ];
 
         Vite::enqueueAllStyles($singlePageStyles, 'fluent-cart-single-product-page');

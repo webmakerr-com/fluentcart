@@ -4,6 +4,7 @@ namespace FluentCart\App\Services\Renderer;
 
 use FluentCart\Api\ModuleSettings;
 use FluentCart\Api\StoreSettings;
+use FluentCart\App\CPT\FluentProducts;
 use FluentCart\App\Helpers\Helper;
 use FluentCart\App\Models\Product;
 use FluentCart\App\Models\ProductVariation;
@@ -42,6 +43,8 @@ class ProductRenderer
 
     protected $defaultImageAlt = null;
 
+    protected $videoUrl = '';
+
     public function __construct(Product $product, $config = [])
     {
         $this->product = $product;
@@ -72,6 +75,8 @@ class ProductRenderer
                 $this->hasSubscription = true;
             }
         }
+
+        $this->videoUrl = trim(get_post_meta($product->ID, FluentProducts::CPT_NAME . '-video-url', true));
 
         $this->buildProductGroups();
     }
@@ -757,7 +762,17 @@ class ProductRenderer
         ?>
         <div class="fct-product-gallery-thumb" role="region"
              aria-label="<?php echo esc_attr($this->product->post_title . ' gallery'); ?>">
+            <?php if ($this->videoUrl) { ?>
+                <div
+                        class="fct-product-video-container is-active"
+                        data-fluent-cart-product-video
+                        data-video-url="<?php echo esc_url($this->videoUrl); ?>"
+                        data-video-loaded="false"
+                        style="padding-top:56.25%;"
+                ></div>
+            <?php } ?>
             <img
+                    class="<?php echo $this->videoUrl ? 'is-hidden' : ''; ?>"
                     src="<?php echo esc_url($this->defaultImageUrl ?? '') ?>"
                     alt="<?php echo esc_attr($this->defaultImageAlt) ?>"
                     data-fluent-cart-single-product-page-product-thumbnail
@@ -783,6 +798,10 @@ class ProductRenderer
 
     public function renderGalleryThumbControl()
     {
+        if ($this->videoUrl) {
+            $this->renderVideoThumbControlButton();
+        }
+
         foreach ($this->images as $imageId => $image) {
             if (empty($image['media']) || !is_array($image['media'])) {
                 continue;
@@ -833,6 +852,29 @@ class ProductRenderer
         <?php
 
 
+    }
+
+    protected function renderVideoThumbControlButton()
+    {
+        ?>
+
+        <button
+                type="button"
+                class="fct-gallery-thumb-control-button fct-gallery-video-thumb"
+                data-fluent-cart-video-thumb-button
+                data-video-url="<?php echo esc_url($this->videoUrl); ?>"
+                aria-label="<?php echo esc_attr__('Play product video', 'fluent-cart'); ?>"
+                aria-pressed="true"
+        >
+            <span class="fct-gallery-video-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="2"></circle>
+                    <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="currentColor"></path>
+                </svg>
+            </span>
+        </button>
+
+        <?php
     }
 
     public function renderGallery($args = [])
