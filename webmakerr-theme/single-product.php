@@ -39,45 +39,6 @@ if ($post instanceof WP_Post) {
     $description = apply_filters('the_content', $post->post_content);
 }
 
-$reviewHighlights = [
-    [
-        'name'   => 'Sofia R.',
-        'avatar' => 'https://i.pravatar.cc/80?img=12',
-        'rating' => '&#9733;&#9733;&#9733;&#9733;&#9733;',
-        'score'  => '5.0',
-        'text'   => __('Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.', 'fluent-cart'),
-    ],
-    [
-        'name'   => 'Daniel K.',
-        'avatar' => 'https://i.pravatar.cc/80?img=32',
-        'rating' => '&#9733;&#9733;&#9733;&#9733;&#9734;',
-        'score'  => '4.8',
-        'text'   => __('Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.', 'fluent-cart'),
-    ],
-    [
-        'name'   => 'Maya L.',
-        'avatar' => 'https://i.pravatar.cc/80?img=47',
-        'rating' => '&#9733;&#9733;&#9733;&#9733;&#9733;',
-        'score'  => '5.0',
-        'text'   => __('Detail-oriented, proactive, and truly invested in our goals—perfect partner for our launch campaign.', 'fluent-cart'),
-    ],
-    [
-        'name'   => 'Liam T.',
-        'avatar' => 'https://i.pravatar.cc/80?img=24',
-        'rating' => '&#9733;&#9733;&#9733;&#9733;&#9733;',
-        'score'  => '5.0',
-        'text'   => __('Communication was effortless and the results matched our brief perfectly. Highly recommend.', 'fluent-cart'),
-    ],
-    [
-        'name'   => 'Priya S.',
-        'avatar' => 'https://i.pravatar.cc/80?img=18',
-        'rating' => '&#9733;&#9733;&#9733;&#9733;&#9734;',
-        'score'  => '4.9',
-        'text'   => __('Dependable partner for every sprint—keeps us on timeline and on brand every single time.', 'fluent-cart'),
-    ],
-];
-
-$initialHighlightReview = $reviewHighlights[0];
 ?>
 <div class="fc-single-product-page fc-single-product-page--fiverr" data-fluent-cart-single-product-page>
     <div class="fc-container py-4">
@@ -92,26 +53,59 @@ $initialHighlightReview = $reviewHighlights[0];
 
                             <?php $renderer->renderTitle(); ?>
 
-                            <div class="card shadow-sm border-0 bg-light" data-fluent-cart-review-highlight>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <div class="text-uppercase text-muted small fw-semibold"><?php esc_html_e('Reviews Highlight', 'fluent-cart'); ?></div>
-                                        <div class="text-muted small"><?php esc_html_e('Real client wins on FluentCart', 'fluent-cart'); ?></div>
-                                    </div>
-                                    <div class="fct-review-highlight-card d-flex align-items-start gap-3">
-                                        <div class="flex-shrink-0">
-                                            <img src="<?php echo esc_url($initialHighlightReview['avatar']); ?>" alt="<?php echo esc_attr($initialHighlightReview['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" data-review-avatar />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <div class="fw-semibold text-dark" data-review-name><?php echo esc_html($initialHighlightReview['name']); ?></div>
-                                                <div class="text-warning small" data-review-rating><?php echo wp_kses_post($initialHighlightReview['rating']); ?><span class="text-muted ms-1"><?php echo esc_html($initialHighlightReview['score']); ?></span></div>
+                            <div class="fct-review-highlight my-3"></div>
+
+                            <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const container = document.querySelector('.fct-review-highlight');
+                                if (!container) return;
+
+                                const cards = [
+                                    {
+                                        name: "Sofia R.",
+                                        avatar: "https://i.pravatar.cc/80?img=12",
+                                        rating: "5.0",
+                                        comment: "Outstanding experience. Clear communication and flawless delivery."
+                                    },
+                                    {
+                                        name: "Daniel K.",
+                                        avatar: "https://i.pravatar.cc/80?img=32",
+                                        rating: "4.8",
+                                        comment: "Fast delivery and thoughtful revisions. Very professional."
+                                    },
+                                    {
+                                        name: "Maya L.",
+                                        avatar: "https://i.pravatar.cc/80?img=47",
+                                        rating: "5.0",
+                                        comment: "Great partner for our campaign. Detail-oriented and reliable."
+                                    }
+                                ];
+
+                                let index = 0;
+
+                                function renderCard() {
+                                    const c = cards[index];
+                                    container.innerHTML = `
+                                        <div class="card border-0 shadow-sm p-3">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <img src="${c.avatar}" width="56" height="56" class="rounded-circle shadow-sm">
+                                                <div>
+                                                    <div class="fw-semibold text-dark">${c.name}</div>
+                                                    <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">${c.rating}</span></div>
+                                                </div>
                                             </div>
-                                            <p class="mb-0 text-muted" data-review-text><?php echo esc_html($initialHighlightReview['text']); ?></p>
+                                            <p class="mb-0 text-muted">${c.comment}</p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    `;
+                                }
+
+                                renderCard();
+                                setInterval(() => {
+                                    index = (index + 1) % cards.length;
+                                    renderCard();
+                                }, 3000);
+                            });
+                            </script>
                         </div>
                     </section>
 
@@ -193,56 +187,3 @@ $initialHighlightReview = $reviewHighlights[0];
         </div>
     <?php endif; ?>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const highlight = document.querySelector('[data-fluent-cart-review-highlight]');
-    if (!highlight) {
-        return;
-    }
-
-    const reviewData = <?php echo wp_json_encode($reviewHighlights); ?>;
-
-    if (!Array.isArray(reviewData) || !reviewData.length) {
-        return;
-    }
-
-    const card = highlight.querySelector('.fct-review-highlight-card');
-    const nameEl = highlight.querySelector('[data-review-name]');
-    const ratingEl = highlight.querySelector('[data-review-rating]');
-    const textEl = highlight.querySelector('[data-review-text]');
-    const avatarEl = highlight.querySelector('[data-review-avatar]');
-
-    if (!card || !nameEl || !ratingEl || !textEl || !avatarEl) {
-        return;
-    }
-
-    const setReview = (review) => {
-        nameEl.textContent = review.name;
-        ratingEl.innerHTML = review.rating + '<span class="text-muted ms-1">' + review.score + '</span>';
-        textEl.textContent = review.text;
-        avatarEl.src = review.avatar;
-        avatarEl.alt = review.name;
-    };
-
-    const minHeight = card.offsetHeight;
-    if (minHeight) {
-        card.style.minHeight = minHeight + 'px';
-    }
-    card.style.transition = 'opacity 0.35s ease';
-
-    let index = 0;
-    setReview(reviewData[index]);
-
-    if (reviewData.length > 1) {
-        setInterval(() => {
-            index = (index + 1) % reviewData.length;
-            card.style.opacity = '0';
-            setTimeout(() => {
-                setReview(reviewData[index]);
-                card.style.opacity = '1';
-            }, 250);
-        }, 3000);
-    }
-});
-</script>
