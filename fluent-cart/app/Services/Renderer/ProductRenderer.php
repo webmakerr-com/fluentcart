@@ -634,8 +634,11 @@ class ProductRenderer
         $this->renderItemPrice();
         $this->renderQuantity();
         ?>
-        <div class="fct-product-buttons-wrap">
+        <div class="fct-product-buttons-wrap d-flex flex-column gap-2">
             <?php $this->renderPurchaseButtons(Arr::get($atts, 'button_atts', [])); ?>
+            <p class="text-muted small text-center mb-0 fw-semibold">
+                <?php esc_html_e('Only a few spots left — secure your order today.', 'fluent-cart'); ?>
+            </p>
         </div>
         </div>
         <?php
@@ -1106,7 +1109,7 @@ class ProductRenderer
                 'data-cart-id'                                => $this->defaultVariant ? $this->defaultVariant->id : '',
                 'data-variation-type'                         => $this->product->detail->variation_type,
                 'data-payment-type'                           => 'onetime',
-                'class'                                       => 'fct-product-quantity-container'
+                'class'                                       => 'fct-product-quantity-container mb-3'
         ];
 
         $defaultVariantData = $this->getDefaultVariantData();
@@ -1219,30 +1222,48 @@ class ProductRenderer
                 'product' => $this->product
         ]);
         ?>
-        <a <?php $this->renderAttributes($buyNowAttributes); ?> aria-label="<?php echo esc_attr($buyButtonText); ?>">
-            <?php echo wp_kses_post($buyButtonText); ?>
-        </a>
-        <?php if ($this->hasOnetime): ?>
-        <button <?php $this->renderAttributes($cartAttributes); ?> aria-label="<?php echo esc_attr($addToCartText); ?>">
-            <span class="text">
-                <?php echo wp_kses_post($addToCartText); ?>
-            </span>
-            <span class="fluent-cart-loader" role="status">
-                    <svg aria-hidden="true"
-                         width="20"
-                         height="20"
-                         class="w-5 h-5 text-gray-200 animate-spin fill-blue-600"
-                         viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                  fill="currentColor"/>
-                          <path
-                                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                  fill="currentFill"/>
-                    </svg>
+        <div class="fct-purchase-actions d-flex flex-column gap-2">
+            <a <?php $this->renderAttributes(array_merge($buyNowAttributes, [
+                    'class' => $buyNowAttributes['class'] . ' btn w-100 fw-semibold text-uppercase',
+                    'style' => 'background-color:#000;color:#fff;border:1px solid #000;border-radius:4px;text-align:center;'
+            ])); ?> aria-label="<?php echo esc_attr($buyButtonText); ?>" role="button">
+                <?php echo wp_kses_post($buyButtonText); ?>
+            </a>
+            <?php if ($this->hasOnetime): ?>
+            <button <?php $this->renderAttributes(array_merge($cartAttributes, [
+                    'class' => $cartAttributes['class'] . ' btn w-100 text-uppercase fw-semibold',
+                    'style' => 'border-radius:4px;'
+            ])); ?> aria-label="<?php echo esc_attr($addToCartText); ?>">
+                <span class="text">
+                    <?php echo wp_kses_post($addToCartText); ?>
                 </span>
-        </button>
-    <?php endif;
+                <span class="fluent-cart-loader" role="status">
+                        <svg aria-hidden="true"
+                             width="20"
+                             height="20"
+                             class="w-5 h-5 text-gray-200 animate-spin fill-blue-600"
+                             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                      fill="currentColor"/>
+                              <path
+                                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.10071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                      fill="currentFill"/>
+                        </svg>
+                    </span>
+            </button>
+            <?php endif; ?>
+
+            <a href="<?php echo esc_url(site_url('/contact')); ?>"
+               class="btn btn-outline-secondary w-100 fw-semibold text-uppercase"
+               style="border-radius:4px;" aria-label="<?php esc_attr_e('Contact Us', 'fluent-cart'); ?>">
+                <?php esc_html_e('Contact Us', 'fluent-cart'); ?>
+            </a>
+            <p class="text-muted small text-center mb-0">
+                <?php esc_html_e('Get answers fast — we respond within minutes.', 'fluent-cart'); ?>
+            </p>
+        </div>
+    <?php
     }
 
 
