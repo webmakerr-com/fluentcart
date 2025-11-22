@@ -68,7 +68,12 @@ class TemplateLoader
         $templateActions = new TemplateActions();
 
         $templateActions->register();
-        $templateActions->initSingleProductHooks();
+
+        add_action('template_redirect', function () use ($templateActions) {
+            if (is_singular('fluent-products')) {
+                $templateActions->initSingleProductHooks();
+            }
+        }, 1);
 
         AssetLoader::register();
 
