@@ -11,8 +11,8 @@
 .fct-similar-product-list-container .fct-product-card-prices{align-items:center;gap:6px;margin:0 0 12px;padding:0}
 .fct-similar-product-list-container .fct-product-card-prices .fct-item-price{font-size:20px;font-weight:700;color:#0f172a}
 .fct-similar-product-list-container .fct-product-card-actions{display:flex;align-items:center;gap:10px;margin-top:4px}
-.fct-similar-product-list-container .fct-product-card-related-buy-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:11px 14px;font-weight:600;font-size:14px;line-height:1.4;background:#000;color:#fff;border:1px solid #000;border-radius:4px;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
-.fct-similar-product-list-container .fct-product-card-related-buy-btn:hover{opacity:.94;transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,0.12)}
+.fct-similar-product-list-container .fct-product-card-related-buy-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:12px 14px;font-weight:600;font-size:14px;line-height:1.4;background:#fff;color:#111;border:1px solid #e6e6e6;border-radius:4px;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,color .2s ease;box-shadow:0 10px 24px rgba(0,0,0,0.04)}
+.fct-similar-product-list-container .fct-product-card-related-buy-btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,0,0,0.08);background:#f9f9f9;border-color:#dcdcdc;color:#0f172a}
 .fct-similar-product-list-container .fct-product-list-item{flex:0 0 25%;min-width:25%;scroll-snap-align:start}
 @media (max-width:1200px){.fct-similar-product-list-container .fct-product-list-item{flex-basis:32%;min-width:32%}}
 @media (max-width:992px){.fct-similar-product-list-container .fct-product-list-item{flex-basis:40%;min-width:40%}}
