@@ -178,11 +178,11 @@ class ProductRenderer
                                         <?php $this->renderGallery(); ?>
                                     </div>
                                     <?php $this->renderTitle(); ?>
+                                    <?php $this->renderReviewRotator(); ?>
                                     <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
                                         <?php $this->renderRatingSummary(); ?>
                                         <?php $this->renderStockAvailability('class="text-success fw-semibold"'); ?>
                                     </div>
-                                    <?php $this->renderSellerOverview(); ?>
                                 </div>
                             </section>
 
@@ -273,30 +273,94 @@ class ProductRenderer
         <?php
     }
 
-    public function renderSellerOverview($inset = false)
+    public function renderReviewRotator()
     {
-        $authorId = (int)$this->product->post_author;
-        $avatar = get_avatar_url($authorId, ['size' => 64]);
-        $name = get_the_author_meta('display_name', $authorId);
-        $bio = get_the_author_meta('description', $authorId);
+        $reviews = [
+            [
+                'avatar' => 'https://i.pravatar.cc/80?img=12',
+                'name'   => 'Sofia R.',
+                'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
+                'quote'  => __('Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.', 'fluent-cart')
+            ],
+            [
+                'avatar' => 'https://i.pravatar.cc/80?img=32',
+                'name'   => 'Daniel K.',
+                'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span>',
+                'quote'  => __('Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.', 'fluent-cart')
+            ],
+            [
+                'avatar' => 'https://i.pravatar.cc/80?img=47',
+                'name'   => 'Maya L.',
+                'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
+                'quote'  => __('Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.', 'fluent-cart')
+            ],
+            [
+                'avatar' => 'https://i.pravatar.cc/80?img=24',
+                'name'   => 'Liam T.',
+                'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
+                'quote'  => __('Communication was effortless and the results matched our brief perfectly. Highly recommend.', 'fluent-cart')
+            ],
+            [
+                'avatar' => 'https://i.pravatar.cc/80?img=55',
+                'name'   => 'Elena M.',
+                'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.9</span>',
+                'quote'  => __('Thoughtful strategy, clean deliverables, and proactive updates every step of the way.', 'fluent-cart')
+            ]
+        ];
 
+        $initialReview = $reviews[0];
         ?>
-        <div class="d-flex align-items-center gap-3 <?php echo $inset ? 'p-3 bg-light rounded-3 border' : ''; ?>">
-            <div class="flex-shrink-0">
-                <img src="<?php echo esc_url($avatar); ?>" alt="<?php echo esc_attr($name); ?>" class="rounded-circle" width="64" height="64" />
-            </div>
-            <div class="flex-grow-1">
-                <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+        <div class="card shadow-sm border-0" data-fct-review-rotator>
+            <div class="card-body" data-fct-review-card style="opacity:1; transition: opacity 300ms ease;">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <img src="<?php echo esc_url($initialReview['avatar']); ?>" alt="<?php echo esc_attr($initialReview['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" data-fct-review-avatar />
                     <div>
-                        <div class="fw-semibold text-dark"><?php echo esc_html($name ?: __('Seller', 'fluent-cart')); ?></div>
-                        <div class="text-muted small"><?php esc_html_e('Verified Freelancer', 'fluent-cart'); ?></div>
+                        <div class="fw-semibold text-dark" data-fct-review-name><?php echo esc_html($initialReview['name']); ?></div>
+                        <div class="text-warning small" data-fct-review-stars><?php echo $initialReview['stars']; ?></div>
                     </div>
-                    <a class="btn btn-outline-primary btn-sm" href="<?php echo esc_url(get_author_posts_url($authorId)); ?>"><?php esc_html_e('Contact', 'fluent-cart'); ?></a>
                 </div>
-                <div class="text-muted small mb-2"><?php echo esc_html($bio ?: __('Professional seller profile placeholder', 'fluent-cart')); ?></div>
-                <?php $this->renderRatingSummary(); ?>
+                <p class="mb-0 text-muted" data-fct-review-quote><?php echo esc_html($initialReview['quote']); ?></p>
             </div>
         </div>
+
+        <script>
+            (function() {
+                const container = document.querySelector('[data-fct-review-rotator]');
+                if (!container) {
+                    return;
+                }
+
+                const card = container.querySelector('[data-fct-review-card]');
+                const avatar = container.querySelector('[data-fct-review-avatar]');
+                const name = container.querySelector('[data-fct-review-name]');
+                const stars = container.querySelector('[data-fct-review-stars]');
+                const quote = container.querySelector('[data-fct-review-quote]');
+
+                const reviews = <?php echo wp_json_encode($reviews); ?>;
+                let currentIndex = 0;
+                const fadeDuration = 300;
+                const intervalMs = 3000;
+
+                const renderReview = (review) => {
+                    avatar.src = review.avatar;
+                    avatar.alt = review.name;
+                    name.textContent = review.name;
+                    stars.innerHTML = review.stars;
+                    quote.textContent = review.quote;
+                };
+
+                setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % reviews.length;
+                    card.style.opacity = '0';
+
+                    setTimeout(() => {
+                        currentIndex = nextIndex;
+                        renderReview(reviews[currentIndex]);
+                        card.style.opacity = '1';
+                    }, fadeDuration);
+                }, intervalMs);
+            })();
+        </script>
         <?php
     }
 
