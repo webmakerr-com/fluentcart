@@ -343,7 +343,7 @@ class ProductCardRender
             $relatedButtonClass = 'fct-product-card-related-buy-btn';
             $ariaLabel = sprintf(
             /* translators: %s: product title */
-                    __('Buy %s now', 'fluent-cart'),
+                    __('Learn more about %s', 'fluent-cart'),
                     $this->product->post_title
             );
 
@@ -355,7 +355,7 @@ class ProductCardRender
                 ];
                 ?>
                 <a <?php $this->renderAttributes($anchorAttributes); ?>>
-                    <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
+                    <span class="fct-button-text"><?php esc_html_e('Learn More', 'fluent-cart'); ?></span>
                 </a>
                 <?php
                 return;
@@ -373,7 +373,7 @@ class ProductCardRender
                 <button type="button"
                         data-button-url="<?php echo esc_url($buttonHref); ?>"
                         <?php $this->renderAttributes($buttonAttributes); ?>>
-                    <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
+                    <span class="fct-button-text"><?php esc_html_e('Learn More', 'fluent-cart'); ?></span>
                     <span
                           class="fluent-cart-loader"
                           role="status"
@@ -404,7 +404,7 @@ class ProductCardRender
             ];
             ?>
             <a <?php $this->renderAttributes($anchorAttributes); ?>>
-                <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
+                <span class="fct-button-text"><?php esc_html_e('Learn More', 'fluent-cart'); ?></span>
             </a>
             <?php
             return;

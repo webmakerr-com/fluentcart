@@ -274,12 +274,31 @@ class ProductRenderer
     protected function renderMobileCtaBar()
     {
         $buttonConfig = $this->preparePurchaseButtonData();
+        $pricing = $this->getPrimaryPriceSummary();
+
+        $buttonLabel = $buttonConfig['buy_button_text'];
+        if ($pricing && isset($pricing['price'])) {
+            $buttonLabel = sprintf(
+                /* translators: %s: product price */
+                __('Buy Now (%s)', 'fluent-cart'),
+                Helper::toDecimal($pricing['price'])
+            );
+        }
+
+        $savingsText = '';
+        if ($pricing && Arr::get($pricing, 'savings', 0) > 0) {
+            $savingsText = sprintf(
+                /* translators: %s: savings amount */
+                __('Save %s — Limited time only', 'fluent-cart'),
+                Helper::toDecimal($pricing['savings'])
+            );
+        }
 
         ?>
         <div class="fct-mobile-cta-bar d-md-none" data-fct-mobile-cta>
             <a <?php $this->renderAttributes(array_merge($buttonConfig['buy_now_attributes'], [
-                    'class' => trim($buttonConfig['buy_now_attributes']['class'] . ' fct-mobile-cta-button d-flex align-items-center justify-content-center gap-2 fw-semibold text-uppercase'),
-                    'style' => 'background-color:#000;color:#fff;border:1px solid #000;border-radius:4px 4px 0 0;text-align:center;'
+                    'class' => trim($buttonConfig['buy_now_attributes']['class'] . ' fct-mobile-cta-button d-flex align-items-center justify-content-center gap-2 fw-semibold'),
+                    'style' => 'background-color:#000;color:#fff;border:1px solid #000;border-radius:4px 4px 0 0;text-align:center;height:48px;padding:0 16px;',
             ])); ?> aria-label="<?php echo esc_attr($buttonConfig['buy_button_text']); ?>" role="button">
                 <span class="fct-mobile-cta-icon" aria-hidden="true">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -288,8 +307,11 @@ class ProductRenderer
                         <path d="M1 1h4l2.68 12.39a2 2 0 0 0 2 1.61h7.72a2 2 0 0 0 2-1.61L21 6H6"></path>
                     </svg>
                 </span>
-                <span class="fct-button-text"><?php echo wp_kses_post($buttonConfig['buy_button_text']); ?></span>
+                <span class="fct-button-text"><?php echo wp_kses_post($buttonLabel); ?></span>
             </a>
+            <?php if ($savingsText): ?>
+                <div class="fct-mobile-cta-savings"><?php echo esc_html($savingsText); ?></div>
+            <?php endif; ?>
         </div>
         <?php
     }
@@ -1704,6 +1726,28 @@ class ProductRenderer
         <?php endforeach; ?>
 
         <?php
+    }
+
+    protected function getPrimaryPriceSummary()
+    {
+        $variant = $this->defaultVariant ?: ($this->product->variants()->first());
+
+        if (!$variant) {
+            return null;
+        }
+
+        $price = (float)Arr::get($variant, 'item_price', 0);
+        $comparePrice = (float)Arr::get($variant, 'compare_price', 0);
+
+        if ($comparePrice <= $price) {
+            $comparePrice = 0;
+        }
+
+        return [
+            'price'         => $price,
+            'compare_price' => $comparePrice,
+            'savings'       => $comparePrice ? max(0, $comparePrice - $price) : 0,
+        ];
     }
 
     protected function getDefaultVariantData()
