@@ -289,7 +289,7 @@ class ProductRenderer
         if ($pricing && Arr::get($pricing, 'savings', 0) > 0) {
             $savingsText = sprintf(
                 /* translators: %s: savings amount */
-                __('Save %s — Limited time only', 'fluent-cart'),
+                __('Save %s — limited time only', 'fluent-cart'),
                 Helper::toDecimal($pricing['savings'])
             );
         }
@@ -310,7 +310,17 @@ class ProductRenderer
                 <span class="fct-button-text"><?php echo wp_kses_post($buttonLabel); ?></span>
             </a>
             <?php if ($savingsText): ?>
-                <div class="fct-mobile-cta-savings"><?php echo esc_html($savingsText); ?></div>
+                <div class="fct-mobile-cta-savings" role="note">
+                    <span class="fct-mobile-cta-savings-text"><?php echo esc_html($savingsText); ?></span>
+                    <span class="fct-mobile-cta-savings-icon" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 14.667A6.667 6.667 0 1 0 8 1.333a6.667 6.667 0 0 0 0 13.334Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 5.333h.005" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.667 8h1.333v3.333" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.667 11.333h2.666" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </div>
             <?php endif; ?>
         </div>
         <?php
