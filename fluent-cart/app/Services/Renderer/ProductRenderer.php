@@ -279,30 +279,40 @@ class ProductRenderer
             [
                 'avatar' => 'https://i.pravatar.cc/80?img=12',
                 'name'   => 'Sofia R.',
+                'country' => 'Germany',
+                'flag'    => 'https://flagcdn.com/de.svg',
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.', 'fluent-cart')
             ],
             [
                 'avatar' => 'https://i.pravatar.cc/80?img=32',
                 'name'   => 'Daniel K.',
+                'country' => 'United States',
+                'flag'    => 'https://flagcdn.com/us.svg',
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span>',
                 'quote'  => __('Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.', 'fluent-cart')
             ],
             [
                 'avatar' => 'https://i.pravatar.cc/80?img=47',
                 'name'   => 'Maya L.',
+                'country' => 'Australia',
+                'flag'    => 'https://flagcdn.com/au.svg',
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.', 'fluent-cart')
             ],
             [
                 'avatar' => 'https://i.pravatar.cc/80?img=24',
                 'name'   => 'Liam T.',
+                'country' => 'United Kingdom',
+                'flag'    => 'https://flagcdn.com/gb.svg',
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Communication was effortless and the results matched our brief perfectly. Highly recommend.', 'fluent-cart')
             ],
             [
                 'avatar' => 'https://i.pravatar.cc/80?img=55',
                 'name'   => 'Elena M.',
+                'country' => 'Canada',
+                'flag'    => 'https://flagcdn.com/ca.svg',
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.9</span>',
                 'quote'  => __('Thoughtful strategy, clean deliverables, and proactive updates every step of the way.', 'fluent-cart')
             ]
@@ -310,16 +320,25 @@ class ProductRenderer
 
         $initialReview = $reviews[0];
         ?>
-        <div class="card shadow-sm border-0" data-fct-review-rotator>
+        <div class="card shadow-sm border border-light-subtle rounded-4" data-fct-review-rotator>
             <div class="card-body" data-fct-review-card style="opacity:1; transition: opacity 300ms ease;">
-                <div class="d-flex align-items-center gap-3 mb-3">
-                    <img src="<?php echo esc_url($initialReview['avatar']); ?>" alt="<?php echo esc_attr($initialReview['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" data-fct-review-avatar />
-                    <div>
-                        <div class="fw-semibold text-dark" data-fct-review-name><?php echo esc_html($initialReview['name']); ?></div>
-                        <div class="text-warning small" data-fct-review-stars><?php echo $initialReview['stars']; ?></div>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?php echo esc_url($initialReview['avatar']); ?>" alt="<?php echo esc_attr($initialReview['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" data-fct-review-avatar />
+                        <div>
+                            <div class="fw-semibold text-dark" data-fct-review-name><?php echo esc_html($initialReview['name']); ?></div>
+                            <div class="text-warning small" data-fct-review-stars><?php echo $initialReview['stars']; ?></div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 text-muted small bg-light rounded-pill px-3 py-1 border border-light">
+                        <img src="<?php echo esc_url($initialReview['flag']); ?>" alt="<?php echo esc_attr($initialReview['country']); ?>" width="20" height="14" data-fct-review-flag class="rounded shadow-sm" />
+                        <span class="fw-semibold text-dark" data-fct-review-country><?php echo esc_html($initialReview['country']); ?></span>
                     </div>
                 </div>
-                <p class="mb-0 text-muted" data-fct-review-quote><?php echo esc_html($initialReview['quote']); ?></p>
+                <div class="d-flex gap-3">
+                    <div class="text-primary-emphasis fs-2 lh-1">“</div>
+                    <p class="mb-0 text-muted" data-fct-review-quote><?php echo esc_html($initialReview['quote']); ?></p>
+                </div>
             </div>
         </div>
 
@@ -335,6 +354,8 @@ class ProductRenderer
                 const name = container.querySelector('[data-fct-review-name]');
                 const stars = container.querySelector('[data-fct-review-stars]');
                 const quote = container.querySelector('[data-fct-review-quote]');
+                const country = container.querySelector('[data-fct-review-country]');
+                const flag = container.querySelector('[data-fct-review-flag]');
 
                 const reviews = <?php echo wp_json_encode($reviews); ?>;
                 let currentIndex = 0;
@@ -347,6 +368,9 @@ class ProductRenderer
                     name.textContent = review.name;
                     stars.innerHTML = review.stars;
                     quote.textContent = review.quote;
+                    country.textContent = review.country;
+                    flag.src = review.flag;
+                    flag.alt = review.country;
                 };
 
                 setInterval(() => {
@@ -448,65 +472,83 @@ class ProductRenderer
         ?>
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
             <div class="fw-semibold text-dark mb-1"><?php esc_html_e('What our customers say', 'fluent-cart'); ?></div>
+            <div class="text-muted small d-flex align-items-center gap-2">
+                <span class="badge bg-success-subtle text-success fw-semibold px-3 py-2 border border-success-subtle">4.9 ★</span>
+                <span><?php esc_html_e('Real feedback from global clients', 'fluent-cart'); ?></span>
+            </div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <img src="https://i.pravatar.cc/80?img=12" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
-                            <div>
-                                <div class="fw-semibold text-dark">Sofia R.</div>
-                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+            <?php
+            $placeholderReviews = [
+                [
+                    'avatar'  => 'https://i.pravatar.cc/80?img=12',
+                    'name'    => 'Sofia R.',
+                    'country' => 'Germany',
+                    'flag'    => 'https://flagcdn.com/de.svg',
+                    'rating'  => '5.0',
+                    'quote'   => __('Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.', 'fluent-cart')
+                ],
+                [
+                    'avatar'  => 'https://i.pravatar.cc/80?img=32',
+                    'name'    => 'Daniel K.',
+                    'country' => 'United States',
+                    'flag'    => 'https://flagcdn.com/us.svg',
+                    'rating'  => '4.8',
+                    'quote'   => __('Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.', 'fluent-cart')
+                ],
+                [
+                    'avatar'  => 'https://i.pravatar.cc/80?img=47',
+                    'name'    => 'Maya L.',
+                    'country' => 'Australia',
+                    'flag'    => 'https://flagcdn.com/au.svg',
+                    'rating'  => '5.0',
+                    'quote'   => __('Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.', 'fluent-cart')
+                ],
+                [
+                    'avatar'  => 'https://i.pravatar.cc/80?img=24',
+                    'name'    => 'Liam T.',
+                    'country' => 'United Kingdom',
+                    'flag'    => 'https://flagcdn.com/gb.svg',
+                    'rating'  => '5.0',
+                    'quote'   => __('Communication was effortless and the results matched our brief perfectly. Highly recommend.', 'fluent-cart')
+                ],
+                [
+                    'avatar'  => 'https://i.pravatar.cc/80?img=55',
+                    'name'    => 'Elena M.',
+                    'country' => 'Canada',
+                    'flag'    => 'https://flagcdn.com/ca.svg',
+                    'rating'  => '4.9',
+                    'quote'   => __('Thoughtful strategy, clean deliverables, and proactive updates every step of the way.', 'fluent-cart')
+                ],
+            ];
+
+            foreach ($placeholderReviews as $review):
+                ?>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border border-light-subtle rounded-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="<?php echo esc_url($review['avatar']); ?>" alt="<?php echo esc_attr($review['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" />
+                                    <div>
+                                        <div class="fw-semibold text-dark"><?php echo esc_html($review['name']); ?></div>
+                                        <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1"><?php echo esc_html($review['rating']); ?></span></div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 text-muted small bg-light rounded-pill px-3 py-1 border border-light">
+                                    <img src="<?php echo esc_url($review['flag']); ?>" alt="<?php echo esc_attr($review['country']); ?>" width="20" height="14" class="rounded shadow-sm" />
+                                    <span class="fw-semibold text-dark"><?php echo esc_html($review['country']); ?></span>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3">
+                                <div class="text-primary-emphasis fs-2 lh-1">“</div>
+                                <p class="mb-0 text-muted"><?php echo esc_html($review['quote']); ?></p>
                             </div>
                         </div>
-                        <p class="mb-0 text-muted">“Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.”</p>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <img src="https://i.pravatar.cc/80?img=32" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
-                            <div>
-                                <div class="fw-semibold text-dark">Daniel K.</div>
-                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span></div>
-                            </div>
-                        </div>
-                        <p class="mb-0 text-muted">“Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.”</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <img src="https://i.pravatar.cc/80?img=47" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
-                            <div>
-                                <div class="fw-semibold text-dark">Maya L.</div>
-                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
-                            </div>
-                        </div>
-                        <p class="mb-0 text-muted">“Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.”</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <img src="https://i.pravatar.cc/80?img=24" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
-                            <div>
-                                <div class="fw-semibold text-dark">Liam T.</div>
-                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
-                            </div>
-                        </div>
-                        <p class="mb-0 text-muted">“Communication was effortless and the results matched our brief perfectly. Highly recommend.”</p>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
         <?php
     }
