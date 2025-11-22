@@ -347,29 +347,51 @@ class ProductRenderer
 
     public function renderFaqSection()
     {
-        $faqs = $this->getFaqs();
-
-        if (empty($faqs)) {
-            ?>
-            <div class="alert alert-light border mb-0" role="note"><?php esc_html_e('No FAQs added yet.', 'fluent-cart'); ?></div>
-            <?php
-            return;
-        }
+        $faqs = [
+            [
+                'question' => __('What happens if I’m not satisfied with the order?', 'fluent-cart'),
+                'answer'   => __('If something isn’t quite right, I’ll fix it quickly—simply send your feedback within 7 days and I’ll provide adjustments or a refund according to the project scope.', 'fluent-cart')
+            ],
+            [
+                'question' => __('Do I get an invoice for my purchase?', 'fluent-cart'),
+                'answer'   => __('Yes. You’ll receive a professional invoice automatically after checkout, and you can download it anytime from your account.', 'fluent-cart')
+            ],
+            [
+                'question' => __('How long does delivery really take?', 'fluent-cart'),
+                'answer'   => __('Standard delivery is typically completed within 2–3 business days. You’ll receive updates as I work and can request expedited delivery when needed.', 'fluent-cart')
+            ],
+            [
+                'question' => __('Is my payment secure?', 'fluent-cart'),
+                'answer'   => __('Payments are processed through encrypted gateways, and I never store your card details. Your checkout is fully secured.', 'fluent-cart')
+            ],
+            [
+                'question' => __('What if I have questions before or after ordering?', 'fluent-cart'),
+                'answer'   => __('Message me anytime—I respond quickly before and after delivery to ensure you’re confident with every step.', 'fluent-cart')
+            ],
+            [
+                'question' => __('Can I request revisions?', 'fluent-cart'),
+                'answer'   => __('Absolutely. I include thoughtful revisions that align with the package you select so you receive exactly what you need.', 'fluent-cart')
+            ],
+            [
+                'question' => __('Do you accept custom requests?', 'fluent-cart'),
+                'answer'   => __('Yes. Share your requirements and I’ll create a tailored plan with pricing and delivery that fits your goals.', 'fluent-cart')
+            ]
+        ];
 
         ?>
-        <div class="accordion" id="fct-product-faq">
+        <div class="accordion accordion-flush" id="fct-product-faq">
             <?php foreach ($faqs as $index => $faq):
                 $headingId = 'fct-faq-heading-' . $index;
                 $collapseId = 'fct-faq-collapse-' . $index;
                 ?>
-                <div class="accordion-item">
+                <div class="accordion-item border rounded-3 mb-2 shadow-sm">
                     <h2 class="accordion-header" id="<?php echo esc_attr($headingId); ?>">
-                        <button class="accordion-button <?php echo $index ? 'collapsed' : ''; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo esc_attr($collapseId); ?>" aria-expanded="<?php echo $index ? 'false' : 'true'; ?>" aria-controls="<?php echo esc_attr($collapseId); ?>">
+                        <button class="accordion-button <?php echo $index ? 'collapsed' : ''; ?> fw-semibold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo esc_attr($collapseId); ?>" aria-expanded="<?php echo $index ? 'false' : 'true'; ?>" aria-controls="<?php echo esc_attr($collapseId); ?>">
                             <?php echo esc_html($faq['question']); ?>
                         </button>
                     </h2>
                     <div id="<?php echo esc_attr($collapseId); ?>" class="accordion-collapse collapse <?php echo $index ? '' : 'show'; ?>" aria-labelledby="<?php echo esc_attr($headingId); ?>" data-bs-parent="#fct-product-faq">
-                        <div class="accordion-body">
+                        <div class="accordion-body text-muted">
                             <?php echo wp_kses_post(wpautop($faq['answer'])); ?>
                         </div>
                     </div>
@@ -385,11 +407,69 @@ class ProductRenderer
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
             <div>
                 <div class="fw-semibold text-dark mb-1"><?php esc_html_e('Client Reviews', 'fluent-cart'); ?></div>
-                <div class="text-muted small"><?php esc_html_e('Ratings and testimonials will be displayed here.', 'fluent-cart'); ?></div>
+                <div class="text-muted small"><?php esc_html_e('Trusted by buyers who value quality, communication, and timely delivery.', 'fluent-cart'); ?></div>
             </div>
             <button class="btn btn-outline-secondary btn-sm" type="button"><?php esc_html_e('Write a review', 'fluent-cart'); ?></button>
         </div>
-        <div class="alert alert-light border mb-0" role="status"><?php esc_html_e('No reviews have been published yet.', 'fluent-cart'); ?></div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=12" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Sofia R.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=32" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Daniel K.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=47" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Maya L.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.”</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <img src="https://i.pravatar.cc/80?img=24" alt="Reviewer avatar" class="rounded-circle shadow-sm" width="56" height="56" />
+                            <div>
+                                <div class="fw-semibold text-dark">Liam T.</div>
+                                <div class="text-warning small">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span></div>
+                            </div>
+                        </div>
+                        <p class="mb-0 text-muted">“Communication was effortless and the results matched our brief perfectly. Highly recommend.”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <?php
     }
 
