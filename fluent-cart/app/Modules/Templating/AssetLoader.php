@@ -11,6 +11,7 @@ use FluentCart\App\Helpers\UtmHelper;
 use FluentCart\App\Hooks\Cart\CartLoader;
 use FluentCart\App\Hooks\Handlers\ShortCodes\CustomerProfileHandler;
 use FluentCart\App\Models\Cart;
+use FluentCart\App\CPT\FluentProducts;
 use FluentCart\App\Modules\Tax\TaxModule;
 use FluentCart\App\Services\Localization\LocalizationManager;
 use FluentCart\App\Services\Renderer\ProductFilterRender;
@@ -52,6 +53,11 @@ class AssetLoader
                 self::loadCheckoutAssets();
                 break;
             default:
+                // If the page type could not be detected, still ensure the single product assets
+                // are available on Fluent Product singles so the latest styles load correctly.
+                if (is_singular(FluentProducts::CPT_NAME)) {
+                    self::loadSingleProductAssets();
+                }
                 return; // No need to load any assets
         }
     }
