@@ -14,11 +14,14 @@ class ProductListRenderer
 
     protected $cursor = null;
 
-    public function __construct($products, $listTitle = null, $wrapperClass = null)
+    protected $cardConfig = [];
+
+    public function __construct($products, $listTitle = null, $wrapperClass = null, $cardConfig = [])
     {
         $this->products = $products;
         $this->listTitle = $listTitle;
         $this->wrapperClass = $wrapperClass;
+        $this->cardConfig = $cardConfig;
 
         if($products instanceof \FluentCart\Framework\Pagination\CursorPaginator){
             $this->cursor = wp_parse_args(wp_parse_url($products->nextPageUrl(), PHP_URL_QUERY));
@@ -48,7 +51,7 @@ class ProductListRenderer
     {
 
         foreach ($this->products as $index => $product) {
-            $config = [];
+            $config = $this->cardConfig;
             if($index == 0 && $this->cursor){
                 $config['cursor'] = $this->cursor;
             }

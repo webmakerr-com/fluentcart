@@ -81,7 +81,10 @@ class TemplateActions
             (new ProductListRenderer(
                 $products['products'],
                 __('Related Products', 'fluent-cart'),
-                'fct-similar-product-list-container'
+                'fct-similar-product-list-container',
+                [
+                    'card_variant' => 'related'
+                ]
             ))->render();
 
             $content = ob_get_clean();
@@ -243,7 +246,10 @@ class TemplateActions
             (new ProductListRenderer(
                   Arr::get($products, 'products', []),
                 __('Related Products', 'fluent-cart'),
-                'fct-similar-product-list-container'
+                'fct-similar-product-list-container',
+                [
+                    'card_variant' => 'related'
+                ]
             ))->render();
 
             $relevantProducts = ob_get_clean();

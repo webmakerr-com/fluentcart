@@ -1128,41 +1128,101 @@ class ProductRenderer
                 continue;
             }
 
-            $badges[] = [
-                    'id'   => $variant->id,
-                    'text' => sprintf(__('Save %s — limited time only', 'fluent-cart'), Helper::toDecimal($saving))
+            $badges[$variant->id] = [
+                    'text' => sprintf(__('Save %s — Limited time offer', 'fluent-cart'), Helper::toDecimal($saving))
             ];
         }
 
         if (empty($badges)) {
             return;
         }
-        ?>
-        <div class="mb-3">
-            <?php
-            foreach ($badges as $badge) {
-                $isHidden = $this->defaultVariant && $this->defaultVariant->id != $badge['id'];
 
-                $attributes = [
-                        'class'                  => 'fct-savings-badge fluent-cart-product-variation-content' . ($isHidden ? ' is-hidden' : ''),
-                        'data-variation-id'      => $badge['id'],
-                        'data-fluent-cart-product-savings-badge' => '',
-                        'style'                  => 'display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:20px;background-color:#FFE6EB;color:#D4006E;font-size:12px;font-weight:600;line-height:1.2;'
-                ];
-                ?>
-                <div <?php $this->renderAttributes($attributes); ?>>
-                    <span class="fct-savings-badge-icon" aria-hidden="true" style="display:inline-flex;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 7.5C4 6.67157 4.67157 6 5.5 6H18.5C19.3284 6 20 6.67157 20 7.5V9.58579C20 9.851 19.8946 10.1054 19.7071 10.2929L17.2929 12.7071C16.9024 13.0976 16.9024 13.7308 17.2929 14.1213L19.7071 16.5355C19.8946 16.723 20 16.9774 20 17.2426V19.5C20 20.3284 19.3284 21 18.5 21H5.5C4.67157 21 4 20.3284 4 19.5V17.25C4 16.9739 4.11491 16.7096 4.31802 16.518L6.761 14.2142C7.13417 13.8622 7.13417 13.2708 6.761 12.9188L4.31802 10.615C4.11491 10.4234 4 10.1591 4 9.883V7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10.5 9.5L13.5 16.5M14 9L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="fct-savings-badge-text"><?php echo esc_html($badge['text']); ?></span>
-                </div>
-                <?php
-            }
-            ?>
+        $defaultVariationId = $this->defaultVariant ? $this->defaultVariant->id : key($badges);
+        $defaultBadgeText = Arr::get($badges, $defaultVariationId . '.text', '');
+
+        ?>
+        <div class="fct-savings-badge-wrap mb-3"
+             data-fluent-cart-product-savings
+             data-default-variation-id="<?php echo esc_attr($defaultVariationId); ?>"
+             data-savings-map="<?php echo esc_attr(wp_json_encode($badges)); ?>">
+            <div class="fct-savings-badge" data-fluent-cart-product-savings-badge
+                 <?php echo $defaultBadgeText ? '' : 'style="display:none;"'; ?>>
+                <span class="fct-savings-badge-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L5 6V11C5 15.55 7.39 19.74 11 21.96C11.6283 22.3342 12.3717 22.3342 13 21.96C16.61 19.74 19 15.55 19 11V6L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.5 11.5L11.25 13.25L14.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="fct-savings-badge-text"><?php echo esc_html($defaultBadgeText); ?></span>
+            </div>
+            <div class="fct-savings-trust-line" data-fluent-cart-product-savings-trust <?php echo $defaultBadgeText ? '' : 'style="display:none;"'; ?>>
+                <span aria-hidden="true">🛡️</span>
+                <span><?php esc_html_e('100% Money-Back Guarantee — No Risk', 'fluent-cart'); ?></span>
+            </div>
         </div>
+        <script>
+            (function() {
+                const wrapper = document.querySelector('[data-fluent-cart-product-savings]');
+                if (!wrapper) {
+                    return;
+                }
+
+                const badge = wrapper.querySelector('[data-fluent-cart-product-savings-badge]');
+                const badgeText = wrapper.querySelector('.fct-savings-badge-text');
+                const trustLine = wrapper.querySelector('[data-fluent-cart-product-savings-trust]');
+                let savingsMap = {};
+
+                try {
+                    savingsMap = JSON.parse(wrapper.getAttribute('data-savings-map')) || {};
+                } catch (e) {
+                    savingsMap = {};
+                }
+
+                const toggleBadge = (variationId) => {
+                    const info = savingsMap[variationId];
+
+                    if (!info || !info.text) {
+                        if (badge) {
+                            badge.style.display = 'none';
+                        }
+                        if (trustLine) {
+                            trustLine.style.display = 'none';
+                        }
+                        return;
+                    }
+
+                    if (badge && badgeText) {
+                        badgeText.textContent = info.text;
+                        badge.style.display = 'inline-flex';
+                    }
+                    if (trustLine) {
+                        trustLine.style.display = 'flex';
+                    }
+                };
+
+                const handleSelection = (event) => {
+                    const variant = event.target.closest('[data-fluent-cart-product-variant]');
+                    if (!variant) {
+                        return;
+                    }
+
+                    const variationId = variant.getAttribute('data-cart-id');
+                    toggleBadge(variationId);
+                };
+
+                const variantContainer = document.querySelector('.fct-product-variants');
+                if (variantContainer) {
+                    variantContainer.addEventListener('click', handleSelection);
+                    variantContainer.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            handleSelection(event);
+                        }
+                    });
+                }
+
+                toggleBadge(wrapper.getAttribute('data-default-variation-id'));
+            })();
+        </script>
         <?php
     }
 
