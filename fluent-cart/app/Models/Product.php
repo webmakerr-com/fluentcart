@@ -75,6 +75,7 @@ class Product extends Model
 
     protected $appends = [
         'thumbnail',
+        'video_url',
     ];
 
     protected $searchable = [
@@ -154,6 +155,17 @@ class Product extends Model
     {
         return $this->hasOne(PostMeta::class, 'post_id', 'ID')
             ->where('postmeta.meta_key', 'fluent-products-gallery-image');
+    }
+
+    public function getVideoUrlAttribute(): string
+    {
+        $videoUrl = get_post_meta($this->ID, FluentProducts::VIDEO_META_KEY, true);
+
+        if (!$videoUrl) {
+            $videoUrl = get_post_meta($this->ID, FluentProducts::CPT_NAME . '-video-url', true);
+        }
+
+        return $videoUrl ? (string)$videoUrl : '';
     }
 
     public function wp_terms(): \FluentCart\Framework\Database\Orm\Relations\HasMany

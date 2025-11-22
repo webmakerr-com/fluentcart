@@ -94,7 +94,8 @@ class ProductResource extends BaseResourceApi
 
         $videoUrl = trim(Arr::get($data, 'video_url', ''));
         if ($videoUrl) {
-            update_post_meta($createdPostId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
+            update_post_meta($createdPostId, FluentProducts::VIDEO_META_KEY, esc_url_raw($videoUrl));
+            delete_post_meta($createdPostId, FluentProducts::CPT_NAME . '-video-url');
         }
 
         if ($createdProductDetail) {
@@ -272,8 +273,10 @@ class ProductResource extends BaseResourceApi
         static::updateWpPost($postId, $product);
         $videoUrl = trim(Arr::get($product, 'video_url', ''));
         if ($videoUrl) {
-            update_post_meta($postId, FluentProducts::CPT_NAME . '-video-url', esc_url_raw($videoUrl));
+            update_post_meta($postId, FluentProducts::VIDEO_META_KEY, esc_url_raw($videoUrl));
+            delete_post_meta($postId, FluentProducts::CPT_NAME . '-video-url');
         } else {
+            delete_post_meta($postId, FluentProducts::VIDEO_META_KEY);
             delete_post_meta($postId, FluentProducts::CPT_NAME . '-video-url');
         }
         if (Arr::has($product, 'gallery')) {
