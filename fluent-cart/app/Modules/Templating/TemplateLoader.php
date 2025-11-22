@@ -65,7 +65,10 @@ class TemplateLoader
             return $taxFilters;
         }, 10, 2);
 
-        (new TemplateActions())->register();
+        $templateActions = new TemplateActions();
+
+        $templateActions->register();
+        $templateActions->initSingleProductHooks();
 
         AssetLoader::register();
 
