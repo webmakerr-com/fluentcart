@@ -39,6 +39,8 @@ class FluentProducts
             $this->registerPostType();
             $this->registerProductTaxonomies();
         });
+        add_action('add_meta_boxes', [$this, 'registerVideoMetaBox']);
+        add_action('save_post_' . self::CPT_NAME, [$this, 'saveVideoMetaBox']);
         add_action('admin_enqueue_scripts', function () {
             if ($this->showStandaloneMenu) {
                 return;
@@ -123,6 +125,63 @@ class FluentProducts
 
         add_action('update_post_meta', [$this, 'handleThumbChange'], 10, 4);
         add_action('added_post_meta', [$this, 'handleThumbChange'], 10, 4);
+    }
+
+    public function registerVideoMetaBox()
+    {
+        add_meta_box(
+            'fluent_cart_product_video_url',
+            __('Product Video URL', 'fluent-cart'),
+            [$this, 'renderVideoMetaBox'],
+            self::CPT_NAME,
+            'side',
+            'default'
+        );
+    }
+
+    public function renderVideoMetaBox($post)
+    {
+        $videoUrl = get_post_meta($post->ID, 'fluent-products-video-url', true);
+        wp_nonce_field('fluent_cart_save_product_video_url', '_fluent_cart_product_video_nonce');
+        ?>
+        <p>
+            <label for="fluent_cart_product_video_url" class="screen-reader-text"><?php esc_html_e('Product Video URL', 'fluent-cart'); ?></label>
+            <input type="url"
+                   id="fluent_cart_product_video_url"
+                   name="fluent_cart_product_video_url"
+                   class="widefat"
+                   placeholder="<?php esc_attr_e('https://', 'fluent-cart'); ?>"
+                   value="<?php echo esc_attr($videoUrl); ?>"/>
+        </p>
+        <p class="description">
+            <?php esc_html_e('Add a YouTube, Vimeo, or direct MP4 link to feature a video in the product gallery.', 'fluent-cart'); ?>
+        </p>
+        <?php
+    }
+
+    public function saveVideoMetaBox($postId)
+    {
+        $nonce = Arr::get($_POST, '_fluent_cart_product_video_nonce');
+        if (!$nonce || !wp_verify_nonce($nonce, 'fluent_cart_save_product_video_url')) {
+            return;
+        }
+
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (!current_user_can('edit_post', $postId)) {
+            return;
+        }
+
+        $rawVideoUrl = Arr::get($_POST, 'fluent_cart_product_video_url');
+        $videoUrl = $rawVideoUrl ? esc_url_raw($rawVideoUrl) : '';
+
+        if ($videoUrl) {
+            update_post_meta($postId, 'fluent-products-video-url', $videoUrl);
+        } else {
+            delete_post_meta($postId, 'fluent-products-video-url');
+        }
     }
 
     public function registerElementorScript()
