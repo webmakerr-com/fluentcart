@@ -33,3 +33,19 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
 .fct-gallery-thumb-controls {
     gap: 10px;
 }
+
+@media (max-width: 768px) {
+    /* Ensure the main gallery image is fully visible on mobile */
+    .fct-product-gallery-thumb {
+        height: auto;
+        max-height: none;
+        aspect-ratio: auto;
+    }
+
+    .fct-product-gallery-thumb img {
+        width: 100%;
+        height: auto;
+        -o-object-fit: contain;
+        object-fit: contain;
+    }
+}
