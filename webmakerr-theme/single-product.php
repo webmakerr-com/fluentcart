@@ -9,7 +9,6 @@ if (!defined('ABSPATH')) {
 
 use FluentCart\Api\Resource\ShopResource;
 use FluentCart\Api\StoreSettings;
-use FluentCart\App\Helpers\Helper;
 use FluentCart\App\Modules\Data\ProductDataSetup;
 use FluentCart\App\Services\Renderer\ProductListRenderer;
 use FluentCart\App\Services\Renderer\ProductRenderer;
@@ -41,36 +40,32 @@ if ($post instanceof WP_Post) {
 }
 ?>
 <div class="fc-single-product-page fc-single-product-page--fiverr" data-fluent-cart-single-product-page>
-    <div class="fc-container">
+    <div class="fc-container py-4">
         <div class="row g-4">
             <div class="col-lg-7 col-xl-8">
                 <div class="d-flex flex-column gap-4">
-                    <section class="card shadow-sm overflow-hidden" data-fluent-cart-product-gallery-area>
-                        <div class="card-body p-0">
-                            <?php $renderer->renderGallery(); ?>
-                        </div>
-                    </section>
-
                     <section class="card shadow-sm">
-                        <div class="card-body">
-                            <?php $renderer->renderTitle(); ?>
-                        </div>
-                    </section>
-
-                    <section class="card shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <h2 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('Seller information', 'fluent-cart'); ?></h2>
-                                <span class="badge bg-light text-dark border"><?php esc_html_e('Verified', 'fluent-cart'); ?></span>
+                        <div class="card-body d-flex flex-column gap-4">
+                            <div class="border rounded-3 overflow-hidden">
+                                <?php $renderer->renderGallery(['thumb_position' => 'bottom']); ?>
                             </div>
-                            <?php $renderer->renderSellerOverview(true); ?>
-                        </div>
-                    </section>
 
-                    <section class="card shadow-sm">
-                        <div class="card-body d-flex align-items-center gap-3">
-                            <div class="text-muted text-uppercase small fw-semibold"><?php esc_html_e('Rating', 'fluent-cart'); ?></div>
-                            <?php $renderer->renderRatingSummary(); ?>
+                            <?php $renderer->renderTitle(); ?>
+
+                            <div class="card bg-light border-0">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <h2 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('Seller information', 'fluent-cart'); ?></h2>
+                                        <span class="badge bg-light text-dark border"><?php esc_html_e('Verified', 'fluent-cart'); ?></span>
+                                    </div>
+                                    <?php $renderer->renderSellerOverview(true); ?>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
+                                <?php $renderer->renderRatingSummary(); ?>
+                                <?php $renderer->renderStockAvailability('class="text-success fw-semibold"'); ?>
+                            </div>
                         </div>
                     </section>
 
