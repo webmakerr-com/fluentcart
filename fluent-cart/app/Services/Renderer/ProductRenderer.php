@@ -188,9 +188,8 @@ class ProductRenderer
 
                             <section class="card shadow-sm">
                                 <div class="card-body">
-                                    <h3 class="h5 mb-3"><?php esc_html_e('Gig Overview', 'fluent-cart'); ?></h3>
-                                    <?php $this->renderExcerpt(); ?>
-                                    <div class="fct-product-description mt-3">
+                                    <h3 class="h5 mb-3"><?php esc_html_e('About this service', 'fluent-cart'); ?></h3>
+                                    <div class="fct-product-description">
                                         <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
                                     </div>
                                 </div>
@@ -198,7 +197,7 @@ class ProductRenderer
 
                             <section class="card shadow-sm">
                                 <div class="card-body">
-                                    <h3 class="h6 text-uppercase text-muted mb-3"><?php esc_html_e('What you get', 'fluent-cart'); ?></h3>
+                                    <h3 class="h5 mb-3"><?php esc_html_e('What you get', 'fluent-cart'); ?></h3>
                                     <?php $this->renderFeatureList(); ?>
                                 </div>
                             </section>
@@ -241,34 +240,13 @@ class ProductRenderer
                             <div class="card-header bg-white border-0 pb-0">
                                 <ul class="nav nav-tabs fct-gig-tabs" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="fct-tab-overview" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-overview" type="button" role="tab" aria-controls="fct-tab-pane-overview" aria-selected="true"><?php esc_html_e('Overview', 'fluent-cart'); ?></button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="fct-tab-seller" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-seller" type="button" role="tab" aria-controls="fct-tab-pane-seller" aria-selected="false"><?php esc_html_e('About Seller', 'fluent-cart'); ?></button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="fct-tab-reviews" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-reviews" type="button" role="tab" aria-controls="fct-tab-pane-reviews" aria-selected="false"><?php esc_html_e('Reviews', 'fluent-cart'); ?></button>
+                                        <button class="nav-link active" id="fct-tab-reviews" data-bs-toggle="tab" data-bs-target="#fct-tab-pane-reviews" type="button" role="tab" aria-controls="fct-tab-pane-reviews" aria-selected="true"><?php esc_html_e('Reviews', 'fluent-cart'); ?></button>
                                     </li>
                                 </ul>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="fct-single-product-tabs">
-                                    <div class="tab-pane fade show active" id="fct-tab-pane-overview" role="tabpanel" aria-labelledby="fct-tab-overview">
-                                        <div class="mb-4">
-                                            <h4 class="h6 text-uppercase text-muted mb-2"><?php esc_html_e('Description', 'fluent-cart'); ?></h4>
-                                            <div class="fct-product-description">
-                                                <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4 class="h6 text-uppercase text-muted mb-2"><?php esc_html_e('Deliverables', 'fluent-cart'); ?></h4>
-                                            <?php $this->renderFeatureList(); ?>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="fct-tab-pane-seller" role="tabpanel" aria-labelledby="fct-tab-seller">
-                                        <?php $this->renderSellerOverview(true); ?>
-                                    </div>
-                                    <div class="tab-pane fade" id="fct-tab-pane-reviews" role="tabpanel" aria-labelledby="fct-tab-reviews">
+                                    <div class="tab-pane fade show active" id="fct-tab-pane-reviews" role="tabpanel" aria-labelledby="fct-tab-reviews">
                                         <?php $this->renderReviewPlaceholder(); ?>
                                     </div>
                                 </div>
@@ -405,11 +383,7 @@ class ProductRenderer
     {
         ?>
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
-            <div>
-                <div class="fw-semibold text-dark mb-1"><?php esc_html_e('Client Reviews', 'fluent-cart'); ?></div>
-                <div class="text-muted small"><?php esc_html_e('Trusted by buyers who value quality, communication, and timely delivery.', 'fluent-cart'); ?></div>
-            </div>
-            <button class="btn btn-outline-secondary btn-sm" type="button"><?php esc_html_e('Write a review', 'fluent-cart'); ?></button>
+            <div class="fw-semibold text-dark mb-1"><?php esc_html_e('What our customers say', 'fluent-cart'); ?></div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
