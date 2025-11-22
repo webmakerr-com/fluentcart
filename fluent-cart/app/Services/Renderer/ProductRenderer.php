@@ -168,18 +168,15 @@ class ProductRenderer
     {
         ?>
         <div class="fct-single-product-page" data-fluent-cart-single-product-page>
-            <div class="fct-gig-hero mb-4">
-                <div class="container-fluid px-0">
-                    <?php $this->renderGallery(); ?>
-                </div>
-            </div>
-
-            <div class="container-fluid fct-gig-body px-0 px-md-4">
+            <div class="container fct-gig-body py-4">
                 <div class="row g-4">
                     <div class="col-lg-8">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex flex-column gap-3">
+                        <div class="d-flex flex-column gap-4">
+                            <section class="card shadow-sm">
+                                <div class="card-body d-flex flex-column gap-4">
+                                    <div class="border rounded-3 overflow-hidden">
+                                        <?php $this->renderGallery(); ?>
+                                    </div>
                                     <?php $this->renderTitle(); ?>
                                     <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
                                         <?php $this->renderRatingSummary(); ?>
@@ -187,34 +184,34 @@ class ProductRenderer
                                     </div>
                                     <?php $this->renderSellerOverview(); ?>
                                 </div>
-                            </div>
-                        </div>
+                            </section>
 
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <h3 class="h5 mb-3"><?php esc_html_e('Gig Overview', 'fluent-cart'); ?></h3>
-                                <?php $this->renderExcerpt(); ?>
-                                <div class="fct-product-description mt-3">
-                                    <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
+                            <section class="card shadow-sm">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><?php esc_html_e('Gig Overview', 'fluent-cart'); ?></h3>
+                                    <?php $this->renderExcerpt(); ?>
+                                    <div class="fct-product-description mt-3">
+                                        <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </section>
 
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <h3 class="h6 text-uppercase text-muted mb-3"><?php esc_html_e('What you get', 'fluent-cart'); ?></h3>
-                                <?php $this->renderFeatureList(); ?>
-                            </div>
-                        </div>
-
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <h3 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('FAQ', 'fluent-cart'); ?></h3>
-                                    <span class="text-muted small"><?php esc_html_e('Common questions', 'fluent-cart'); ?></span>
+                            <section class="card shadow-sm">
+                                <div class="card-body">
+                                    <h3 class="h6 text-uppercase text-muted mb-3"><?php esc_html_e('What you get', 'fluent-cart'); ?></h3>
+                                    <?php $this->renderFeatureList(); ?>
                                 </div>
-                                <?php $this->renderFaqSection(); ?>
-                            </div>
+                            </section>
+
+                            <section class="card shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <h3 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('FAQ', 'fluent-cart'); ?></h3>
+                                        <span class="text-muted small"><?php esc_html_e('Common questions', 'fluent-cart'); ?></span>
+                                    </div>
+                                    <?php $this->renderFaqSection(); ?>
+                                </div>
+                            </section>
                         </div>
                     </div>
 
