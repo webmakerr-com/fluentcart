@@ -180,7 +180,6 @@ class ProductRenderer
                                     <?php $this->renderTitle(); ?>
                                     <?php $this->renderReviewRotator(); ?>
                                     <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
-                                        <?php $this->renderRatingSummary(); ?>
                                         <?php $this->renderStockAvailability('class="text-success fw-semibold"'); ?>
                                     </div>
                                 </div>
@@ -281,6 +280,7 @@ class ProductRenderer
                 'name'   => 'Sofia R.',
                 'country' => 'Germany',
                 'flag'    => 'https://flagcdn.com/de.svg',
+                'time'   => __('2 days ago', 'fluent-cart'),
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Outstanding experience. Clear communication from start to finish and the final delivery exceeded our brand standards.', 'fluent-cart')
             ],
@@ -289,6 +289,7 @@ class ProductRenderer
                 'name'   => 'Daniel K.',
                 'country' => 'United States',
                 'flag'    => 'https://flagcdn.com/us.svg',
+                'time'   => __('5 days ago', 'fluent-cart'),
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.8</span>',
                 'quote'  => __('Fast delivery and thoughtful revisions. The process felt like working with an in-house pro.', 'fluent-cart')
             ],
@@ -297,6 +298,7 @@ class ProductRenderer
                 'name'   => 'Maya L.',
                 'country' => 'Australia',
                 'flag'    => 'https://flagcdn.com/au.svg',
+                'time'   => __('1 week ago', 'fluent-cart'),
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Great partner for our launch campaign. Detail-oriented, proactive, and truly invested in our goals.', 'fluent-cart')
             ],
@@ -305,6 +307,7 @@ class ProductRenderer
                 'name'   => 'Liam T.',
                 'country' => 'United Kingdom',
                 'flag'    => 'https://flagcdn.com/gb.svg',
+                'time'   => __('1 week ago', 'fluent-cart'),
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9733; <span class="text-muted ms-1">5.0</span>',
                 'quote'  => __('Communication was effortless and the results matched our brief perfectly. Highly recommend.', 'fluent-cart')
             ],
@@ -313,6 +316,7 @@ class ProductRenderer
                 'name'   => 'Elena M.',
                 'country' => 'Canada',
                 'flag'    => 'https://flagcdn.com/ca.svg',
+                'time'   => __('2 weeks ago', 'fluent-cart'),
                 'stars'  => '&#9733;&#9733;&#9733;&#9733;&#9734; <span class="text-muted ms-1">4.9</span>',
                 'quote'  => __('Thoughtful strategy, clean deliverables, and proactive updates every step of the way.', 'fluent-cart')
             ]
@@ -320,22 +324,26 @@ class ProductRenderer
 
         $initialReview = $reviews[0];
         ?>
-        <div class="card shadow-sm border border-light-subtle rounded-4" data-fct-review-rotator>
+        <div class="card shadow-sm border border-light rounded-1" data-fct-review-rotator style="border-radius:4px;">
             <div class="card-body" data-fct-review-card style="opacity:1; transition: opacity 300ms ease;">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="<?php echo esc_url($initialReview['avatar']); ?>" alt="<?php echo esc_attr($initialReview['name']); ?>" class="rounded-circle shadow-sm" width="56" height="56" data-fct-review-avatar />
-                        <div>
-                            <div class="fw-semibold text-dark" data-fct-review-name><?php echo esc_html($initialReview['name']); ?></div>
-                            <div class="text-warning small" data-fct-review-stars><?php echo $initialReview['stars']; ?></div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <img src="<?php echo esc_url($initialReview['avatar']); ?>" alt="<?php echo esc_attr($initialReview['name']); ?>" class="rounded-circle shadow-sm border border-light" width="56" height="56" data-fct-review-avatar />
+                    <div class="flex-grow-1">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="fw-semibold text-dark" data-fct-review-name><?php echo esc_html($initialReview['name']); ?></span>
+                            <span class="d-inline-flex align-items-center gap-1 text-muted small">
+                                <img src="<?php echo esc_url($initialReview['flag']); ?>" alt="<?php echo esc_attr($initialReview['country']); ?>" width="18" height="12" data-fct-review-flag class="border rounded-1 shadow-sm" />
+                                <span class="fw-semibold text-dark" data-fct-review-country><?php echo esc_html($initialReview['country']); ?></span>
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 text-muted small">
+                            <span class="text-warning fw-semibold" data-fct-review-stars><?php echo $initialReview['stars']; ?></span>
+                            <span class="text-secondary">•</span>
+                            <span class="fw-semibold" data-fct-review-time><?php echo esc_html($initialReview['time']); ?></span>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center gap-2 text-muted small bg-light rounded-pill px-3 py-1 border border-light">
-                        <img src="<?php echo esc_url($initialReview['flag']); ?>" alt="<?php echo esc_attr($initialReview['country']); ?>" width="20" height="14" data-fct-review-flag class="rounded shadow-sm" />
-                        <span class="fw-semibold text-dark" data-fct-review-country><?php echo esc_html($initialReview['country']); ?></span>
-                    </div>
                 </div>
-                <div class="d-flex gap-3">
+                <div class="d-flex gap-3 p-3 bg-light rounded-1 border border-light" style="border-radius:4px;">
                     <div class="text-primary-emphasis fs-2 lh-1">“</div>
                     <p class="mb-0 text-muted" data-fct-review-quote><?php echo esc_html($initialReview['quote']); ?></p>
                 </div>
@@ -353,6 +361,7 @@ class ProductRenderer
                 const avatar = container.querySelector('[data-fct-review-avatar]');
                 const name = container.querySelector('[data-fct-review-name]');
                 const stars = container.querySelector('[data-fct-review-stars]');
+                const time = container.querySelector('[data-fct-review-time]');
                 const quote = container.querySelector('[data-fct-review-quote]');
                 const country = container.querySelector('[data-fct-review-country]');
                 const flag = container.querySelector('[data-fct-review-flag]');
@@ -367,6 +376,7 @@ class ProductRenderer
                     avatar.alt = review.name;
                     name.textContent = review.name;
                     stars.innerHTML = review.stars;
+                    time.textContent = review.time;
                     quote.textContent = review.quote;
                     country.textContent = review.country;
                     flag.src = review.flag;
