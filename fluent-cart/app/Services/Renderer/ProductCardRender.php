@@ -340,54 +340,72 @@ class ProductCardRender
         }
 
         if ($useRelatedStyle) {
-            $iconAttributes = $buttonAttributes;
-            $iconAttributes['class'] = trim('fct-product-card-icon-btn ' . Arr::get($iconAttributes, 'class', ''));
-            ?>
-            <div class="fct-product-card-related-actions">
-                <a class="fct-product-card-primary-btn" href="<?php echo esc_url($this->viewUrl); ?>" aria-label="<?php echo esc_attr($ariaLabel); ?>">
-                    <span class="fct-button-text"><?php esc_html_e('View Options', 'fluent-cart'); ?></span>
+            $relatedButtonClass = 'fct-product-card-related-buy-btn';
+            $ariaLabel = sprintf(
+            /* translators: %s: product title */
+                    __('Buy %s now', 'fluent-cart'),
+                    $this->product->post_title
+            );
+
+            if ($isInstantCheckout) {
+                $anchorAttributes = [
+                        'href'       => $buttonHref,
+                        'class'      => $relatedButtonClass,
+                        'aria-label' => $ariaLabel
+                ];
+                ?>
+                <a <?php $this->renderAttributes($anchorAttributes); ?>>
+                    <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
                 </a>
+                <?php
+                return;
+            }
 
-                <?php if ($isInstantCheckout): ?>
-                    <a class="fct-product-card-secondary-btn" <?php $this->renderAttributes($anchorAttributes); ?>>
-                        <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
-                    </a>
-                <?php else: ?>
-                    <button type="button" class="fct-product-card-secondary-btn"
-                            data-button-url="<?php echo esc_url($buttonHref); ?>"
-                            <?php $this->renderAttributes($buttonAttributes); ?>>
-                        <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
-                        <span
-                              class="fluent-cart-loader"
-                              role="status"
-                              aria-live="polite"
-                              aria-label="<?php echo esc_attr__('Loading', 'fluent-cart'); ?>">
-                            <svg aria-hidden="true"
-                                 viewBox="0 0 100 101"
-                                 fill="none"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 focusable="false">
-                                  <path
-                                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                          fill="currentColor"></path>
-                                  <path
-                                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.10071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                          fill="currentFill"></path>
-                            </svg>
-                        </span>
-                    </button>
-                <?php endif; ?>
-
-                <button type="button" data-button-url="<?php echo esc_url($buttonHref); ?>" <?php $this->renderAttributes($iconAttributes); ?>>
-                    <span class="screen-reader-text"><?php esc_html_e('Add to cart', 'fluent-cart'); ?></span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                        <path d="M7 7H21L19.2 15H8.8L7 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8.5 19.5C9.32843 19.5 10 18.8284 10 18C10 17.1716 9.32843 16.5 8.5 16.5C7.67157 16.5 7 17.1716 7 18C7 18.8284 7.67157 19.5 8.5 19.5Z" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M17.5 19.5C18.3284 19.5 19 18.8284 19 18C19 17.1716 18.3284 16.5 17.5 16.5C16.6716 16.5 16 17.1716 16 18C16 18.8284 16.6716 19.5 17.5 19.5Z" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M7 7L5.5 3.5H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
+            if ($firstVariant) {
+                $buttonAttributes = [
+                        'data-cart-id'                        => $firstVariant->id,
+                        'class'                               => trim('fluent-cart-add-to-cart-button ' . $relatedButtonClass),
+                        'data-variation-type'                 => $this->product->detail->variation_type,
+                        'data-fluent-cart-add-to-cart-button' => '',
+                        'aria-label'                          => $ariaLabel
+                ];
+                ?>
+                <button type="button"
+                        data-button-url="<?php echo esc_url($buttonHref); ?>"
+                        <?php $this->renderAttributes($buttonAttributes); ?>>
+                    <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
+                    <span
+                          class="fluent-cart-loader"
+                          role="status"
+                          aria-live="polite"
+                          aria-label="<?php echo esc_attr__('Loading', 'fluent-cart'); ?>">
+                        <svg aria-hidden="true"
+                             viewBox="0 0 100 101"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg"
+                             focusable="false">
+                              <path
+                                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                      fill="currentColor"></path>
+                              <path
+                                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.10071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                      fill="currentFill"></path>
+                        </svg>
+                    </span>
                 </button>
-            </div>
+                <?php
+                return;
+            }
+
+            $anchorAttributes = [
+                    'href'       => $buttonHref,
+                    'class'      => $relatedButtonClass,
+                    'aria-label' => $ariaLabel
+            ];
+            ?>
+            <a <?php $this->renderAttributes($anchorAttributes); ?>>
+                <span class="fct-button-text"><?php esc_html_e('Buy Now', 'fluent-cart'); ?></span>
+            </a>
             <?php
             return;
         }
