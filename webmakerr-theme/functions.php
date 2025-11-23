@@ -42,6 +42,20 @@ add_action( 'wp_enqueue_scripts', function () {
                 file_exists( $coupon_fix_path ) ? filemtime( $coupon_fix_path ) : null,
                 true
         );
+
+        if ( is_singular( 'product' ) ) {
+                global $post;
+
+                if ( $post instanceof WP_Post ) {
+                        $post_id = absint( $post->ID );
+
+                        wp_add_inline_script(
+                                'webmakerr-fluentcart-fixes',
+                                'window.fluentcartPostId = ' . $post_id . ';window.dispatchEvent(new CustomEvent("fluentcart:product-id",{detail:{post_id:' . $post_id . '}}));',
+                                'before'
+                        );
+                }
+        }
 } );
 
 
