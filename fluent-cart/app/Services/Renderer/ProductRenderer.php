@@ -366,59 +366,60 @@ class ProductRenderer
 
                 .fct-amazon-rating__popover {
                     position: absolute;
-                    top: 140%;
-                    left: 0;
+                    top: calc(100% + 10px);
+                    left: 50%;
+                    transform: translate(-50%, 12px);
+                    width: min(360px, calc(100vw - 32px));
+                    max-width: calc(100% + 120px);
                     background: #fff;
-                    border: 1px solid #d5d9d9;
-                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-                    border-radius: 10px;
-                    padding: 16px;
-                    min-width: 280px;
-                    z-index: 5;
+                    border: 1px solid #e5e7eb;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+                    border-radius: 6px;
+                    padding: 14px 16px;
+                    z-index: 10;
                     opacity: 0;
                     visibility: hidden;
-                    transform: translateY(8px);
-                    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+                    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
                 }
 
                 .fct-amazon-rating:hover .fct-amazon-rating__popover,
                 .fct-amazon-rating:focus-within .fct-amazon-rating__popover {
                     opacity: 1;
                     visibility: visible;
-                    transform: translateY(0);
+                    transform: translate(-50%, 0);
                 }
 
                 .fct-amazon-rating__heading {
-                    font-size: 15px;
+                    font-size: 14px;
                     font-weight: 600;
                     color: #0F1111;
-                    margin-bottom: 4px;
+                    margin-bottom: 6px;
                 }
 
                 .fct-amazon-rating__subtext {
                     color: #565959;
-                    font-size: 13px;
-                    margin-bottom: 12px;
+                    font-size: 12px;
+                    margin-bottom: 10px;
                 }
 
                 .fct-amazon-rating__global {
                     color: #0F1111;
-                    font-size: 13px;
+                    font-size: 12px;
                     margin-bottom: 12px;
-                    font-weight: 500;
+                    font-weight: 600;
                 }
 
                 .fct-amazon-rating__breakdown {
                     display: flex;
                     flex-direction: column;
-                    gap: 6px;
+                    gap: 8px;
                 }
 
                 .fct-amazon-rating__row {
                     display: grid;
-                    grid-template-columns: 26px 1fr 40px;
+                    grid-template-columns: 28px 1fr 42px;
                     align-items: center;
-                    gap: 8px;
+                    gap: 10px;
                     font-size: 12px;
                     color: #0F1111;
                 }
@@ -426,7 +427,7 @@ class ProductRenderer
                 .fct-amazon-rating__bar {
                     position: relative;
                     height: 12px;
-                    background: #f0f2f2;
+                    background: #f3f4f6;
                     border-radius: 999px;
                     overflow: hidden;
                 }
@@ -437,22 +438,38 @@ class ProductRenderer
                     left: 0;
                     height: 100%;
                     background: linear-gradient(90deg, #ffce00, #ffa700);
+                    border-radius: 999px;
                 }
 
                 .fct-amazon-rating__footer {
-                    margin-top: 12px;
-                    font-size: 13px;
+                    margin-top: 14px;
+                    font-size: 12px;
                 }
 
                 .fct-amazon-rating__footer a {
                     color: #007185;
                     text-decoration: none;
-                    font-weight: 500;
+                    font-weight: 600;
                 }
 
                 .fct-amazon-rating__footer a:hover,
                 .fct-amazon-rating__footer a:focus {
                     text-decoration: underline;
+                }
+
+                @media (max-width: 420px) {
+                    .fct-amazon-rating__popover {
+                        width: 90%;
+                        max-width: 90%;
+                        left: 50%;
+                        transform: translate(-50%, 12px);
+                        right: auto;
+                    }
+
+                    .fct-amazon-rating:hover .fct-amazon-rating__popover,
+                    .fct-amazon-rating:focus-within .fct-amazon-rating__popover {
+                        transform: translate(-50%, 0);
+                    }
                 }
             </style>
 
