@@ -123,6 +123,7 @@ class CartRenderer
         $title = Arr::get($this->cartItem, 'title', '');
         $productId = Arr::get($this->cartItem, 'post_id');
         $this->product = Product::query()->with(['detail'])->find($productId);
+        $shortDescription = $this->getShortDescription();
 
         ?>
         <li data-cart-items class="fct-cart-item" role="listitem"
@@ -132,6 +133,7 @@ class CartRenderer
                 <?php $this->renderDetails(); ?>
             </div>
             <?php $this->renderSummary(); ?>
+            <?php $this->renderIncluded($shortDescription); ?>
         </li>
 
         <?php
@@ -180,15 +182,6 @@ class CartRenderer
     {
         $postTitle = Arr::get($this->cartItem, 'post_title', '');
         $variationTitle = Arr::get($this->cartItem, 'title', '');
-        $shortDescription = '';
-
-        if ($this->product) {
-            $shortDescription = $this->product->post_excerpt;
-        } else {
-            $shortDescription = Arr::get($this->cartItem, 'post_excerpt', '');
-        }
-
-        $shortDescription = trim($shortDescription);
 
         $aria_label = sprintf(
         /* translators: 1: Post or product title */
@@ -208,15 +201,6 @@ class CartRenderer
             </span>
             </a>
         </h3>
-
-        <?php if (!empty($shortDescription)) { ?>
-            <div class="fc-sidecart-desc">
-                <strong><?php esc_html_e('You will get:', 'fluent-cart'); ?></strong>
-                <div class="fc-sidecart-desc-text">
-                    <?php echo wp_kses_post($shortDescription); ?>
-                </div>
-            </div>
-        <?php } ?>
 
         <p class="fct-cart-item-variant"
            data-fluent-cart-cart-list-item-variation-title>
@@ -406,6 +390,37 @@ class CartRenderer
                     <path d="M8.66666 11L8.66666 7" stroke="currentColor" stroke-linecap="round"></path>
                 </svg>
             </button>
+        </div>
+
+        <?php
+    }
+
+    protected function getShortDescription()
+    {
+        $shortDescription = '';
+
+        if ($this->product) {
+            $shortDescription = $this->product->post_excerpt;
+        } else {
+            $shortDescription = Arr::get($this->cartItem, 'post_excerpt', '');
+        }
+
+        return trim($shortDescription);
+    }
+
+    public function renderIncluded($shortDescription)
+    {
+        if (empty($shortDescription)) {
+            return;
+        }
+
+        ?>
+        <div class="fct-cart-item-separator" aria-hidden="true"></div>
+        <div class="fc-sidecart-included">
+            <strong><?php esc_html_e('You will get:', 'fluent-cart'); ?></strong>
+            <div class="fc-sidecart-included-text">
+                <?php echo wp_kses_post($shortDescription); ?>
+            </div>
         </div>
 
         <?php
