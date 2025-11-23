@@ -9,10 +9,21 @@
 
 /* FluentCart mobile single product layout tweaks */
 @media (max-width: 767.98px) {
+  .fc-single-product-page {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+  }
+
   .fc-single-product-page,
   .fc-single-product-page .fc-container {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .fc-single-product-page .fc-container {
+    max-width: none;
+    width: 100vw;
   }
 
   .fc-single-product-page .fc-container .row {
@@ -46,5 +57,10 @@
   .fc-single-product-page .fct-product-gallery-wrapper img {
     width: 100%;
     display: block;
+  }
+
+  .fc-single-product-page .fct-product-gallery-wrapper img {
+    height: auto;
+    object-fit: cover;
   }
 }
