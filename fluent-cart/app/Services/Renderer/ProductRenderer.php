@@ -376,6 +376,63 @@ class ProductRenderer
                 </div>
             <?php endif; ?>
         </div>
+        <script>
+            (() => {
+                const bar = document.querySelector('[data-fct-mobile-cta]');
+                if (!bar) {
+                    return;
+                }
+
+                const ua = navigator.userAgent || '';
+                const isInAppBrowser = /FBAN|FBAV|FB_IAB|Instagram/i.test(ua);
+                const computed = window.getComputedStyle(bar);
+                const stylesMissing = computed && (computed.position === 'static' || computed.display === 'none');
+                if (!isInAppBrowser && !stylesMissing) {
+                    return;
+                }
+
+                bar.setAttribute('data-fct-mobile-cta-fallback', 'true');
+                const fallbackStyles = {
+                    position: 'fixed',
+                    left: '0',
+                    right: '0',
+                    bottom: '0',
+                    background: '#fff',
+                    padding: '10px 16px calc(12px + env(safe-area-inset-bottom, 0px))',
+                    zIndex: '9999',
+                    boxShadow: '0 -4px 18px rgba(0, 0, 0, 0.08)',
+                    borderTopLeftRadius: '4px',
+                    borderTopRightRadius: '4px',
+                    backfaceVisibility: 'hidden',
+                    transform: 'translateZ(0)'
+                };
+
+                Object.entries(fallbackStyles).forEach(([key, value]) => {
+                    if (!bar.style[key]) {
+                        bar.style[key] = value;
+                    }
+                });
+
+                // Provide iOS WebView safe-area fallback when env() is unavailable
+                bar.style.padding = bar.style.padding || '10px 16px calc(12px + constant(safe-area-inset-bottom, 0px))';
+
+                const button = bar.querySelector('.fct-mobile-cta-button');
+                if (button) {
+                    button.style.display = 'flex';
+                    button.style.alignItems = 'center';
+                    button.style.justifyContent = 'center';
+                    button.style.gap = button.style.gap || '8px';
+                    button.style.textDecoration = 'none';
+                }
+
+                const savings = bar.querySelector('.fct-mobile-cta-savings');
+                if (savings) {
+                    savings.style.display = 'flex';
+                    savings.style.justifyContent = 'center';
+                    savings.style.margin = savings.style.margin || '6px auto 0';
+                }
+            })();
+        </script>
         <?php
     }
 
