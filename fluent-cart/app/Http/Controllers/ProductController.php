@@ -191,9 +191,9 @@ class ProductController extends Controller
         return $this->response->sendSuccess($isUpdated);
     }
 
-    protected function maybeUpdateProductMeta($postId, array $metaValue = [])
+    protected function maybeUpdateProductMeta($postId, $metaValue = [])
     {
-        if (!Arr::has($metaValue, 'embedded_video_url')) {
+        if (!Arr::accessible($metaValue) || !Arr::has($metaValue, 'embedded_video_url')) {
             return;
         }
 
