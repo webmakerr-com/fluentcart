@@ -392,6 +392,10 @@ class ProductUpdateRequest extends RequestGuard
             $sanitizers['gallery.*.title'] = 'sanitize_text_field';
         }
 
+        if (Arr::has($data, 'metaValue.embedded_video_url')) {
+            $sanitizers['metaValue.embedded_video_url'] = 'esc_url_raw';
+        }
+
         // Variants
         if (isset($data['variants']) && is_array($data['variants'])) {
             foreach ($data['variants'] as $index => $variant) {

@@ -188,6 +188,7 @@ class ProductRenderer
                             <section class="card shadow-sm">
                                 <div class="card-body">
                                     <h3 class="h5 mb-3"><?php esc_html_e('About this service', 'fluent-cart'); ?></h3>
+                                    <?php $this->renderEmbeddedVideo(); ?>
                                     <div class="fct-product-description">
                                         <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
                                     </div>
@@ -965,6 +966,36 @@ class ProductRenderer
         }
 
         return $content;
+    }
+
+    protected function renderEmbeddedVideo()
+    {
+        $videoUrl = $this->product->getProductMeta('embedded_video_url', 'product_video');
+
+        if (!$videoUrl) {
+            return;
+        }
+
+        $embed = wp_oembed_get($videoUrl);
+
+        if (!$embed) {
+            $embed = sprintf(
+                '<iframe src="%1$s" allowfullscreen loading="lazy" title="%2$s"></iframe>',
+                esc_url($videoUrl),
+                esc_attr(get_bloginfo('name'))
+            );
+        }
+
+        $embed = apply_filters('fluent_cart/product/embedded_video', $embed, $videoUrl, $this->product);
+
+        if (!$embed) {
+            return;
+        }
+        ?>
+        <div class="fct-product-video ratio ratio-16x9 mb-3">
+            <?php echo wp_kses_post($embed); ?>
+        </div>
+        <?php
     }
 
     protected function getFeatures()

@@ -407,6 +407,10 @@ class ProductRequest extends RequestGuard
         ];
 
 
+        if (Arr::has($data, 'metaValue.embedded_video_url')) {
+            $sanitizer['metaValue.embedded_video_url'] = 'esc_url_raw';
+        }
+
         $sanitizer = array_merge($sanitizer, $otherInfoSanitizer);
 
         return $sanitizer;
