@@ -11,6 +11,7 @@ class ProductVideoMetaBox
     {
         add_action('add_meta_boxes', [$this, 'registerMetaBox']);
         add_action('save_post', [$this, 'saveMetaBox']);
+        add_action('edit_form_after_title', [$this, 'renderInlineField']);
     }
 
     public function registerMetaBox()
@@ -48,6 +49,40 @@ class ProductVideoMetaBox
         <p class="description">
             <?php esc_html_e('Add a YouTube, Vimeo, or any embeddable video link to highlight your product on the single product page.', 'fluent-cart'); ?>
         </p>
+        <?php
+    }
+
+    public function renderInlineField($post)
+    {
+        if (get_post_type($post) !== FluentProducts::CPT_NAME) {
+            return;
+        }
+
+        // Remove the side meta box to avoid duplicate fields and keep the video input
+        // alongside the main product editor.
+        remove_meta_box('fluent_cart_product_video', FluentProducts::CPT_NAME, 'side');
+
+        wp_nonce_field('fluent_cart_product_video', '_fct_product_video_nonce');
+
+        $product = Product::find($post->ID);
+        $videoUrl = '';
+
+        if ($product) {
+            $videoUrl = (string)$product->getProductMeta('embedded_video_url', 'product_video', '');
+        }
+
+        ?>
+        <div class="notice notice-info" style="margin:16px 0;padding:12px 16px;">
+            <label for="fluent_cart_product_video_url" style="font-weight:600; display:block; margin-bottom:6px;">
+                <?php esc_html_e('Product Video URL', 'fluent-cart'); ?>
+            </label>
+            <input type="url" name="fluent_cart_product_video_url" id="fluent_cart_product_video_url" class="widefat"
+                   placeholder="<?php esc_attr_e('https://example.com/video', 'fluent-cart'); ?>"
+                   value="<?php echo esc_attr($videoUrl); ?>" />
+            <p class="description" style="margin:6px 0 0;">
+                <?php esc_html_e('Add a YouTube, Vimeo, or any embeddable video link to highlight your product on the single product page.', 'fluent-cart'); ?>
+            </p>
+        </div>
         <?php
     }
 
