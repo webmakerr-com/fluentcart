@@ -100,8 +100,10 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
     padding: 18px 16px;
   }
   .fct-contact-support,
-  .fct-single-product-page .fct-how-it-works,
   .fct-single-product-page .fct-gig-tabs {
+    display: none;
+  }
+  .fct-single-product-page .fct-similar-product-list-container {
     display: none;
   }
   .fct-single-product-page section.card + section.card {
