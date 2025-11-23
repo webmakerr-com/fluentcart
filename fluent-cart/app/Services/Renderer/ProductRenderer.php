@@ -711,30 +711,70 @@ class ProductRenderer
                 }
 
                 const card = container.querySelector('[data-fct-review-card]');
-                const avatar = container.querySelector('[data-fct-review-avatar]');
-                const name = container.querySelector('[data-fct-review-name]');
-                const stars = container.querySelector('[data-fct-review-stars]');
-                const time = container.querySelector('[data-fct-review-time]');
-                const quote = container.querySelector('[data-fct-review-quote]');
-                const country = container.querySelector('[data-fct-review-country]');
-                const flag = container.querySelector('[data-fct-review-flag]');
+                const getRefs = (root) => ({
+                    avatar: root.querySelector('[data-fct-review-avatar]'),
+                    name: root.querySelector('[data-fct-review-name]'),
+                    stars: root.querySelector('[data-fct-review-stars]'),
+                    time: root.querySelector('[data-fct-review-time]'),
+                    quote: root.querySelector('[data-fct-review-quote]'),
+                    country: root.querySelector('[data-fct-review-country]'),
+                    flag: root.querySelector('[data-fct-review-flag]'),
+                });
+
+                const refs = getRefs(container);
 
                 const reviews = <?php echo wp_json_encode($reviews); ?>;
                 let currentIndex = 0;
                 const fadeDuration = 300;
                 const intervalMs = 3000;
 
-                const renderReview = (review) => {
-                    avatar.src = review.avatar;
-                    avatar.alt = review.name;
-                    name.textContent = review.name;
-                    stars.innerHTML = review.stars;
-                    time.textContent = review.time;
-                    quote.textContent = review.quote;
-                    country.textContent = review.country;
-                    flag.src = review.flag;
-                    flag.alt = review.country;
+                const renderReview = (targetRefs, review) => {
+                    targetRefs.avatar.src = review.avatar;
+                    targetRefs.avatar.alt = review.name;
+                    targetRefs.name.textContent = review.name;
+                    targetRefs.stars.innerHTML = review.stars;
+                    targetRefs.time.textContent = review.time;
+                    targetRefs.quote.textContent = review.quote;
+                    targetRefs.country.textContent = review.country;
+                    targetRefs.flag.src = review.flag;
+                    targetRefs.flag.alt = review.country;
                 };
+
+                const setStableHeight = () => {
+                    const cardWidth = card.offsetWidth || card.getBoundingClientRect().width;
+                    if (!cardWidth) {
+                        return;
+                    }
+
+                    const tempCard = card.cloneNode(true);
+                    tempCard.style.position = 'absolute';
+                    tempCard.style.left = '-9999px';
+                    tempCard.style.visibility = 'hidden';
+                    tempCard.style.pointerEvents = 'none';
+                    tempCard.style.opacity = '1';
+                    tempCard.style.transition = 'none';
+                    tempCard.style.width = `${cardWidth}px`;
+
+                    container.appendChild(tempCard);
+
+                    const tempRefs = getRefs(tempCard);
+                    let maxHeight = 0;
+
+                    reviews.forEach((review) => {
+                        renderReview(tempRefs, review);
+                        tempCard.style.height = 'auto';
+                        maxHeight = Math.max(maxHeight, tempCard.offsetHeight);
+                    });
+
+                    container.removeChild(tempCard);
+
+                    if (maxHeight) {
+                        card.style.minHeight = `${maxHeight}px`;
+                    }
+                };
+
+                setStableHeight();
+                window.addEventListener('resize', setStableHeight);
 
                 setInterval(() => {
                     const nextIndex = (currentIndex + 1) % reviews.length;
@@ -742,7 +782,7 @@ class ProductRenderer
 
                     setTimeout(() => {
                         currentIndex = nextIndex;
-                        renderReview(reviews[currentIndex]);
+                        renderReview(refs, reviews[currentIndex]);
                         card.style.opacity = '1';
                     }, fadeDuration);
                 }, intervalMs);
