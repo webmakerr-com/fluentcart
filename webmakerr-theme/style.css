@@ -40,3 +40,10 @@ body {
 .col-md-3 {
     width: 15%;
 }
+
+@media (max-width: 767.98px) {
+    #fc-product-related,
+    .fc-product-section--related {
+        display: none !important;
+    }
+}

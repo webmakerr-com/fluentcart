@@ -75,6 +75,7 @@ if ($post instanceof WP_Post) {
                             <div class="fc-product-description">
                                 <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                             </div>
+                            <?php $renderer->renderHowItWorks(); ?>
                         </div>
                     </section>
 
