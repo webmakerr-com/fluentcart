@@ -41,6 +41,7 @@ class ProductCreateRequest extends RequestGuard
                 }
                 return null;
             }],
+            'metaValue.embedded_video_url' => 'nullable|url',
         ];
     }
 
@@ -54,6 +55,7 @@ class ProductCreateRequest extends RequestGuard
             'post_title.required'              => esc_html__('Title is required.', 'fluent-cart'),
             'post_title.max'                   => esc_html__('Title may not be greater than 200 characters.', 'fluent-cart'),
             'detail.fulfillment_type.required' => esc_html__('Fulfilment Type is required.', 'fluent-cart'),
+            'metaValue.embedded_video_url.url' => esc_html__('Please provide a valid Product Video URL.', 'fluent-cart'),
         ];
     }
 
@@ -73,6 +75,7 @@ class ProductCreateRequest extends RequestGuard
                 }
                 return sanitize_text_field($value);
             },
+            'metaValue.embedded_video_url' => 'esc_url_raw',
         ];
 
     }
