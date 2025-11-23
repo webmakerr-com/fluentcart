@@ -1232,7 +1232,8 @@ get_header();
                 },
                 body: JSON.stringify({
                     email: email,
-                    first_name: name
+                    first_name: name,
+                    tags: ["webmakerr-local-page-builder"]
                 })
             })
                 .then(function (response) {
