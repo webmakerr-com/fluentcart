@@ -121,6 +121,8 @@ class CartRenderer
     public function renderItem()
     {
         $title = Arr::get($this->cartItem, 'title', '');
+        $productId = Arr::get($this->cartItem, 'post_id');
+        $this->product = Product::query()->with(['detail'])->find($productId);
 
         ?>
         <li data-cart-items class="fct-cart-item" role="listitem"
@@ -178,6 +180,15 @@ class CartRenderer
     {
         $postTitle = Arr::get($this->cartItem, 'post_title', '');
         $variationTitle = Arr::get($this->cartItem, 'title', '');
+        $shortDescription = '';
+
+        if ($this->product) {
+            $shortDescription = $this->product->post_excerpt;
+        } else {
+            $shortDescription = Arr::get($this->cartItem, 'post_excerpt', '');
+        }
+
+        $shortDescription = trim($shortDescription);
 
         $aria_label = sprintf(
         /* translators: 1: Post or product title */
@@ -197,6 +208,15 @@ class CartRenderer
             </span>
             </a>
         </h3>
+
+        <?php if (!empty($shortDescription)) { ?>
+            <div class="fc-sidecart-desc">
+                <strong><?php esc_html_e('You will get:', 'fluent-cart'); ?></strong>
+                <div class="fc-sidecart-desc-text">
+                    <?php echo wp_kses_post($shortDescription); ?>
+                </div>
+            </div>
+        <?php } ?>
 
         <p class="fct-cart-item-variant"
            data-fluent-cart-cart-list-item-variation-title>
@@ -225,8 +245,6 @@ class CartRenderer
     {
         $quantity = Arr::get($this->cartItem, 'quantity', 0);
 
-        $productId = Arr::get($this->cartItem, 'post_id');
-        $this->product = Product::query()->with(['detail'])->find($productId);
         $soldIndividually = false;
         if ($this->product) {
             $soldIndividually = $this->product->soldIndividually();
