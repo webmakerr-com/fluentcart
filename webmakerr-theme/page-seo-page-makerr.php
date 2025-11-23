@@ -810,7 +810,7 @@ get_header();
                         Create one master layout with smart fields for city, state, services, FAQs, images, and CTAs—then let Webmakerr fill in the details.
                     </p>
 
-                    <img src="https://cdn.webmakerr.com/website/facebook-ads-3.png" alt="Local page template graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/web-loacal-page1.png" alt="Local page template graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -826,7 +826,7 @@ get_header();
                         Bulk-generate pages for every city or service while keeping branding consistent and URLs organized for search.
                     </p>
 
-                    <img src="https://cdn.webmakerr.com/website/facebook-ads-1.png" alt="Bulk publishing graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/web-page-loacl-2.png" alt="Bulk publishing graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -842,7 +842,7 @@ get_header();
                         Set meta titles, descriptions, and schema once, then apply them to every location variant to keep pages clean and compliant.
                     </p>
 
-                    <img src="https://cdn.webmakerr.com/website/facebook-ads-2.png" alt="Local SEO toolkit graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/web-page-local-3.png" alt="Local SEO toolkit graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
 
                 </div>
             </div>
