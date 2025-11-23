@@ -12,7 +12,12 @@
     $post_views_count     = getPostViews($post->ID);
     $is_item_single_post  = get_query_var( 'raphael_is_item_single_post', null );
 
-    if ( null === $is_item_single_post || '' === $is_item_single_post ) {
+    if (
+        $post instanceof WP_Post
+        && $post->post_type === 'fluent-products'
+    ) {
+        $is_item_single_post = true;
+    } elseif ( null === $is_item_single_post || '' === $is_item_single_post ) {
         $is_item_single_post = (
             is_single()
             && $post instanceof WP_Post
