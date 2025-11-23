@@ -498,8 +498,16 @@ add_action( 'wp_ajax_nopriv_load_webp_png', 'do_webp_to_png' );
 
 // Disable the Gutenberg block editor and related features globally.
 // Disable Gutenberg only for pages and posts
-function wm_disable_gutenberg_for_posts_pages( $use_block_editor, $post ) {
-    if ( $post->post_type === 'page' || $post->post_type === 'post' ) {
+function wm_disable_gutenberg_for_posts_pages( $use_block_editor, $post_or_type ) {
+    $post_type = '';
+
+    if ( is_object( $post_or_type ) && isset( $post_or_type->post_type ) ) {
+        $post_type = $post_or_type->post_type;
+    } elseif ( is_string( $post_or_type ) ) {
+        $post_type = $post_or_type;
+    }
+
+    if ( $post_type === 'page' || $post_type === 'post' ) {
         return false; // Force Classic Editor
     }
     return $use_block_editor; // Keep Gutenberg for everything else
