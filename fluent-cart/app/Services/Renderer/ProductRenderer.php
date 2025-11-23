@@ -191,6 +191,59 @@ class ProductRenderer
                                     <div class="fct-product-description">
                                         <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
                                     </div>
+
+                                    <div class="fct-how-it-works mt-4">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <h4 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('How it works', 'fluent-cart'); ?></h4>
+                                            <span class="small text-muted"><?php esc_html_e('Fast and frictionless', 'fluent-cart'); ?></span>
+                                        </div>
+                                        <div class="row g-3 g-md-4">
+                                            <div class="col-12 col-md-4">
+                                                <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
+                                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#edf7ff);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                            <path d="M6 6h14l-1.2 7H8" stroke="#4f46e5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <circle cx="9" cy="19" r="1.25" stroke="#4f46e5" stroke-width="1.5"/>
+                                                            <circle cx="17" cy="19" r="1.25" stroke="#4f46e5" stroke-width="1.5"/>
+                                                            <path d="M6 6l-1 0" stroke="#4f46e5" stroke-width="1.5" stroke-linecap="round"/>
+                                                        </svg>
+                                                    </span>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-semibold text-body">Add to Cart</span>
+                                                        <span class="text-muted small">Select your perfect option</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
+                                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#ecfdf3,#e0f2f1);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                            <path d="M7 9l5 5 5-5" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <rect x="4" y="4" width="16" height="16" rx="4" stroke="#10b981" stroke-width="1.5"/>
+                                                        </svg>
+                                                    </span>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-semibold text-body">Place the Order</span>
+                                                        <span class="text-muted small">Secure checkout in seconds</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4">
+                                                <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
+                                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#e0f2fe);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                            <path d="M7 12l3 3 7-7" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12 4a8 8 0 100 16 8 8 0 000-16z" stroke="#2563eb" stroke-width="1.5"/>
+                                                        </svg>
+                                                    </span>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-semibold text-body">Instant Delivery</span>
+                                                        <span class="text-muted small">Confirmation right away</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
 
