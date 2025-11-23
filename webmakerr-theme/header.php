@@ -4,7 +4,7 @@
         <link rel="shortcut icon" href="<?php _cz( 'tp_favicon' ); ?>"/>
         <meta charset="<?php bloginfo( 'charset' ); ?>">
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
     <?php
     global $ADSTM;
     if(isset($ADSTM[ 'product' ])) {
