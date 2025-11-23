@@ -198,6 +198,7 @@ class ProductUpdateRequest extends RequestGuard
             }],
             'detail.other_info.active_editor'     => 'nullable|sanitizeText',
             'product_terms'                       => 'nullable|array',
+            'metaValue.embedded_video_url'        => 'nullable|url',
             'product_terms.*'                     => 'nullable|array',
             'product_terms.*.*'                   => 'nullable|numeric',
 
@@ -291,6 +292,7 @@ class ProductUpdateRequest extends RequestGuard
             'variants.*.item_price.required'      => esc_html__('Price is required.', 'fluent-cart'),
             'variants.*.item_price.numeric'       => esc_html__('Price must be a number.', 'fluent-cart'),
             'variants.*.item_price.min'           => esc_html__('Price must be a positive number greater than 0.', 'fluent-cart'),
+            'metaValue.embedded_video_url.url'    => esc_html__('Please provide a valid Product Video URL.', 'fluent-cart'),
 
         ];
 
