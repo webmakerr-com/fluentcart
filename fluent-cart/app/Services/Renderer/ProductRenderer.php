@@ -198,8 +198,8 @@ class ProductRenderer
                                             <h4 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('How it works', 'fluent-cart'); ?></h4>
                                             <span class="small text-muted"><?php esc_html_e('Fast and frictionless', 'fluent-cart'); ?></span>
                                         </div>
-                                        <div class="row g-3 g-md-4">
-                                            <div class="col-12 col-md-4">
+                                        <div class="row row-cols-1 row-cols-md-3 g-3 g-md-4 fct-how-it-works-grid">
+                                            <div class="col">
                                                 <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                                                     <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#edf7ff);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -215,7 +215,7 @@ class ProductRenderer
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4">
+                                            <div class="col">
                                                 <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                                                     <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#ecfdf3,#e0f2f1);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -229,7 +229,7 @@ class ProductRenderer
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4">
+                                            <div class="col">
                                                 <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                                                     <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#e0f2fe);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -463,6 +463,106 @@ class ProductRenderer
 
                 moveToMobile();
                 window.addEventListener('resize', moveToMobile);
+            })();
+        </script>
+        <script>
+            (() => {
+                const mobileBar = document.querySelector('[data-fct-mobile-cta]');
+                if (!mobileBar) {
+                    return;
+                }
+
+                const button = mobileBar.querySelector('.fct-mobile-cta-button');
+                const labelNode = mobileBar.querySelector('.fct-button-text');
+                const quantityInput = document.querySelector('[data-fluent-cart-single-product-page-product-quantity-input]');
+                const priceTemplate = <?php echo wp_json_encode(__('Buy Now (%s)', 'fluent-cart')); ?>;
+                const fallbackLabel = <?php echo wp_json_encode($buttonConfig['buy_button_text']); ?>;
+
+                const getActiveVariationId = () => {
+                    const selected = document.querySelector('[data-fluent-cart-product-variant].selected');
+                    return selected ? selected.getAttribute('data-cart-id') : button ? button.getAttribute('data-cart-id') : '';
+                };
+
+                const getPriceLabel = (variationId) => {
+                    if (!variationId) {
+                        return '';
+                    }
+
+                    const selector = `[data-variation-id="${variationId}"]`;
+                    const priceEl = document.querySelector(`[data-fluent-cart-product-item-price]${selector}:not(.is-hidden)`);
+                    const paymentEl = document.querySelector(`[data-fluent-cart-product-payment-type]${selector}:not(.is-hidden)`);
+                    const target = priceEl && !priceEl.classList.contains('is-hidden') ? priceEl : paymentEl;
+
+                    return target ? target.textContent.trim() : '';
+                };
+
+                const getQuantity = () => {
+                    if (!quantityInput) {
+                        return 1;
+                    }
+
+                    const value = parseInt(quantityInput.value, 10);
+                    return Number.isNaN(value) || value < 1 ? 1 : value;
+                };
+
+                const updateButton = (variationId) => {
+                    if (!button || !variationId) {
+                        return;
+                    }
+
+                    const priceText = getPriceLabel(variationId);
+                    if (labelNode) {
+                        labelNode.textContent = priceText ? priceTemplate.replace('%s', priceText) : fallbackLabel;
+                    }
+
+                    button.setAttribute('data-cart-id', variationId);
+                    const baseUrl = button.getAttribute('data-url') || '';
+                    button.setAttribute('href', `${baseUrl}${variationId}&quantity=${getQuantity()}`);
+                };
+
+                const syncState = () => updateButton(getActiveVariationId());
+
+                window.addEventListener('fluentCartSingleProductVariationChanged', (event) => {
+                    if (event?.detail?.variationId) {
+                        updateButton(String(event.detail.variationId));
+                    }
+                });
+
+                if (quantityInput) {
+                    ['input', 'change'].forEach((evt) => {
+                        quantityInput.addEventListener(evt, syncState);
+                    });
+                }
+
+                syncState();
+            })();
+        </script>
+        <script>
+            (() => {
+                const relatedSection = document.querySelector('.fct-similar-product-list-container');
+                const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+                if (!relatedSection || !mobileQuery) {
+                    return;
+                }
+
+                const cleanTrailingEmpties = () => {
+                    if (!mobileQuery.matches) {
+                        return;
+                    }
+
+                    let node = relatedSection.nextElementSibling;
+                    while (node) {
+                        const next = node.nextElementSibling;
+                        if (!node.children.length && !node.textContent.trim()) {
+                            node.remove();
+                        }
+                        node = next;
+                    }
+                };
+
+                mobileQuery.addEventListener('change', cleanTrailingEmpties);
+                cleanTrailingEmpties();
             })();
         </script>
         <?php
