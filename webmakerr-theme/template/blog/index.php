@@ -4,7 +4,6 @@ get_template_part( 'template/blog/tpl/_top_category_menu' );
 get_template_part( 'template/blog/tpl/_print_blog_post_item' );
 $is_blog_single_page = is_single();
 $blog_page_title = get_the_title( get_option('page_for_posts', true) );
-$is_item_permalink = function_exists( 'raphael_is_item_permalink' ) ? raphael_is_item_permalink() : false;
 
 global $post;
 $current_post = get_post();
@@ -154,13 +153,11 @@ $blog_wrapper_class_attr = esc_attr( implode( ' ', array_unique( $blog_wrapper_c
         </div>
 
         <div class="container">
-            <?php if ( ! $is_item_permalink ): ?>
-                <div id="blog-top-category-menu" class="blog-top-category-menu-wrap">
+            <div id="blog-top-category-menu" class="blog-top-category-menu-wrap">
 
-                    <?php get_top_blog_category_menu( 'blog-top-category-menu-list', 'active', true, 'blog-top-category-mobile-menu' ); ?>
+                <?php get_top_blog_category_menu( 'blog-top-category-menu-list', 'active', true, 'blog-top-category-mobile-menu' ); ?>
 
-                </div>
-            <?php endif; ?>
+            </div>
 
             <?php if ( wp_is_mobile() ): ?>
 
@@ -425,9 +422,9 @@ $blog_wrapper_class_attr = esc_attr( implode( ' ', array_unique( $blog_wrapper_c
 
         <div class="container">
             <div class="blog-top-category-menu-wrap">
-                <?php if ( ! $is_item_permalink ): ?>
-                    <?php get_top_blog_category_menu( 'blog-top-category-menu-list', 'active', true, 'blog-top-category-mobile-menu' ); ?>
-                <?php endif; ?>
+
+                <?php get_top_blog_category_menu( 'blog-top-category-menu-list', 'active', true, 'blog-top-category-mobile-menu' ); ?>
+
             </div>
         </div>
 
