@@ -72,14 +72,6 @@ if ( ! function_exists( 'raphael_is_item_permalink' ) ) {
         }
 }
 
-add_filter( 'get_the_category_list', function ( $thelist, $separator = '', $parents = '', $post_id = false ) {
-        if ( raphael_is_item_permalink() ) {
-                return '';
-        }
-
-        return $thelist;
-}, 10, 4 );
-
 add_action( 'wp_head', function () {
         if ( ! raphael_is_item_permalink() ) {
                 return;
