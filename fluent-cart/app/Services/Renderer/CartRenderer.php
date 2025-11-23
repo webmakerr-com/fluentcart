@@ -126,7 +126,11 @@ class CartRenderer
         $shortDescription = $this->getShortDescription();
 
         ?>
-        <li data-cart-items class="fct-cart-item" role="listitem"
+        <li data-cart-items
+            data-cart-item-id="<?php echo esc_attr($this->cartItem['object_id']); ?>"
+            data-fluent-cart-included-text="<?php echo esc_attr(wp_strip_all_tags($shortDescription)); ?>"
+            data-fluent-cart-included-label="<?php esc_attr_e('You will get:', 'fluent-cart'); ?>"
+            class="fct-cart-item" role="listitem"
             aria-label="<?php echo esc_attr($title); ?>">
             <div class="fct-cart-item-info">
                 <?php $this->renderImage(); ?>
