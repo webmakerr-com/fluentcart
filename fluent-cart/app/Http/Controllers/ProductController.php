@@ -127,6 +127,8 @@ class ProductController extends Controller
         ]);
 
         if ($createdProductDetail) {
+            $this->maybeUpdateProductMeta($createdPostId, Arr::get($data, 'metaValue', []));
+
             return $this->sendSuccess([
                 'data'    => [
                     'ID'              => $createdPostId,
@@ -184,7 +186,26 @@ class ProductController extends Controller
             'product' => $isUpdated['data']
         ]);
 
+        $this->maybeUpdateProductMeta($postId, Arr::get($data, 'metaValue', []));
+
         return $this->response->sendSuccess($isUpdated);
+    }
+
+    protected function maybeUpdateProductMeta($postId, array $metaValue = [])
+    {
+        if (!Arr::has($metaValue, 'embedded_video_url')) {
+            return;
+        }
+
+        $videoUrl = esc_url_raw(Arr::get($metaValue, 'embedded_video_url'));
+
+        $product = Product::find($postId);
+
+        if (!$product) {
+            return;
+        }
+
+        $product->updateProductMeta('embedded_video_url', $videoUrl ?: '', 'product_video');
     }
 
     public function updateLongDescEditorMode(Request $request, $postId)
