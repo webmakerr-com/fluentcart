@@ -441,8 +441,22 @@ class ProductRenderer
                     const priceEl = document.querySelector(`[data-fluent-cart-product-item-price]${selector}:not(.is-hidden)`);
                     const paymentEl = document.querySelector(`[data-fluent-cart-product-payment-type]${selector}:not(.is-hidden)`);
                     const target = priceEl && !priceEl.classList.contains('is-hidden') ? priceEl : paymentEl;
+                    if (!target) {
+                        return '';
+                    }
 
-                    return target ? target.textContent.trim() : '';
+                    const dataPrice = target.getAttribute('data-fct-final-price');
+                    if (dataPrice) {
+                        return dataPrice.trim();
+                    }
+
+                    const normalized = target.textContent ? target.textContent.replace(/\s+/g, ' ').trim() : '';
+                    if (!normalized) {
+                        return '';
+                    }
+
+                    const parts = normalized.split(' ');
+                    return parts.length ? parts[parts.length - 1] : normalized;
                 };
 
                 const getQuantity = () => {
@@ -903,8 +917,8 @@ class ProductRenderer
                 <h4 class="h6 text-uppercase text-muted mb-0"><?php esc_html_e('How Does It Work', 'fluent-cart'); ?></h4>
                 <span class="small text-muted"><?php esc_html_e('Fast and frictionless', 'fluent-cart'); ?></span>
             </div>
-            <div class="row row-cols-1 row-cols-md-3 g-3 g-md-4 fct-how-it-works-grid">
-                <div class="col">
+            <div class="fct-how-it-works-grid">
+                <div class="fct-how-it-works-item">
                     <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#edf7ff);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -920,7 +934,7 @@ class ProductRenderer
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="fct-how-it-works-item">
                     <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#ecfdf3,#e0f2f1);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -934,7 +948,7 @@ class ProductRenderer
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="fct-how-it-works-item">
                     <div class="d-flex align-items-center gap-3 p-3 border rounded-3 bg-white shadow-sm h-100">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:linear-gradient(135deg,#eef2ff,#e0f2fe);box-shadow:0 8px 20px rgba(0,0,0,0.04);">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -1553,11 +1567,19 @@ class ProductRenderer
         <?php if ($this->viewType !== 'text' || $this->columnType !== 'one'): ?>
 
         <?php
-        foreach ($this->product->variants as $variant): ?>
+        foreach ($this->product->variants as $variant):
+            $formattedPrice = apply_filters('fluent_cart/single_product/variation_price', esc_html(Helper::toDecimal($variant->item_price)), [
+                'product' => $this->product,
+                'variant' => $variant,
+                'scope'   => 'product_variant_price'
+            ]);
+            $finalPriceText = wp_strip_all_tags($formattedPrice);
+            ?>
             <div
                     class="fct-product-item-price fluent-cart-product-variation-content <?php echo $this->defaultVariant->id != $variant->id ? ' is-hidden' : '' ?>"
                     data-fluent-cart-product-item-price
                     data-variation-id="<?php echo esc_attr($variant->id); ?>"
+                    data-fct-final-price="<?php echo esc_attr($finalPriceText); ?>"
             >
 
                 <?php if ($this->defaultVariant && !$this->hasSubscription) {
@@ -1567,11 +1589,7 @@ class ProductRenderer
                         </span>
                     <?php endif;
 
-                    echo wp_kses_post(apply_filters('fluent_cart/single_product/variation_price', esc_html(Helper::toDecimal($variant->item_price)), [
-                            'product' => $this->product,
-                            'variant' => $variant,
-                            'scope'   => 'product_variant_price'
-                    ]));
+                    echo wp_kses_post($formattedPrice);
                     do_action('fluent_cart/product/after_price', [
                             'product'       => $this->product,
                             'current_price' => $variant->item_price,
@@ -1588,10 +1606,14 @@ class ProductRenderer
         foreach ($this->product->variants as $variant): ?>
             <?php
             $paymentType = Arr::get($variant->other_info, 'payment_type', 'onetime');
+            $finalPriceText = $paymentType === 'onetime'
+                ? Helper::toDecimal($variant->item_price)
+                : wp_strip_all_tags($variant->getSubscriptionTermsText(true));
             $atts = [
                     'class'                                 => 'fct-product-payment-type fluent-cart-product-variation-content ' . ($paymentType !== 'subscription' || $this->defaultVariant->id != $variant->id ? ' is-hidden' : ''),
                     'data-fluent-cart-product-payment-type' => '',
-                    'data-variation-id'                     => $variant->id
+                    'data-variation-id'                     => $variant->id,
+                    'data-fct-final-price'                  => esc_attr($finalPriceText)
             ];
             ?>
             <div <?php $this->renderAttributes($atts); ?>>
