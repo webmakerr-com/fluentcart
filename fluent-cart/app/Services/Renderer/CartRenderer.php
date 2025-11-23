@@ -133,7 +133,15 @@ class CartRenderer
                 <?php $this->renderDetails(); ?>
             </div>
             <?php $this->renderSummary(); ?>
-            <?php $this->renderIncluded($shortDescription); ?>
+            <?php if ($shortDescription) { ?>
+                <div class="fct-cart-item-separator" aria-hidden="true"></div>
+                <div class="fc-sidecart-included">
+                    <strong><?php esc_html_e('You will get:', 'fluent-cart'); ?></strong>
+                    <div class="fc-sidecart-included-text">
+                        <?php echo wp_kses_post($shortDescription); ?>
+                    </div>
+                </div>
+            <?php } ?>
         </li>
 
         <?php
@@ -406,24 +414,6 @@ class CartRenderer
         }
 
         return trim($shortDescription);
-    }
-
-    public function renderIncluded($shortDescription)
-    {
-        if (empty($shortDescription)) {
-            return;
-        }
-
-        ?>
-        <div class="fct-cart-item-separator" aria-hidden="true"></div>
-        <div class="fc-sidecart-included">
-            <strong><?php esc_html_e('You will get:', 'fluent-cart'); ?></strong>
-            <div class="fc-sidecart-included-text">
-                <?php echo wp_kses_post($shortDescription); ?>
-            </div>
-        </div>
-
-        <?php
     }
 
     public function renderCheckoutButton()
