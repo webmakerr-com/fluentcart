@@ -18,6 +18,8 @@ class ProductCardRender
 
     protected $cardVariant = 'default';
 
+    protected $imageData = [];
+
     public function __construct(Product $product, $config = [])
     {
         $this->product = $product;
@@ -42,6 +44,12 @@ class ProductCardRender
         $cursor = '';
         if (!empty($this->config['cursor'])) {
             $cursor = 'data-fluent-cart-cursor="' . esc_attr($this->config['cursor']) . '"';
+        }
+
+        $this->imageData = $this->prepareImageData();
+
+        if ($this->cardVariant === 'related' && Arr::get($this->imageData, 'is_placeholder')) {
+            return;
         }
 
         $cardWidth = '';
@@ -120,19 +128,12 @@ class ProductCardRender
 
     public function renderProductImage()
     {
-        $image = $this->product->thumbnail;
-        $isPlaceholder = false;
-
-        if (!$image) {
-            $image = Vite::getAssetUrl('images/placeholder.svg');
-            $isPlaceholder = true;
+        if (!$this->imageData) {
+            $this->imageData = $this->prepareImageData();
         }
 
-        $altText = $isPlaceholder
-                ? sprintf(
-                /* translators: %s: product title */
-                        __('Placeholder image for %s', 'fluent-cart'), $this->product->post_title)
-                : $this->product->post_title;
+        $image = Arr::get($this->imageData, 'src');
+        $altText = Arr::get($this->imageData, 'alt_text');
         ?>
         <a class="fct-product-card-image-wrap"
            href="<?php echo esc_url($this->viewUrl); ?>"
@@ -149,6 +150,25 @@ class ProductCardRender
                  height="270"/>
         </a>
         <?php
+    }
+
+    protected function prepareImageData()
+    {
+        $image = $this->product->thumbnail;
+        $placeholder = Vite::getAssetUrl('images/placeholder.svg');
+
+        $isPlaceholder = !$image || $image === $placeholder;
+        $imageSrc = $isPlaceholder ? $placeholder : $image;
+
+        return [
+            'src'            => $imageSrc,
+            'is_placeholder' => $isPlaceholder,
+            'alt_text'       => $isPlaceholder
+                ? sprintf(
+                    /* translators: %s: product title */
+                    __('Placeholder image for %s', 'fluent-cart'), $this->product->post_title)
+                : $this->product->post_title,
+        ];
     }
 
     public function renderPrices($wrapper_attributes = '')
