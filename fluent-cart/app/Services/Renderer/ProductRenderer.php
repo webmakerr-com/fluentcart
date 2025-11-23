@@ -188,7 +188,6 @@ class ProductRenderer
                             <section class="card shadow-sm">
                                 <div class="card-body">
                                     <h3 class="h5 mb-3"><?php esc_html_e('About this service', 'fluent-cart'); ?></h3>
-                                    <?php $this->renderEmbeddedVideo(); ?>
                                     <div class="fct-product-description">
                                         <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
                                     </div>
@@ -435,59 +434,6 @@ class ProductRenderer
             })();
         </script>
         <?php
-    }
-
-    protected function renderEmbeddedVideo()
-    {
-        $videoHtml = $this->getEmbeddedVideoHtml();
-
-        if (!$videoHtml) {
-            return;
-        }
-
-        $allowedTags = wp_kses_allowed_html('post');
-        $allowedTags['iframe'] = [
-            'src'             => true,
-            'width'           => true,
-            'height'          => true,
-            'frameborder'     => true,
-            'allow'           => true,
-            'allowfullscreen' => true,
-            'loading'         => true,
-            'referrerpolicy'  => true,
-        ];
-
-        ?>
-        <div class="fct-product-video ratio ratio-16x9 mb-3">
-            <?php echo wp_kses($videoHtml, $allowedTags); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-        </div>
-        <?php
-    }
-
-    protected function getEmbeddedVideoHtml()
-    {
-        $videoUrl = trim((string)$this->product->getProductMeta('embedded_video_url', null, ''));
-
-        if (!$videoUrl) {
-            return '';
-        }
-
-        $embedded = wp_oembed_get($videoUrl);
-
-        if ($embedded) {
-            return $embedded;
-        }
-
-        $sanitizedUrl = esc_url($videoUrl);
-
-        if (!$sanitizedUrl) {
-            return '';
-        }
-
-        return sprintf(
-            '<iframe src="%s" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>',
-            $sanitizedUrl
-        );
     }
 
     public function renderRatingSummary()
