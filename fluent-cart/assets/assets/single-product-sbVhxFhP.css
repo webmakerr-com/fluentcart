@@ -62,6 +62,12 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
 @media (max-width: 767px) {
   .fct-single-product-page {
     padding-bottom: 90px;
+    overflow-x: hidden;
+  }
+  .fct-single-product-page .container,
+  .fct-single-product-page .row {
+    max-width: 100%;
+    overflow-x: hidden;
   }
   .fct-single-product-page .container {
     padding-left: 0;
@@ -86,6 +92,17 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
   }
   .fct-single-product-page .card-body {
     padding: 16px 14px;
+  }
+  .fct-mobile-purchase-box {
+    margin: 12px 0;
+  }
+  .fct-mobile-purchase-box .card-body {
+    padding: 18px 16px;
+  }
+  .fct-contact-support,
+  .fct-single-product-page .fct-how-it-works,
+  .fct-single-product-page .fct-gig-tabs {
+    display: none;
   }
   .fct-single-product-page section.card + section.card {
     margin-top: 12px;
@@ -162,13 +179,13 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
     justify-content: center;
     gap: 8px;
   }
-      .fct-mobile-cta-savings {
-        margin: 6px auto 0;
-        display: flex;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-      }
+  .fct-mobile-cta-savings {
+    margin: 6px auto 0;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .fct-mobile-cta-bar[data-fct-mobile-cta-fallback="true"] .fct-mobile-cta-savings {
     display: flex;
     justify-content: center;

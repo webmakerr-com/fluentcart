@@ -177,6 +177,7 @@ class ProductRenderer
                                     <div class="border rounded-3 overflow-hidden">
                                         <?php $this->renderGallery(); ?>
                                     </div>
+                                    <div class="fct-mobile-purchase-anchor d-md-none" aria-hidden="true"></div>
                                     <?php $this->renderTitle(); ?>
                                     <?php $this->renderReviewRotator(); ?>
                                     <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
@@ -267,8 +268,8 @@ class ProductRenderer
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="position-sticky" style="top: 90px;">
-                            <div class="card shadow-sm fct-gig-purchase-box">
+                        <div class="position-sticky" style="top: 90px;" data-fct-desktop-purchase-wrapper>
+                            <div class="card shadow-sm fct-gig-purchase-box" data-fct-purchase-box>
                                 <div class="card-body">
                                     <div class="d-flex align-items-start justify-content-between mb-3">
                                         <div>
@@ -283,7 +284,7 @@ class ProductRenderer
                                 </div>
                             </div>
 
-                            <div class="mt-3">
+                            <div class="mt-3 fct-contact-support">
                                 <a href="<?php echo esc_url(site_url('/contact')); ?>"
                                    class="btn w-100"
                                    style="border:1px solid #e0e0e0;background-color:#fff;color:#6c757d;border-radius:4px;font-size:0.875rem;"
@@ -431,6 +432,37 @@ class ProductRenderer
                     savings.style.justifyContent = 'center';
                     savings.style.margin = savings.style.margin || '6px auto 0';
                 }
+            })();
+        </script>
+        <script>
+            (() => {
+                const anchor = document.querySelector('.fct-mobile-purchase-anchor');
+                const purchaseBox = document.querySelector('[data-fct-purchase-box]');
+                const desktopWrapper = document.querySelector('[data-fct-desktop-purchase-wrapper]');
+
+                if (!anchor || !purchaseBox || !desktopWrapper) {
+                    return;
+                }
+
+                const moveToMobile = () => {
+                    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+                    if (isMobile) {
+                        if (purchaseBox.parentElement !== anchor.parentElement) {
+                            anchor.parentElement.insertBefore(purchaseBox, anchor.nextSibling);
+                            purchaseBox.classList.add('fct-mobile-purchase-box');
+                        }
+                        return;
+                    }
+
+                    if (purchaseBox.parentElement !== desktopWrapper) {
+                        desktopWrapper.insertBefore(purchaseBox, desktopWrapper.firstChild);
+                        purchaseBox.classList.remove('fct-mobile-purchase-box');
+                    }
+                };
+
+                moveToMobile();
+                window.addEventListener('resize', moveToMobile);
             })();
         </script>
         <?php
