@@ -328,14 +328,172 @@ class ProductRenderer
 
     public function renderRatingSummary()
     {
-        $rating = apply_filters('fluent_cart/product/rating_value', 4.9, $this->product);
-        $ratingCount = apply_filters('fluent_cart/product/rating_count', 0, $this->product);
+        $rating = apply_filters('fluent_cart/product/rating_value', 4.5, $this->product);
+        $ratingCount = apply_filters('fluent_cart/product/rating_count', 5147, $this->product);
 
         ?>
-        <div class="d-flex align-items-center gap-1 fct-rating-summary">
-            <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-            <span class="fw-semibold text-dark"><?php echo esc_html(number_format_i18n($rating, 1)); ?></span>
-            <span class="text-muted">(<?php echo esc_html(number_format_i18n(max(0, $ratingCount))); ?>)</span>
+        <div class="fct-rating-summary fct-amazon-rating d-inline-flex position-relative align-items-center" aria-label="Product rating summary">
+            <style>
+                .fct-amazon-rating {
+                    gap: 8px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    line-height: 1.2;
+                }
+
+                .fct-amazon-rating__score {
+                    font-weight: 600;
+                    color: #0F1111;
+                }
+
+                .fct-amazon-rating__stars {
+                    color: #ff9900;
+                    letter-spacing: 1px;
+                    font-size: 15px;
+                }
+
+                .fct-amazon-rating__count {
+                    color: #007185;
+                    text-decoration: none;
+                    font-weight: 500;
+                    white-space: nowrap;
+                }
+
+                .fct-amazon-rating__count:hover,
+                .fct-amazon-rating__count:focus {
+                    text-decoration: underline;
+                }
+
+                .fct-amazon-rating__popover {
+                    position: absolute;
+                    top: 140%;
+                    left: 0;
+                    background: #fff;
+                    border: 1px solid #d5d9d9;
+                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+                    border-radius: 10px;
+                    padding: 16px;
+                    min-width: 280px;
+                    z-index: 5;
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateY(8px);
+                    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+                }
+
+                .fct-amazon-rating:hover .fct-amazon-rating__popover,
+                .fct-amazon-rating:focus-within .fct-amazon-rating__popover {
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateY(0);
+                }
+
+                .fct-amazon-rating__heading {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: #0F1111;
+                    margin-bottom: 4px;
+                }
+
+                .fct-amazon-rating__subtext {
+                    color: #565959;
+                    font-size: 13px;
+                    margin-bottom: 12px;
+                }
+
+                .fct-amazon-rating__global {
+                    color: #0F1111;
+                    font-size: 13px;
+                    margin-bottom: 12px;
+                    font-weight: 500;
+                }
+
+                .fct-amazon-rating__breakdown {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                }
+
+                .fct-amazon-rating__row {
+                    display: grid;
+                    grid-template-columns: 26px 1fr 40px;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 12px;
+                    color: #0F1111;
+                }
+
+                .fct-amazon-rating__bar {
+                    position: relative;
+                    height: 12px;
+                    background: #f0f2f2;
+                    border-radius: 999px;
+                    overflow: hidden;
+                }
+
+                .fct-amazon-rating__bar-fill {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    background: linear-gradient(90deg, #ffce00, #ffa700);
+                }
+
+                .fct-amazon-rating__footer {
+                    margin-top: 12px;
+                    font-size: 13px;
+                }
+
+                .fct-amazon-rating__footer a {
+                    color: #007185;
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+
+                .fct-amazon-rating__footer a:hover,
+                .fct-amazon-rating__footer a:focus {
+                    text-decoration: underline;
+                }
+            </style>
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="fct-amazon-rating__score"><?php echo esc_html(number_format_i18n($rating, 1)); ?></span>
+                <span class="fct-amazon-rating__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                <a class="fct-amazon-rating__count" href="#comments">
+                    <?php echo esc_html(number_format_i18n(max(0, $ratingCount))); ?> <?php esc_html_e('ratings', 'fluent-cart'); ?>
+                </a>
+            </div>
+
+            <div class="fct-amazon-rating__popover" role="note">
+                <div class="fct-amazon-rating__heading"><?php echo esc_html(number_format_i18n($rating, 1)); ?> <?php esc_html_e('out of 5', 'fluent-cart'); ?></div>
+                <div class="fct-amazon-rating__subtext"><?php esc_html_e('Average rating: ', 'fluent-cart'); ?><?php echo esc_html(number_format_i18n($rating, 1)); ?> <?php esc_html_e('out of 5 stars', 'fluent-cart'); ?></div>
+                <div class="fct-amazon-rating__global"><?php echo esc_html(number_format_i18n(max(0, $ratingCount))); ?> <?php esc_html_e('global ratings', 'fluent-cart'); ?></div>
+
+                <div class="fct-amazon-rating__breakdown" aria-label="Rating breakdown">
+                    <?php
+                    $ratingBreakdown = [
+                        5 => 76,
+                        4 => 11,
+                        3 => 5,
+                        2 => 2,
+                        1 => 6,
+                    ];
+                    foreach ($ratingBreakdown as $star => $percent) :
+                        ?>
+                        <div class="fct-amazon-rating__row">
+                            <span><?php echo esc_html($star); ?> star</span>
+                            <div class="fct-amazon-rating__bar" aria-hidden="true">
+                                <span class="fct-amazon-rating__bar-fill" style="width: <?php echo esc_attr($percent); ?>%;"></span>
+                            </div>
+                            <span><?php echo esc_html($percent); ?>%</span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="fct-amazon-rating__footer">
+                    <a href="#comments"><?php esc_html_e('See customer reviews', 'fluent-cart'); ?></a>
+                </div>
+            </div>
         </div>
         <?php
     }
