@@ -20,7 +20,6 @@ use FluentCart\App\CPT\FluentProducts;
 use FluentCart\App\Helpers\AdminHelper;
 use FluentCart\App\Models\AttributeTerm;
 use FluentCart\App\Models\AttributeGroup;
-use FluentCart\App\Models\ProductMeta;
 use FluentCart\App\Models\ShippingMethod;
 use FluentCart\App\Modules\Tax\TaxModule;
 use FluentCart\App\Helpers\CurrenciesHelper;
@@ -143,8 +142,6 @@ class MenuHandler
         // add_action('in_admin_header', array($this, 'maybeRenderAdminMenu'));
 
         add_action('edit_form_top', array($this, 'pushProductNav'));
-        add_action('edit_form_after_editor', [$this, 'renderProductVideoField']);
-        add_action('save_post_' . FluentProducts::CPT_NAME, [$this, 'saveProductVideoField']);
 
         add_action('admin_bar_menu', [$this, 'globalEnqueueAssets'], 10, 1);
     }
@@ -346,68 +343,6 @@ class MenuHandler
 
         AdminHelper::getProductMenu($post->ID, true, 'product_edit');
         AdminHelper::pushGlobalAdminAssets();
-    }
-
-    public function renderProductVideoField($post)
-    {
-        if (!$post || $post->post_type != FluentProducts::CPT_NAME) {
-            return;
-        }
-
-        $product = Product::query()->find($post->ID);
-
-        if (!$product) {
-            return;
-        }
-
-        $videoUrl = (string)$product->getProductMeta('embedded_video_url', null, '');
-
-        ?>
-        <div class="postbox">
-            <h2 class="hndle"><span><?php esc_html_e('Embedded Video URL', 'fluent-cart'); ?></span></h2>
-            <div class="inside">
-                <?php wp_nonce_field('fct_product_video_meta', 'fct_product_video_meta_nonce'); ?>
-                <p>
-                    <label class="screen-reader-text" for="fct_embedded_video_url"><?php esc_html_e('Embedded Video URL', 'fluent-cart'); ?></label>
-                    <input type="url" name="fct_embedded_video_url" id="fct_embedded_video_url" class="widefat" value="<?php echo esc_attr($videoUrl); ?>" placeholder="<?php esc_attr_e('https://', 'fluent-cart'); ?>" />
-                    <span class="description"><?php esc_html_e('Provide a URL to embed a video above the product description.', 'fluent-cart'); ?></span>
-                </p>
-            </div>
-        </div>
-        <?php
-    }
-
-    public function saveProductVideoField($postId)
-    {
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-
-        if (!current_user_can('edit_post', $postId)) {
-            return;
-        }
-
-        if (!isset($_POST['fct_product_video_meta_nonce']) || !wp_verify_nonce($_POST['fct_product_video_meta_nonce'], 'fct_product_video_meta')) {
-            return;
-        }
-
-        $videoUrl = isset($_POST['fct_embedded_video_url']) ? esc_url_raw(wp_unslash($_POST['fct_embedded_video_url'])) : '';
-
-        $product = Product::query()->find($postId);
-
-        if (!$product) {
-            return;
-        }
-
-        if ($videoUrl) {
-            $product->updateProductMeta('embedded_video_url', $videoUrl);
-            return;
-        }
-
-        ProductMeta::query()
-            ->where('object_id', $postId)
-            ->where('meta_key', 'embedded_video_url')
-            ->delete();
     }
 
     public function enqueueAssets()
