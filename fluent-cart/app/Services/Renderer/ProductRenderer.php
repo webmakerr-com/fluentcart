@@ -168,69 +168,20 @@ class ProductRenderer
     {
         ?>
         <div class="fct-single-product-page" data-fluent-cart-single-product-page>
-            <style>
-                .fct-single-product-page,
-                .fct-single-product-page .container,
-                .fct-single-product-page .row,
-                .fct-single-product-page .card {
-                    max-width: 100%;
-                    overflow-x: hidden;
-                }
-
-                .fct-single-product-page [data-fluent-cart-product-gallery-wrapper] {
-                    overflow: hidden;
-                }
-
-                .fct-hero-price-cta {
-                    gap: 12px;
-                }
-
-                @media (max-width: 991.98px) {
-                    .fct-hero-price-cta {
-                        align-items: flex-start;
-                    }
-
-                    .fct-single-product-page .fct-gig-body {
-                        padding-left: 0;
-                        padding-right: 0;
-                    }
-                }
-            </style>
             <div class="container fct-gig-body py-4">
                 <div class="row g-4">
-                    <div class="col-12">
+                    <div class="col-lg-8">
                         <div class="d-flex flex-column gap-4">
                             <section class="card shadow-sm">
                                 <div class="card-body d-flex flex-column gap-4">
                                     <div class="border rounded-3 overflow-hidden">
                                         <?php $this->renderGallery(); ?>
                                     </div>
-                                    <div class="fct-hero-purchase-box p-3 p-md-4 border rounded-3 bg-white shadow-sm">
-                                        <div class="d-flex flex-column gap-3">
-                                            <div class="d-flex flex-wrap justify-content-between gap-3">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <?php $this->renderTitle(); ?>
-                                                    <?php $this->renderStockAvailability('class="text-success fw-semibold"'); ?>
-                                                </div>
-                                                <div class="text-end text-muted small d-none d-md-block">
-                                                    <?php $this->renderRatingSummary(); ?>
-                                                </div>
-                                            </div>
-                                            <div class="fct-hero-price-cta d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-                                                <div class="fct-hero-price d-flex flex-column gap-1">
-                                                    <div class="text-muted small"><?php esc_html_e('Starting at', 'fluent-cart'); ?></div>
-                                                    <?php $this->renderPrices(); ?>
-                                                </div>
-                                                <div class="w-100 w-md-auto">
-                                                    <?php $this->renderBuySection(); ?>
-                                                </div>
-                                            </div>
-                                            <div class="text-muted small d-md-none">
-                                                <?php $this->renderRatingSummary(); ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php $this->renderTitle(); ?>
                                     <?php $this->renderReviewRotator(); ?>
+                                    <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
+                                        <?php $this->renderStockAvailability('class="text-success fw-semibold"'); ?>
+                                    </div>
                                 </div>
                             </section>
 
@@ -312,6 +263,37 @@ class ProductRenderer
                                     <?php $this->renderFaqSection(); ?>
                                 </div>
                             </section>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="position-sticky" style="top: 90px;">
+                            <div class="card shadow-sm fct-gig-purchase-box">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start justify-content-between mb-3">
+                                        <div>
+                                            <div class="text-muted small"><?php esc_html_e('Starting at', 'fluent-cart'); ?></div>
+                                            <?php $this->renderPrices(); ?>
+                                        </div>
+                                        <div class="text-end text-muted small">
+                                            <?php $this->renderRatingSummary(); ?>
+                                        </div>
+                                    </div>
+                                    <?php $this->renderBuySection(); ?>
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <a href="<?php echo esc_url(site_url('/contact')); ?>"
+                                   class="btn w-100"
+                                   style="border:1px solid #e0e0e0;background-color:#fff;color:#6c757d;border-radius:4px;font-size:0.875rem;"
+                                   aria-label="<?php esc_attr_e('Contact Us', 'fluent-cart'); ?>">
+                                    <?php esc_html_e('Contact Us', 'fluent-cart'); ?>
+                                </a>
+                                <p class="text-muted small text-center mb-0 mt-2">
+                                    <?php esc_html_e('Get answers fast — we respond within minutes.', 'fluent-cart'); ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
