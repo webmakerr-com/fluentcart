@@ -19,7 +19,7 @@ wp_enqueue_script(
 );
 
 $theme_dir = get_template_directory_uri();
-$checkout_url = 'https://webmakerr.com/?fluent-cart=instant_checkout&item_id=23&quantity=1';
+$checkout_url = 'https://webmakerr.com/?fluent-cart=instant_checkout&item_id=26&quantity=1';
 
 get_header();
 ?>
