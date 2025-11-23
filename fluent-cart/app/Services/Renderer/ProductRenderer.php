@@ -177,6 +177,11 @@ class ProductRenderer
                                     <div class="border rounded-3 overflow-hidden">
                                         <?php $this->renderGallery(); ?>
                                     </div>
+                                    <?php if ($this->hasEmbeddedVideo()) : ?>
+                                        <div class="fct-product-video-wrapper border rounded-3 overflow-hidden">
+                                            <?php $this->renderEmbeddedVideo(); ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <?php $this->renderTitle(); ?>
                                     <?php $this->renderReviewRotator(); ?>
                                     <div class="d-flex flex-wrap align-items-center gap-3 text-muted small fct-gig-meta">
@@ -188,7 +193,6 @@ class ProductRenderer
                             <section class="card shadow-sm">
                                 <div class="card-body">
                                     <h3 class="h5 mb-3"><?php esc_html_e('About this service', 'fluent-cart'); ?></h3>
-                                    <?php $this->renderEmbeddedVideo(); ?>
                                     <div class="fct-product-description">
                                         <?php echo wp_kses_post(wpautop($this->getFormattedContent())); ?>
                                     </div>
@@ -968,6 +972,11 @@ class ProductRenderer
         return $content;
     }
 
+    protected function hasEmbeddedVideo()
+    {
+        return (bool)$this->product->getProductMeta('embedded_video_url', 'product_video');
+    }
+
     protected function renderEmbeddedVideo()
     {
         $videoUrl = $this->product->getProductMeta('embedded_video_url', 'product_video');
@@ -992,7 +1001,7 @@ class ProductRenderer
             return;
         }
         ?>
-        <div class="fct-product-video ratio ratio-16x9 mb-3">
+        <div class="fct-product-video ratio ratio-16x9">
             <?php echo wp_kses_post($embed); ?>
         </div>
         <?php
