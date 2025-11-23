@@ -521,35 +521,35 @@ get_header();
         <div class="p-4 p-md-5 bg-white border rounded-4 shadow-sm row g-4 align-items-center hero-row">
             <div class="col-lg-6 hero-copy">
                 <span class="d-inline-flex align-items-center small bg-light text-secondary px-3 py-1 rounded-pill mb-3">
-                    WordPress booking & scheduling automation
+                    Local SEO landing pages
                     <svg width="12" height="12" class="ms-2" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M4 2l4 4-4 4" />
                     </svg>
                 </span>
 
                 <h1 class="fw-semibold lh-sm text-dark hero-title">
-                    Turn every inquiry into a confirmed booking—automatically.<br>
+                    Create location-based landing pages in minutes—no manual work.<br>
                 </h1>
 
                 <p class="mt-3 text-secondary">
-                    FluentBooking keeps calendars synchronized, collects payments, sends reminders, and routes appointments without manual back-and-forth—so teams look polished and close more revenue.
+                    Webmakerr Local Pages Builder auto-fills your template for every city, region, or service you target, keeping copy, branding, and SEO fields consistent across unlimited locations.
                 </p>
 
                 <div class="d-flex flex-wrap hero-actions mt-4">
                     <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg d-flex align-items-center gap-2 w-100" style="max-width:260px;">
                         <img src="<?php echo esc_url( $theme_dir . '/images/home/user3.png' ); ?>" width="18" alt="Google icon">
-                        Order Plugin Now
+                        Get Local Pages Builder
                     </a>
 
                     <a href="#get-free-trial" class="btn btn-light border btn-lg d-flex align-items-center justify-content-between w-100" data-trial-open style="max-width:260px;">
-                        <span class="text-dark">Get Free Trail</span>
+                        <span class="text-dark">Get Free Trial</span>
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4">
                             <path d="M4 2l6 5-6 5" />
                         </svg>
                     </a>
                 </div>
 
-                <p class="small text-muted mt-2">Be live in minutes—claim your onboarding slot today</p>
+                <p class="small text-muted mt-2">Publish localized pages fast—reserve your setup slot today</p>
 
                 <div class="d-flex gap-4 mt-4">
                     <img src="<?php echo esc_url( $theme_dir . '/images/trustf/sslupf.svg' ); ?>" height="20" alt="Trustpilot">
@@ -561,16 +561,16 @@ get_header();
                     <div class="p-4 position-relative" style="z-index:2; min-height:350px;">
                         <div class="d-flex justify-content-between align-items-start mb-3 hero-info-row">
                             <div>
-                                <p class="fw-semibold text-dark mb-1">Booking System Launch Call</p>
-                                <p class="small text-muted mb-0">Plan the calendars, payment steps, and automations that stop no-shows, cut admin time, and increase closed deals.</p>
+                                <p class="fw-semibold text-dark mb-1">Local Pages Setup Call</p>
+                                <p class="small text-muted mb-0">Align on your template, SEO fields, and location list so every page ships quickly with consistent branding and clean URLs.</p>
                             </div>
-                            <span class="small text-muted fw-normal hero-pill">Done-for-you delivery</span>
+                            <span class="small text-muted fw-normal hero-pill">Template-led onboarding</span>
                         </div>
 
                         <div class="d-flex flex-wrap gap-2 small text-muted mb-3">
-                            <span class="border rounded-pill px-3 py-1">90-min rollout plan</span>
-                            <span class="border rounded-pill px-3 py-1">Calendar + funnel mapping</span>
-                            <span class="border rounded-pill px-3 py-1">Revenue impact forecast</span>
+                            <span class="border rounded-pill px-3 py-1">Bulk location import</span>
+                            <span class="border rounded-pill px-3 py-1">SEO + URL checklist</span>
+                            <span class="border rounded-pill px-3 py-1">Template mapping</span>
                         </div>
 
                         <div class="position-relative border rounded-3 p-3 shadow-sm hero-animation-shell">
@@ -610,8 +610,8 @@ get_header();
                     </svg>
                     Verified onboarding request
                 </span>
-                <h3 class="fw-semibold text-dark mt-3 mb-1" style="font-size: 1.6rem;">Try Our Booking Plugin</h3>
-                <p class="trial-modal__subtitle small mb-0">Tell us where to send your onboarding link and setup steps.</p>
+                <h3 class="fw-semibold text-dark mt-3 mb-1" style="font-size: 1.6rem;">Try Webmakerr Local Pages Builder</h3>
+                <p class="trial-modal__subtitle small mb-0">Tell us where to send your setup link and location-page checklist.</p>
             </div>
 
             <div class="trial-modal__body">
@@ -623,8 +623,8 @@ get_header();
                             </svg>
                         </span>
                         <div>
-                            <h6 class="fw-semibold">Priority onboarding</h6>
-                            <p class="mb-0">We reserve a specialist to configure calendars, reminders, and payments for you.</p>
+                            <h6 class="fw-semibold">Guided template setup</h6>
+                            <p class="mb-0">A specialist configures your page template, CTAs, and SEO fields for every location you target.</p>
                         </div>
                     </div>
 
@@ -635,8 +635,8 @@ get_header();
                             </svg>
                         </span>
                         <div>
-                            <h6 class="fw-semibold">White-glove support</h6>
-                            <p class="mb-0">Real humans guide you through installation and answer every question in minutes.</p>
+                            <h6 class="fw-semibold">Location list import</h6>
+                            <p class="mb-0">Send your cities or regions and we’ll load them with the right slugs, meta data, and publishing settings.</p>
                         </div>
                     </div>
                 </div>
@@ -675,19 +675,19 @@ get_header();
     document.addEventListener('DOMContentLoaded', function () {
         var testimonials = [
             {
-                quote: '“FluentBooking runs every consult slot for us—no email tag, no conflicts. Demo bookings jumped 38% in month one.”',
+                quote: '“We generated 120 city pages in an afternoon. URLs, headings, FAQs—everything followed our template without copy-paste work.”',
                 name: 'Noah Patel',
                 title: 'Marketing Ops Lead, Horizon Creative',
                 initial: 'N'
             },
             {
-                quote: '“The booking-to-payment flow replaced three tools and two contractors. It paid for itself in two weeks.”',
+                quote: '“Local rankings steadied because every service page now uses the same on-brand sections, just tailored to each city.”',
                 name: 'Melissa Grant',
                 title: 'VP Growth, Northwind Legal',
                 initial: 'M'
             },
             {
-                quote: '“Clients self-schedule coaching, get automatic reminders, and pay on the spot. Our team stopped chasing invoices.”',
+                quote: '“Webmakerr let us roll out state, county, and city variants without breaking our design system. Edits roll out everywhere.”',
                 name: 'Sofia Alvarez',
                 title: 'Head of Growth, Latitude Labs',
                 initial: 'S'
@@ -781,19 +781,19 @@ get_header();
     <div class="container-lg">
         <div class="text-center mx-auto" style="max-width: 700px;">
             <span class="d-inline-flex align-items-center bg-white border px-3 py-1 rounded-pill text-secondary small shadow-sm mb-3">
-                Why teams choose FluentBooking
+                Why teams choose Webmakerr Local Pages Builder
             </span>
 
             <h2 class="fw-semibold display-6 text-dark lh-sm">
-                Everything you need to run bookings on autopilot
+                Everything you need to build localized pages at scale
             </h2>
 
             <p class="mt-3 text-secondary">
-                Install once and let FluentBooking capture leads, qualify them, and schedule the right meeting with the right person—while your team focuses on closing deals and serving customers.
+                Install once and let Webmakerr generate city, state, or region pages from your template—while your team focuses on campaigns, clients, and results.
             </p>
 
             <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg mt-4 shadow-sm">
-                Order Plugin Now
+                Get Local Pages Builder
             </a>
         </div>
 
@@ -804,13 +804,13 @@ get_header();
                         <span class="fw-bold text-secondary small">01</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">Scheduling that books itself</h5>
+                    <h5 class="fw-semibold text-dark">Launch pages for every market</h5>
 
                     <p class="text-muted small mt-2">
-                        Replace back-and-forth emails with branded booking pages that qualify visitors and lock in the best time with no double-bookings.
+                        Generate location-based pages from one template, with titles, intros, services, FAQs, and CTAs tailored to each city, state, or region.
                     </p>
 
-                    <img src="https://cdn.webmakerr.com/website/booking1.png" alt="Scheduling that books itself graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/booking1.png" alt="Location landing pages generated from one template graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -820,13 +820,13 @@ get_header();
                         <span class="fw-bold text-secondary small">02</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">Automated follow-up that converts</h5>
+                    <h5 class="fw-semibold text-dark">Consistent branding—no copy/paste</h5>
 
                     <p class="text-muted small mt-2">
-                        Trigger confirmations, reminders, and post-meeting nurture sequences that keep prospects engaged and reduce no-shows.
+                        Keep layouts uniform while swapping in localized headlines, offers, and testimonials so every page stays on-brand and relevant.
                     </p>
 
-                    <img src="https://alidrives.b-cdn.net/website/booking2.png" alt="Automated follow-up graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://alidrives.b-cdn.net/website/booking2.png" alt="Consistent branded local page sections graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -836,13 +836,13 @@ get_header();
                         <span class="fw-bold text-secondary small">03</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">Integrations built for revenue teams</h5>
+                    <h5 class="fw-semibold text-dark">SEO-safe automation</h5>
 
                     <p class="text-muted small mt-2">
-                        Sync calendars, CRMs, payment gateways, and automation tools so every booking, payment, and pipeline update stays in one flow.
+                        Use clean URLs, localized meta data, and structured content fields that help pages stay organized and search-friendly across regions.
                     </p>
 
-                    <img src="https://alidrives.b-cdn.net/website/booking3.png" alt="Integrations built for revenue teams graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://alidrives.b-cdn.net/website/booking3.png" alt="SEO-friendly automation for location pages graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
 
                 </div>
             </div>
@@ -853,7 +853,7 @@ get_header();
 <section class="py-5 bg-light">
     <div class="container-lg">
         <h2 class="text-center fw-semibold lh-sm text-dark mb-5" style="font-size: 2.5rem;">
-            ...plus everything needed for a professional booking engine
+            ...plus everything needed for high-quality local landing pages
         </h2>
 
         <div class="row g-4 justify-content-center more-feature-grid">
@@ -870,14 +870,14 @@ get_header();
             ];
 
             $labels = [
-                'Branded booking pages',
-                'Round-robin & pooled calendars',
-                'Conversion-optimized intake',
-                'Instant confirmations & reminders',
-                'Payments, invoices & receipts',
-                'CRM & marketing automation sync',
-                'Availability rules & routing',
-                'Analytics, QA & launch checklists'
+                'Dynamic location templates',
+                'Bulk city/state creation',
+                'Localized SEO titles & metas',
+                'Auto-filled sections & FAQs',
+                'Clean URLs & slugs',
+                'Works with any builder',
+                'Unlimited services & regions',
+                'Edit any page individually'
             ];
 
             foreach ($labels as $index => $label):
@@ -902,11 +902,11 @@ get_header();
         </span>
 
         <h2 class="fw-semibold lh-sm text-dark" style="font-size: 2.5rem;">
-            Teams booking more revenue on autopilot
+            Teams shipping localized pages faster
         </h2>
 
         <p class="mt-3 text-secondary small mx-auto" style="max-width: 620px;">
-            See how FluentBooking eliminates manual scheduling, speeds up follow-up, and gives every team a polished, conversion-focused booking flow.
+            See how Webmakerr removes repetitive page creation, keeps branding aligned, and helps every region publish relevant, conversion-focused content.
         </p>
 
         <div class="d-none d-md-flex justify-content-center align-items-center gap-4 mt-5" data-testimonial-container="desktop">
@@ -984,16 +984,16 @@ get_header();
                     </span>
 
                 <h2 class="fw-semibold lh-sm text-dark mb-3" style="font-size: 2.25rem;">
-                    Launch bookings without guesswork.
+                    Launch local pages without guesswork.
                 </h2>
 
                 <p class="text-muted small mb-4" style="max-width: 420px;">
-                    We set up availability, routing, payments, and automations with weekly updates—so leadership knows exactly what’s live, what’s next, and when revenue hits.
+                    We set up templates, slugs, SEO fields, and automations with weekly updates—so teams know exactly what’s live, what’s next, and which regions are covered.
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start w-100" style="max-width: 420px;">
-                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">Order Plugin Now</a>
-                    <a href="#get-free-trial" class="btn btn-light border btn-lg" data-trial-open>Get Free Trail</a>
+                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">Get Local Pages Builder</a>
+                    <a href="#get-free-trial" class="btn btn-light border btn-lg" data-trial-open>Get Free Trial</a>
                 </div>
             </div>
 
@@ -1028,13 +1028,13 @@ get_header();
 
             <div class="position-relative" style="z-index:2;">
                 <h2 class="fw-semibold lh-sm text-dark mx-auto" style="font-size: 2.25rem; max-width: 700px;">
-                    Give customers a fast, professional way to book you—every time.
-                    <br class="d-none d-sm-block">Secure your onboarding slot before the calendar fills up.
+                    Publish location landing pages that stay on-brand and SEO-ready—at any scale.
+                    <br class="d-none d-sm-block">Secure your onboarding slot before the next campaign window.
                 </h2>
 
                 <div class="mt-4">
                     <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">
-                        Order Plugin Now
+                        Get Local Pages Builder
                     </a>
                 </div>
             </div>
@@ -1046,10 +1046,10 @@ get_header();
     <div class="container-lg">
         <div class="d-flex gap-2">
             <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg w-100">
-                Order Plugin Now
+                Get Local Pages Builder
             </a>
             <a href="#get-free-trial" class="btn btn-light border btn-lg w-100 text-dark" data-trial-open>
-                Get Free Trail
+                Get Free Trial
             </a>
         </div>
     </div>
