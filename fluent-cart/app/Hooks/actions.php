@@ -24,7 +24,9 @@ use FluentCart\Framework\Support\Arr;
 (new \FluentCart\App\Hooks\Handlers\MenuHandler)->register();
 (new \FluentCart\App\Hooks\Handlers\AdminMenuBarHandler)->register();
 (new \FluentCart\App\Hooks\Handlers\FluentCartHandler)->register();
-(new \FluentCart\App\Hooks\Handlers\ProductVideoMetaBox)->register();
+if (class_exists('FluentCart\\App\\Hooks\\Handlers\\ProductVideoMetaBox')) {
+    (new \FluentCart\App\Hooks\Handlers\ProductVideoMetaBox)->register();
+}
 
 (new \FluentCart\App\Hooks\Handlers\ShortCodes\ShopAppHandler)->register();
 (new \FluentCart\App\Hooks\Handlers\ExportHandler)->register();
