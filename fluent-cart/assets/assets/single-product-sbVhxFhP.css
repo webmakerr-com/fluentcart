@@ -214,3 +214,8 @@ body.lb-disable-scrolling{overflow:hidden}.fct-lightboxOverlay{position:fixed;to
 @media (max-width:991px){.fct-how-it-works .fct-how-it-works-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
 @media (max-width:767px){.fct-how-it-works .fct-how-it-works-grid{grid-template-columns:1fr;gap:12px}}
 @media (max-width:767px){.fct-similar-product-list-container{display:block}}
+@media (max-width: 767px){
+  .fct-single-product-page .card-body.d-flex > * { order: 3; }
+  .fct-single-product-page .card-body.d-flex > .border.rounded-3 { order: 1; }
+  .fct-single-product-page .card-body.d-flex > .fct-product-title { order: 2; }
+}
