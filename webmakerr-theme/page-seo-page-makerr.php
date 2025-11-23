@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Webmakerr Local Page Builder
+ * Template Name: Webmakerr Local page Builder
  * Template Post Type: page
  */
 
@@ -19,7 +19,7 @@ wp_enqueue_script(
 );
 
 $theme_dir = get_template_directory_uri();
-$checkout_url = 'https://webmakerr.com/?fluent-cart=instant_checkout&item_id=21&quantity=1';
+$checkout_url = 'https://webmakerr.com/?fluent-cart=instant_checkout&item_id=23&quantity=1';
 
 get_header();
 ?>
@@ -521,35 +521,35 @@ get_header();
         <div class="p-4 p-md-5 bg-white border rounded-4 shadow-sm row g-4 align-items-center hero-row">
             <div class="col-lg-6 hero-copy">
                 <span class="d-inline-flex align-items-center small bg-light text-secondary px-3 py-1 rounded-pill mb-3">
-                    Local SEO landing pages
+                    Facebook Ads Mastery Course
                     <svg width="12" height="12" class="ms-2" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M4 2l4 4-4 4" />
                     </svg>
                 </span>
 
                 <h1 class="fw-semibold lh-sm text-dark hero-title">
-                    Create location-based landing pages in minutes—no manual work.<br>
+                    Launch Facebook ads that scale revenue without the agency markup.<br>
                 </h1>
 
                 <p class="mt-3 text-secondary">
-                    Webmakerr Local Pages Builder auto-fills your template for every city, region, or service you target, keeping copy, branding, and SEO fields consistent across unlimited locations.
+                    Facebook Ads Mastery gives you proven hooks, headlines, budget and bid calculators, retargeting scripts, and plug-and-play landing pages so campaigns go live fast and stay profitable.
                 </p>
 
                 <div class="d-flex flex-wrap hero-actions mt-4">
                     <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg d-flex align-items-center gap-2 w-100" style="max-width:260px;">
-                        <img src="<?php echo esc_url( $theme_dir . '/images/home/user3.png' ); ?>" width="18" alt="Google icon">
-                        Get Local Pages Builder
+                        <img src="<?php echo esc_url( $theme_dir . '/images/home/user3.png' ); ?>" width="18" alt="Enrollment icon">
+                        Enroll Now
                     </a>
 
                     <a href="#get-free-trial" class="btn btn-light border btn-lg d-flex align-items-center justify-content-between w-100" data-trial-open style="max-width:260px;">
-                        <span class="text-dark">Get Free Trial</span>
+                        <span class="text-dark">Preview a Free Lesson</span>
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4">
                             <path d="M4 2l6 5-6 5" />
                         </svg>
                     </a>
                 </div>
 
-                <p class="small text-muted mt-2">Publish localized pages fast—reserve your setup slot today</p>
+                <p class="small text-muted mt-2">Seats are limited—reserve your cohort spot today</p>
 
                 <div class="d-flex gap-4 mt-4">
                     <img src="<?php echo esc_url( $theme_dir . '/images/trustf/sslupf.svg' ); ?>" height="20" alt="Trustpilot">
@@ -561,23 +561,23 @@ get_header();
                     <div class="p-4 position-relative" style="z-index:2; min-height:350px;">
                         <div class="d-flex justify-content-between align-items-start mb-3 hero-info-row">
                             <div>
-                                <p class="fw-semibold text-dark mb-1">Local Pages Setup Call</p>
-                                <p class="small text-muted mb-0">Align on your template, SEO fields, and location list so every page ships quickly with consistent branding and clean URLs.</p>
+                                <p class="fw-semibold text-dark mb-1">Campaign Launch Blueprint</p>
+                                <p class="small text-muted mb-0">Plan offers, budgets, bids, and retargeting sequences so every ad set launches with clear hooks and confident spend.</p>
                             </div>
-                            <span class="small text-muted fw-normal hero-pill">Template-led onboarding</span>
+                            <span class="small text-muted fw-normal hero-pill">Instructor-led guidance</span>
                         </div>
 
                         <div class="d-flex flex-wrap gap-2 small text-muted mb-3">
-                            <span class="border rounded-pill px-3 py-1">Bulk location import</span>
-                            <span class="border rounded-pill px-3 py-1">SEO + URL checklist</span>
-                            <span class="border rounded-pill px-3 py-1">Template mapping</span>
+                            <span class="border rounded-pill px-3 py-1">Proven hooks & headlines</span>
+                            <span class="border rounded-pill px-3 py-1">Budget + bid calculators</span>
+                            <span class="border rounded-pill px-3 py-1">Data-backed testing plan</span>
                         </div>
 
                         <div class="position-relative border rounded-3 p-3 shadow-sm hero-animation-shell">
                             <div class="ratio ratio-16x9 w-100">
                                 <video
                                     class="w-100 h-100 rounded-3"
-                                    data-src="https://cdn.webmakerr.com/website/booking.mp4"
+                                    data-src="https://cdn.webmakerr.com/website/webmakerr-local-page-builder.mp4"
                                     autoplay
                                     muted
                                     playsinline
@@ -608,10 +608,10 @@ get_header();
                     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M4 10.5l3 3 9-9" />
                     </svg>
-                    Verified onboarding request
+                    Verified cohort application
                 </span>
-                <h3 class="fw-semibold text-dark mt-3 mb-1" style="font-size: 1.6rem;">Try Webmakerr Local Pages Builder</h3>
-                <p class="trial-modal__subtitle small mb-0">Tell us where to send your setup link and location-page checklist.</p>
+                <h3 class="fw-semibold text-dark mt-3 mb-1" style="font-size: 1.6rem;">Claim Your Seat in Facebook Ads Mastery</h3>
+                <p class="trial-modal__subtitle small mb-0">Tell us where to send your welcome kit, free lesson, and launch plan.</p>
             </div>
 
             <div class="trial-modal__body">
@@ -623,8 +623,8 @@ get_header();
                             </svg>
                         </span>
                         <div>
-                            <h6 class="fw-semibold">Guided template setup</h6>
-                            <p class="mb-0">A specialist configures your page template, CTAs, and SEO fields for every location you target.</p>
+                            <h6 class="fw-semibold">Reserved cohort seat</h6>
+                            <p class="mb-0">We lock in your spot and send the blueprint with hooks, bids, and retargeting scripts.</p>
                         </div>
                     </div>
 
@@ -635,8 +635,8 @@ get_header();
                             </svg>
                         </span>
                         <div>
-                            <h6 class="fw-semibold">Location list import</h6>
-                            <p class="mb-0">Send your cities or regions and we’ll load them with the right slugs, meta data, and publishing settings.</p>
+                            <h6 class="fw-semibold">Instructor support</h6>
+                            <p class="mb-0">Get direct guidance on creative, budgets, and funnel tweaks before you launch.</p>
                         </div>
                     </div>
                 </div>
@@ -675,19 +675,19 @@ get_header();
     document.addEventListener('DOMContentLoaded', function () {
         var testimonials = [
             {
-                quote: '“We generated 120 city pages in an afternoon. URLs, headings, FAQs—everything followed our template without copy-paste work.”',
+                quote: '“The launch templates let us ship three winning campaigns in week one. Our cost per lead dropped 42% without hiring an agency.”',
                 name: 'Noah Patel',
                 title: 'Marketing Ops Lead, Horizon Creative',
                 initial: 'N'
             },
             {
-                quote: '“Local rankings steadied because every service page now uses the same on-brand sections, just tailored to each city.”',
+                quote: '“Following the weekly optimization checklist took us to 3.1x ROAS in 30 days. The offer tweaks alone paid for the course in a weekend.”',
                 name: 'Melissa Grant',
                 title: 'VP Growth, Northwind Legal',
                 initial: 'M'
             },
             {
-                quote: '“Webmakerr let us roll out state, county, and city variants without breaking our design system. Edits roll out everywhere.”',
+                quote: '“The retargeting scripts and email automations filled the gaps in our funnel. Every ad click now gets a personalized follow-up sequence.”',
                 name: 'Sofia Alvarez',
                 title: 'Head of Growth, Latitude Labs',
                 initial: 'S'
@@ -781,19 +781,19 @@ get_header();
     <div class="container-lg">
         <div class="text-center mx-auto" style="max-width: 700px;">
             <span class="d-inline-flex align-items-center bg-white border px-3 py-1 rounded-pill text-secondary small shadow-sm mb-3">
-                Why teams choose Webmakerr Local Pages Builder
+                Why teams choose Facebook Ads Mastery
             </span>
 
             <h2 class="fw-semibold display-6 text-dark lh-sm">
-                Everything you need to build localized pages at scale
+                Everything you need to launch Facebook ads that convert
             </h2>
 
             <p class="mt-3 text-secondary">
-                Install once and let Webmakerr generate city, state, or region pages from your template—while your team focuses on campaigns, clients, and results.
+                Get the creative, calculators, scripts, and checklists to build profitable campaigns faster—while your team focuses on refining offers and turning spend into revenue.
             </p>
 
             <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg mt-4 shadow-sm">
-                Get Local Pages Builder
+                Enroll Now
             </a>
         </div>
 
@@ -804,13 +804,13 @@ get_header();
                         <span class="fw-bold text-secondary small">01</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">Launch pages for every market</h5>
+                    <h5 class="fw-semibold text-dark">Creative that earns the click</h5>
 
                     <p class="text-muted small mt-2">
-                        Generate location-based pages from one template, with titles, intros, services, FAQs, and CTAs tailored to each city, state, or region.
+                        Swipe proven hooks and headlines, then plug them into ready-to-launch ad angles so every campaign starts with conversion-focused creative.
                     </p>
 
-                    <img src="https://cdn.webmakerr.com/website/booking1.png" alt="Location landing pages generated from one template graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/facebook-ads-3.png" alt="Facebook ads creative frameworks graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -820,13 +820,13 @@ get_header();
                         <span class="fw-bold text-secondary small">02</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">Consistent branding—no copy/paste</h5>
+                    <h5 class="fw-semibold text-dark">Optimization that compounds</h5>
 
                     <p class="text-muted small mt-2">
-                        Keep layouts uniform while swapping in localized headlines, offers, and testimonials so every page stays on-brand and relevant.
+                        Follow weekly optimization checklists that tighten targeting, refresh creatives, and steadily raise ROAS without guesswork.
                     </p>
 
-                    <img src="https://alidrives.b-cdn.net/website/booking2.png" alt="Consistent branded local page sections graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/facebook-ads-1.png" alt="Optimization checklist graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
                 </div>
             </div>
 
@@ -836,13 +836,13 @@ get_header();
                         <span class="fw-bold text-secondary small">03</span>
                     </span>
 
-                    <h5 class="fw-semibold text-dark">SEO-safe automation</h5>
+                    <h5 class="fw-semibold text-dark">Measurement built for teams</h5>
 
                     <p class="text-muted small mt-2">
-                        Use clean URLs, localized meta data, and structured content fields that help pages stay organized and search-friendly across regions.
+                        Use budget and bid calculators, tracking templates, and retargeting scripts to scale spend confidently and keep pipelines full.
                     </p>
 
-                    <img src="https://alidrives.b-cdn.net/website/booking3.png" alt="SEO-friendly automation for location pages graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
+                    <img src="https://cdn.webmakerr.com/website/facebook-ads-2.png" alt="Measurement and retargeting toolkit graphic" class="mt-auto pt-3 w-100" style="height: 250px; object-fit: cover;" />
 
                 </div>
             </div>
@@ -853,7 +853,7 @@ get_header();
 <section class="py-5 bg-light">
     <div class="container-lg">
         <h2 class="text-center fw-semibold lh-sm text-dark mb-5" style="font-size: 2.5rem;">
-            ...plus everything needed for high-quality local landing pages
+            ...plus everything needed for a profitable Facebook ads system
         </h2>
 
         <div class="row g-4 justify-content-center more-feature-grid">
@@ -870,14 +870,14 @@ get_header();
             ];
 
             $labels = [
-                'Dynamic location templates',
-                'Bulk city/state creation',
-                'Localized SEO titles & metas',
-                'Auto-filled sections & FAQs',
-                'Clean URLs & slugs',
-                'Works with any builder',
-                'Unlimited services & regions',
-                'Edit any page individually'
+                'Proven hooks & headlines',
+                'Budget & bid calculators',
+                'Retargeting scripts that convert',
+                'Plug-and-play landing pages',
+                'Data-backed testing plan',
+                'Checklists for every launch',
+                'Creative and offer swipe files',
+                'Student results library'
             ];
 
             foreach ($labels as $index => $label):
@@ -898,15 +898,15 @@ get_header();
 <section class="py-5 bg-light">
     <div class="container-lg text-center">
         <span class="d-inline-flex align-items-center bg-white border px-3 py-1 rounded-pill text-secondary small shadow-sm mb-3">
-            Client results
+            Student results
         </span>
 
         <h2 class="fw-semibold lh-sm text-dark" style="font-size: 2.5rem;">
-            Teams shipping localized pages faster
+            Marketers turning ads into revenue
         </h2>
 
         <p class="mt-3 text-secondary small mx-auto" style="max-width: 620px;">
-            See how Webmakerr removes repetitive page creation, keeps branding aligned, and helps every region publish relevant, conversion-focused content.
+            See how the Facebook Ads course helps founders and growth teams launch profitable campaigns without guesswork.
         </p>
 
         <div class="d-none d-md-flex justify-content-center align-items-center gap-4 mt-5" data-testimonial-container="desktop">
@@ -984,16 +984,16 @@ get_header();
                     </span>
 
                 <h2 class="fw-semibold lh-sm text-dark mb-3" style="font-size: 2.25rem;">
-                    Launch local pages without guesswork.
+                    Launch campaigns without guesswork.
                 </h2>
 
                 <p class="text-muted small mb-4" style="max-width: 420px;">
-                    We set up templates, slugs, SEO fields, and automations with weekly updates—so teams know exactly what’s live, what’s next, and which regions are covered.
+                    Follow the curriculum, checklists, and calculators with weekly updates—so leadership knows what’s launching, what’s optimizing, and when the next revenue lift lands.
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start w-100" style="max-width: 420px;">
-                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">Get Local Pages Builder</a>
-                    <a href="#get-free-trial" class="btn btn-light border btn-lg" data-trial-open>Get Free Trial</a>
+                    <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">Enroll Now</a>
+                    <a href="#get-free-trial" class="btn btn-light border btn-lg" data-trial-open>Preview a Free Lesson</a>
                 </div>
             </div>
 
@@ -1003,7 +1003,7 @@ get_header();
                         <div class="ratio ratio-16x9 rounded-3 overflow-hidden border" style="--bs-border-opacity: 0.35;">
                             <video
                                 class="w-100 h-100"
-                                data-src="https://cdn.webmakerr.com/website/booking-footer.mp4"
+                                data-src="https://cdn.webmakerr.com/Learn/FacebookAds/1.Facebook%20Advertising%20Overview.mp4"
                                 style="object-fit: cover;"
                                 controls
                                 playsinline
@@ -1011,6 +1011,87 @@ get_header();
                                 muted
                                 preload="none"
                             ></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white border-top">
+    <div class="container-lg">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-4">
+                    <span class="d-inline-flex align-items-center bg-light border px-3 py-1 rounded-pill text-secondary small mb-3">Frequently Asked Questions</span>
+                    <h2 class="fw-semibold text-dark">Clear answers so you can enroll with confidence</h2>
+                    <p class="text-secondary mt-2">If you're on the fence, these quick answers explain exactly what you get, how it works, and what to do if it isn't the right fit.</p>
+                </div>
+
+                <div class="accordion" id="faqsAccordion">
+                    <div class="accordion-item border rounded-3 mb-3">
+                        <h2 class="accordion-header" id="faqOneHeading">
+                            <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                                How quickly will I start seeing results?
+                            </button>
+                        </h2>
+                        <div id="faqOne" class="accordion-collapse collapse show" aria-labelledby="faqOneHeading" data-bs-parent="#faqsAccordion">
+                            <div class="accordion-body text-secondary">
+                                Most members launch their first optimized campaigns within the first week using our ready-to-use templates, checklists, and ad calculators. Your pace depends on implementation, but every module is designed for fast action.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-3 mb-3">
+                        <h2 class="accordion-header" id="faqTwoHeading">
+                            <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                                What if I'm new to Facebook ads?
+                            </button>
+                        </h2>
+                        <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqTwoHeading" data-bs-parent="#faqsAccordion">
+                            <div class="accordion-body text-secondary">
+                                The curriculum includes beginner-friendly walkthroughs plus advanced modules. We show you how to set up the pixel, structure campaigns, and scale without guesswork—no prior media buying experience required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-3 mb-3">
+                        <h2 class="accordion-header" id="faqThreeHeading">
+                            <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
+                                Do I get support if I get stuck?
+                            </button>
+                        </h2>
+                        <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqThreeHeading" data-bs-parent="#faqsAccordion">
+                            <div class="accordion-body text-secondary">
+                                Yes. You’ll receive weekly live Q&A access with our instructors and can submit campaign screenshots for feedback. We also provide email support to help troubleshoot creative, targeting, and tracking questions.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-3 mb-3">
+                        <h2 class="accordion-header" id="faqFourHeading">
+                            <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">
+                                Is there a guarantee?
+                            </button>
+                        </h2>
+                        <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faqFourHeading" data-bs-parent="#faqsAccordion">
+                            <div class="accordion-body text-secondary">
+                                If you complete the core modules and templates within 30 days and don’t feel more confident running profitable ads, email us and we’ll work with you to make it right.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-3">
+                        <h2 class="accordion-header" id="faqFiveHeading">
+                            <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">
+                                Can I access updates in the future?
+                            </button>
+                        </h2>
+                        <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faqFiveHeading" data-bs-parent="#faqsAccordion">
+                            <div class="accordion-body text-secondary">
+                                Absolutely. Enrollment includes ongoing updates whenever Meta releases major changes. We refresh the playbooks and templates so your campaigns stay compliant and competitive.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1028,13 +1109,13 @@ get_header();
 
             <div class="position-relative" style="z-index:2;">
                 <h2 class="fw-semibold lh-sm text-dark mx-auto" style="font-size: 2.25rem; max-width: 700px;">
-                    Publish location landing pages that stay on-brand and SEO-ready—at any scale.
-                    <br class="d-none d-sm-block">Secure your onboarding slot before the next campaign window.
+                    Claim your seat in Facebook Ads Mastery.
+                    <br class="d-none d-sm-block">Bonuses disappear when the cohort fills.
                 </h2>
 
                 <div class="mt-4">
                     <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg shadow-sm">
-                        Get Local Pages Builder
+                        Enroll Now
                     </a>
                 </div>
             </div>
@@ -1046,10 +1127,10 @@ get_header();
     <div class="container-lg">
         <div class="d-flex gap-2">
             <a href="<?php echo esc_url( $checkout_url ); ?>" class="btn btn-dark btn-lg w-100">
-                Get Local Pages Builder
+                Enroll Now
             </a>
             <a href="#get-free-trial" class="btn btn-light border btn-lg w-100 text-dark" data-trial-open>
-                Get Free Trial
+                Preview a Free Lesson
             </a>
         </div>
     </div>
@@ -1065,7 +1146,7 @@ get_header();
         var errorAlert = modalBackdrop ? modalBackdrop.querySelector('[data-trial-error]') : null;
         var spinner = modalBackdrop ? modalBackdrop.querySelector('[data-trial-spinner]') : null;
         var submitBtn = modalBackdrop ? modalBackdrop.querySelector('[data-trial-submit]') : null;
-        var webhookUrl = 'https://webmakerr.com/?fluentcrm=1&route=contact&hash=fb919fc9-b574-4847-8d03-014249a2767e';
+        var webhookUrl = 'https://webmakerr.com/?fluentcrm=1&route=contact&hash=f4146b0f-34b7-4677-8b3c-9628b056387b';
 
         if (!modalBackdrop || !form || !nameInput || !emailInput) {
             return;
@@ -1219,5 +1300,12 @@ get_header();
         });
     });
 </script>
+
+<section class="wmk-disclaimer" style="padding:20px 0; font-size:11px; color:#777; line-height:1.5;">
+    <div class="container">
+        <p>Important Disclaimer: This training is for educational purposes only and does not guarantee results. This page is not endorsed by or affiliated with Meta Platforms, Inc. Advertisers are responsible for following all Meta Advertising Policies.</p>
+    </div>
+</section>
+
 
 <?php get_footer(); ?>
